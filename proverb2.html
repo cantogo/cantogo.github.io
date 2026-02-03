@@ -1,0 +1,532 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粤语俗语/俚语</title>
+    <style>
+        :root {
+            --bg-color: #F2F0E9;
+            --card-bg: #FFFFFF;
+            --text-main: rgb(40, 40, 40);
+            --text-sub: #363636;
+            --accent-green: #9CB0A3; /* 鼠尾草绿 - 工作 */
+            --accent-blue: #94A8B3; /* 雾霾蓝 - 沟通 */
+            --accent-pink: #C7B2B2; /* 干燥玫瑰 - 生活 */
+            --accent-yellow: #D4C5A0; /* 姜黄 - 谚语 */
+            --border-color: #E0E0E0;
+            --shadow: 0 2px 8px rgba(0,0,0,0.03);
+            --radius: 12px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #2B2B2B;
+                --card-bg: #363636;
+                --text-main: #E0E0E0;
+                --text-sub: #D1D1D1;
+                --accent-green: #7A8F82;
+                --accent-blue: #708591;
+                --accent-pink: #A69090;
+                --accent-yellow: #B0A282;
+                --border-color: #5C5C5C;
+                --shadow: 0 2px 8px rgba(0,0,0,0.2);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        html {
+            font-size: 115%;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        header {
+            max-width: 1200px;
+            margin: 0 auto 10px auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: 500;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        /* 筛选按钮 */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-sub);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+        }
+
+        .filter-btn:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-green);
+            color: white;
+            border-color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        /* 网格布局 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 卡片样式 */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 分类标签条 */
+        .card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background-color: var(--accent-green);
+        }
+
+        .card[data-cat="work"]::before { background-color: var(--accent-green); }
+        .card[data-cat="comm"]::before { background-color: var(--accent-blue); }
+        .card[data-cat="daily"]::before { background-color: var(--accent-pink); }
+        .card[data-cat="proverb"]::before { background-color: var(--accent-yellow); }
+
+        .slang-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .slang-word {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .jyutping {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            opacity: 0.8;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .meaning {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
+            flex-grow: 1;
+        }
+
+        .example-box {
+            background-color: rgba(0,0,0,0.03);
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: auto;
+        }
+
+        .ex-label {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .ex-text {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            display: block;
+        }
+
+        /* 播放按钮样式 */
+        .audio-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .play-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: transparent;
+            border: 1.25px solid currentColor;
+            border-radius: 15px;
+            padding: 6px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            cursor: pointer;
+            opacity: 0.7;
+        }
+
+        .play-btn:hover {
+            opacity: 1;
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .play-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        /* Header CSS */
+        #navbar {
+            width: 100%;
+            /* Explicitly set solid white background to prevent transparency */
+            background-color: var(--bg-color); 
+            /* Ensure header stays on top of scrolling content */
+            z-index: 1000; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+        }
+
+        #navbar .title {
+            color: var(--text-main);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-left: 0;
+        }
+
+        #navbar a {
+            color: var(--text-main);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+    
+        .home-icon {
+            width: 43px;
+            height: 43px;
+            background: gba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid;
+        }
+
+        .home-icon:hover {
+            background: lightgreen;
+            border-color: lightgreen;
+            transform: translateY(-2px);
+        }
+
+        /* SVG Icons */
+        svg {
+            width: 43px;
+            height: 43px;
+            fill: #0ea5e9;
+        }
+
+    </style>
+</head>
+<body>
+
+<header id="navbar">
+    <div class="header-content">
+        <!-- Top Bar containing Title and Home Icon -->
+        <div class="top-bar">
+            <div class="title">&#9316 粤语俗语/俚语</div>
+                <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                    </svg>
+                </a>
+        </div>
+        <!-- Filter Container moved here -->
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterData('all', this)">全部显示</button>
+            <button class="filter-btn" onclick="filterData('work', this)">工作</button>
+            <button class="filter-btn" onclick="filterData('comm', this)">沟通情感</button>
+            <button class="filter-btn" onclick="filterData('daily', this)">日常生活</button>
+            <button class="filter-btn" onclick="filterData('proverb', this)">谚语</button>
+        </div>
+    </div>
+</header>
+
+<div class="grid" id="contentGrid">
+    <!-- 卡片将通过 JS 生成 -->
+</div>
+
+<script>
+    const data = [
+        // 1. 工作
+        { cat: 'work', slang: '有纹有路', newadd: 'New😊', jp: 'jau5 man4 jau5 lou6', mean: '条理清晰，有条不紊。', ex: '佢份报告写得有纹有路，好易明。', cantno :122,cantexno :1122 },
+        { cat: 'work', slang: '转数快', newadd: 'New😊', jp: 'zyun3 sou3 faai3', mean: '脑筋转得快，反应敏捷，能迅速应对变化。', ex: '做项目经理最紧要转数快，随机应变。', cantno :123,cantexno :1123 },
+        { cat: 'work', slang: 'Fit马', newadd: 'New😊', jp: 'fit1 maa5', mean: '得力助手，非常能干的下属。', ex: '佢系我嘅Fit马，冇咗佢唔得。', cantno :124,cantexno :1124 },
+        { cat: 'work', slang: '瓣瓣掂', newadd: 'New😊', jp: 'faan6 faan6 dim6', mean: '方方面面都做得很好，全能。', ex: '佢无论管人定管数都瓣瓣掂。', cantno :125,cantexno :1125 },
+        { cat: 'work', slang: '掂过碌蔗', newadd: 'New😊', jp: 'dim6 gwo3 luk1 ze3', mean: '形容事情进展非常顺利，结果完美（比甘蔗还要直、还要甜）。', ex: '今次个Project掂过碌蔗，老板好满意。', cantno :126,cantexno :1126 },
+        { cat: 'work', slang: '补镬' , newadd: 'New😊', jp:'bou2 wok6' ,mean:'补救过失。镬烂了要补，指工作出错后进行修补。' ,ex:'单嘢搞错咗，依家要谂办法补镬。' ,cantno :127,cantexno :1127},
+        { cat: 'work', slang: '食死猫' , newadd: 'New😊', jp:'sik6 sei2 maau1' ,mean:'含冤受屈，被迫承担不是自己犯的错。' ,ex:'明明系佢错，但我食咗只死猫。' ,cantno :128,cantexno :1128},
+        { cat: 'work', slang: '执生' , newadd: 'New😊', jp:'zap1 saang1' ,mean:'随机应变。在没有预设方案时，靠自己灵活处理。' ,ex:'老板唔喺度，有咩事你自己执生啦。' ,cantno :129,cantexno :1129},
+        { cat: 'work', slang: '炖冬菇', newadd: 'New😊', jp: 'dan6 dung1 gu1', mean: '降职。', ex: '佢犯咗大错，俾公司炖冬菇。', cantno :130,cantexno :1130},
+        { cat: 'work', slang: '揸fit', newadd: 'New😊', jp: 'zaa1 fit1', mean: '指为一些事情负责，「揸fit人」则指负责人。', ex: '呢个项目依家由边个揸fit？', cantno :131,cantexno :1131},
+        { cat: 'work', slang: '收到风', newadd: 'New😊', jp: 'sau1 dou2 fung1', mean: '得到一些有意思或无意思的情报。', ex: '我收到风话公司会有大变动。', cantno :132,cantexno :1132 },
+        { cat: 'work', slang: '笃背脊', newadd: 'New😊', jp: 'duk1 bui3 zek3', mean: '在背后说人坏话，打小报告。', ex: '最憎人喺后面笃背脊。', cantno :133,cantexno :1133 },
+        { cat: 'work', slang: '大细超', newadd: 'New😊', jp: 'daai6 sai3 ciu1', mean: '偏心，处事不公平。', ex: '老细对佢特别好，真系大细超。', cantno :134,cantexno :1134 },
+        { cat: 'work', slang: '擦鞋', newadd: 'New😊', jp: 'caat3 haai4', mean: '拍马屁。', ex: '佢最叻就系擦鞋，所以升得咁快。', cantno :135,cantexno :1135 },
+        { cat: 'work', slang: '卸膊', newadd: 'New😊', jp: 'se3 bok3', mean: '形容人推卸责任。', ex: '佢做野好卸膊，有事就推俾同事。', cantno :136,cantexno :1136 },
+        { cat: 'work', slang: '老点' , newadd:'New😊' ,jp:'lou5 dim2' ,mean:'欺骗，误导，乱指挥。' ,ex:'你唔识路就唔好老点我。' ,cantno : 137, cantexno : 1137 },
+        { cat: 'work', slang: '搏大雾', newadd: 'New😊', jp: 'bok3 daai6 mou6', mean: '趁乱占便宜，混水摸鱼，蒙混过关。', ex: '有人趁人多搏大雾唔排队。', cantno :138,cantexno :1138 },
+        { cat: 'work', slang: '抵得谂', newadd: 'New😊', jp: 'dai2 dak1 nam2', mean: '不计较，肯吃亏，愿意多做一点。', ex: '"佢做野好抵得谂，唔斤斤计较。"', cantno :139,cantexno :1139 },
+        { cat: 'work', slang: '一Take过', newadd: 'New😊', jp: 'jat1 take gwo3', mean: '一次就成功，不需要返工重做。', ex: '"大家比心机，争取一Take过搞掂。"', cantno :140,cantexno :1140 },
+        { cat: 'work', slang: '老细', newadd: 'exist', jp: 'lou5 sai3', mean: '上司、Boss。', ex: '老细今日心情唔好，大家小心啲。', cantno: 101, cantexno: 1101},
+        { cat: 'work', slang: '好夹', newadd: 'exist', jp: 'hou2 gaap3', mean: '合得来。', ex: '我同新同事性格好夹，做野好顺。', cantno: 102, cantexno: 1102},
+        { cat: 'work', slang: '话头醒尾', newadd: 'exist', jp: 'waa6 tau4 sing2 mei5', mean: '机灵，一点就通。', ex: '个新人话头醒尾，教一次就识。', cantno: 103, cantexno: 1103},
+        { cat: 'work', slang: '湿滞', newadd: 'exist', jp: 'sap1 zai6', mean: '很麻烦、很棘手、难以处理。', ex: '呢单工程好湿滞，好多手尾跟。', cantno: 104, cantexno: 1104},
+        { cat: 'work', slang: '大镬', newadd: 'exist', jp: 'daai6 wok6', mean: '事态严重，形容一件事件发展到无法承受的危险地步。', ex: '死啦，唔记得交报告，今次大镬喇。', cantno: 105, cantexno: 1105},
+        { cat: 'work', slang: '孭镬', newadd: 'exist', jp: 'me1 wok6', mean: '背黑锅。指找一个人或一小撮人为某一过失负责。', ex: '明明系佢做错，点解要我孭镬？', cantno: 106, cantexno: 1106},
+        { cat: 'work', slang: '揸流滩', newadd: 'exist', jp: 'zaa1 lau4 taan1', mean: '偷懒，做事马虎。', ex: '你做嘢唔好成日揸流滩啦。', cantno: 107, cantexno: 1107},
+        { cat: 'work', slang: '捱夜', newadd: 'exist', jp: 'ngaai4 je2', mean: '熬夜。', ex: '寻晚捱夜赶工，而家好攰。' , cantno: 108, cantexno: 1108},
+        { cat: 'work', slang: '冇符', newadd: 'exist', jp: 'mou5 fu4', mean: '束手无策。', ex: '对住个顽皮仔，我真系冇符。' , cantno: 109, cantexno: 1109},
+        { cat: 'work', slang: '造马', newadd: 'exist', jp: 'zou6 maa5', mean: '造假。', ex: '个抽奖结果肯定系造马嘅。' , cantno: 110, cantexno: 1110},
+        { cat: 'work', slang: '搵食', newadd: 'exist', jp: 'wan2 sik6', mean: '去工作赚取工资糊口。', ex: '大家都系为两餐搵食啫，何必咁计较。' , cantno: 111, cantexno: 1111},
+        { cat: 'work', slang: '忙到一头烟', newadd: 'exist', jp: 'mong4 dou3 jat1 tau4 jin1', mean: '形容人非常忙。', ex: '啲客排晒队，我忙到一头烟。' , cantno: 112, cantexno: 1112},
+        { cat: 'work', slang: '忙到七彩', newadd: 'exist', jp: 'mong4 dou3 cat1 coi2', mean: '忙得够呛。', ex: '年尾特别多嘢做，真系忙到七彩。' , cantno: 113, cantexno: 1113},
+        { cat: 'work', slang: '一手一脚', newadd: 'exist', jp: 'jat1 sau2 jat1 goek3', mean: '独自干某件事，完成某项工作。', ex: '呢餐饭系我一手一脚煮嘅。' , cantno: 114, cantexno: 1114},
+        { cat: 'work', slang: '跟手尾', newadd: 'exist', jp: 'gan1 sau2 mei5', mean: '替人家完成未做完的工作，引申为承接人家的麻烦事。', ex: '佢辞职走咗，留低好多嘢要我跟手尾。' , cantno: 115, cantexno: 1115},
+        { cat: 'work', slang: '做野冇手尾', newadd: 'exist', jp: 'zou6 je5 mou5 sau2 mei5', mean: '形容人做事有头无尾，或者做完一件事不收拾东西。', ex: '佢做野冇手尾，又要我执烂摊子。' , cantno: 116, cantexno: 1116},
+        { cat: 'work', slang: '两头唔到岸', newadd: 'exist', jp: 'loeng5 tau4 m4 dou3 ngon6', mean: '两头够不着；两头落空。', ex: '你想两边讨好，小心两头唔到岸。' , cantno: 117, cantexno: 1117},
+        { cat: 'work', slang: '一镬泡', newadd: 'exist', jp: 'jat1 wok6 pou5', mean: '形容事情搞糟了，难以收拾。', ex: '搞到一镬泡，点算呀？' , cantno: 118, cantexno: 1118},
+        { cat: 'work', slang: '冷手执个热煎堆', newadd: 'exist', jp: 'laang5 sau2 zap1 go3 jit6 zin1 deoi1', mean: '比喻捡到意外的便宜。', ex: '佢辞职，你升职，真系冷手执个热煎堆。' , cantno: 119, cantexno: 1119},
+        { cat: 'work', slang: '收科', newadd: 'exist', jp: 'sau1 fo1', mean: '收场，结束，了结。', ex: '件事搞大咗，睇你点收科。' , cantno: 120, cantexno : 1120},
+        { cat: 'work', slang: '赶唔切' , newadd: 'exist', jp:'gon2 m4 cit3' ,mean:'赶不及。' ,ex:'快啲啦，赶唔切搭尾班车喇。' ,cantno :121,cantexno :1121},
+        
+        // 2. 沟通情感
+        { cat: 'comm', slang: '烂gag', newadd: 'New😊', jp: 'laan6 gag', mean: '很差劲的笑话，又称为「冷笑话」。', ex: '佢讲啲烂gag一啲都唔好笑。' , cantno : 233, cantexno : 2233},
+        { cat: 'comm', slang: '好Q', newadd: 'New😊', jp: 'hou2 kiu1', mean: '源自英文「Cute」，好可爱的意思。', ex: '只猫仔好Q啊！' , cantno : 234, cantexno : 2234},
+        { cat: 'comm', slang: 'O嘴', newadd: 'New😊', jp: 'O zeoi2', mean: '惊讶得合不拢嘴，目瞪口呆。', ex: '听到个消息，我当场O晒嘴。' , cantno : 235, cantexno : 2235},
+        { cat: 'comm', slang: '无厘头', newadd: 'New😊', jg: 'mou4 lei4 tau4', mean: '莫名其妙。', ex: '周星驰嘅戏好无厘头，但好好笑。', cantno : 236, cantexno : 2236},
+        { cat: 'comm', slang: '冇尾飞陀', newadd: 'New😊', jp: 'mou5 mei5 fei1 to4', mean: '形容人行踪飘忽，出去后很久不回家或失去联系。', ex: '佢一放假就系冇尾飞陀，搵唔到人。' , cantno : 237, cantexno : 2237},
+        { cat: 'comm', slang: '穿煲', newadd: 'New😊', jp: 'cyun1 bou1', mean: '秘密泄露，露出马脚。', ex: '你个大话讲得太假，好快就穿煲。' , cantno : 238, cantexno : 2238},
+        { cat: 'comm', slang: '爆响口', newadd: 'New😊', jp: 'baau3 hoeng2 hau2', mean: '透露消息，把秘密说出来。', ex: '千祈唔好爆响口话系我讲嘅。' , cantno : 239, cantexno : 2239},
+        { cat: 'comm', slang: '跌眼镜', newadd: 'New😊', jp: 'dit3 ngaan5 geng2', mean: '大失所望，结果出乎意料。', ex: '今次比赛结果令人大跌眼镜。' , cantno : 240, cantexno : 2240},
+        { cat: 'comm', slang: '踢爆', newadd: 'exist', jp: 'tek3 baau3', mean: '把他人的丑事给揭发。', ex: '佢讲大话即刻俾人踢爆咗。' , cantno: 201, cantexno: 2201},
+        { cat: 'comm', slang: '抽水', newadd: 'exist', jp: 'cau1 seoi2', mean: '博懵／博大雾︰趁人不备从中取利，或占女人便宜。', ex: '你讲嘢正经啲，唔好借机抽水。' , cantno: 202, cantexno: 2202},
+        { cat: 'comm', slang: '吹水', newadd: 'exist', jp: 'ceoi1 seoi2', mean: '指闲聊，或者形容他人说话没有凭据，胡说八道。', ex: '唔好信佢啦，佢成日吹水唔抹嘴。' , cantno: 203, cantexno: 2203},
+        { cat: 'comm', slang: '硬食', newadd: 'exist', jp: 'ngaang6 sik6', mean: '无法防御的攻击，迫不得已全部承受。', ex: '呢批货有问题都要硬食，冇得退。' , cantno: 204, cantexno: 2204},
+        { cat: 'comm', slang: '混吉', newadd: 'exist', jp: 'wan6 gat1', mean: '打断别人工作又没带来帮助的无聊行为。', ex: '唔买野就唔好喺度混吉啦，阻住做生意。' , cantno: 205, cantexno: 2205},
+        { cat: 'comm', slang: '扮野', newadd: 'exist', jp: 'baan6 je5', mean: '假装；如装傻、装无知、不懂装作懂等。', ex: '你识就识，唔好喺度扮野。' , cantno: 206, cantexno: 2206},
+        { cat: 'comm', slang: '嘥气', newadd: 'exist', jp: 'saai1 hei3', mean: '浪费气力。', ex: '同佢讲道理真系嘥气。' , cantno: 207, cantexno: 2207},
+        { cat: 'comm', slang: '肉酸', newadd: 'exist', jp: 'juk6 syun1', mean: '即「核突」，不好看，难以入目的意思。', ex: '件衫个颜色配得好肉酸。' , cantno: 208, cantexno: 2208},
+        { cat: 'comm', slang: '孤寒', newadd: 'exist', jp: 'gu1 hon4', mean: '不愿多出分文，吝啬。', ex: '佢好孤寒，请食饭都唔肯。' , cantno: 209, cantexno: 2209},
+        { cat: 'comm', slang: '慢吞吞', newadd: 'exist', jp: 'maan6 tan1 tan1', mean: '形容别人动作或行为缓慢。', ex: '行路慢吞吞，几时先到呀？' , cantno: 210, cantexno: 2210},
+        { cat: 'comm', slang: '淆底', newadd: 'exist', jp: 'ngaau4 dai2', mean: '「缩沙」，临阵退缩，做了亏心事不敢承认责任。', ex: '叫你上台表演啫，唔系咁快淆底呀？' , cantno: 211, cantexno: 2211},
+        { cat: 'comm', slang: '够姜', newadd: 'exist', jp: 'gau3 goeng1', mean: '形容很辣，够胆的意思。', ex: '你够姜就跳过去。' , cantno: 212, cantexno : 2212},
+        { cat: 'comm', slang: '拍心口', newadd: 'exist', jp:'paak3 sam1 hau2' ,mean:'指向人承诺保证做到某事或证实某事。' ,ex:'我拍心口保证一定搞掂。' ,cantno :213,cantexno :2213},
+        { cat: 'comm', slang: '论尽' , newadd: 'exist', jp:'leon6 zeon6' ,mean:'不灵活、动作迟钝。' ,ex:'佢好论尽，成日打烂野。' ,cantno :214,cantexno :2214},
+        { cat: 'comm', slang: '唔嗲唔吊' , newadd: 'exist', jp:'m4 de2 m4 diu3' ,mean:'没心没肺，吊儿郎当的模样。' ,ex:'做野唔嗲唔吊，令人好担心。' ,cantno :215,cantexno :2215},
+        { cat: 'comm', slang: '稳阵' , newadd: 'exist', jp:'wan2 zan6' ,mean:'稳妥。' ,ex:'买楼收租最稳阵。' ,cantno :216,cantexno :2216},
+        { cat: 'comm', slang: '肉紧', newadd: 'exist', jp: 'juk6 gan2', mean: '紧张、投入。', ex: '睇波睇到好肉紧，手心出晒汗。' , cantno: 217, cantexno: 2217},
+        { cat: 'comm', slang: '托手踭', newadd: 'exist', jp: 'tok3 sau2 zang1', mean: '故意为难、不肯帮忙。', ex: '我想叫佢帮手，点知佢托手踭。' , cantno: 218, cantexno: 2218},
+        { cat: 'comm', slang: '话口未完', newadd: 'exist', jp: 'waa6 hau2 mei6 jyun4', mean: '话还没讲完。', ex: '话口未完，佢就到咗。' , cantno: 219, cantexno: 2219},
+        { cat: 'comm', slang: '靠害', newadd: 'exist', jp: 'kaau3 hoi6', mean: '坑人，存心害人。', ex: '你畀假贴士，系咪靠害呀？' , cantno: 220, cantexno: 2220},
+        { cat: 'comm', slang: '一头雾水', newadd: 'exist', jp: 'jat1 tau4 mou6 seoi2', mean: '糊里糊涂；不了解情况。', ex: '听完佢解释，我都系一头雾水。' , cantno: 221, cantexno : 2221},
+        { cat: 'comm', slang: '冇瘾', newadd: 'exist', jp: 'mou5 jan5', mean: '无聊，没意思。', ex: '个个都唔去，真系冇瘾。' , cantno: 222, cantexno: 2222},
+        { cat: 'comm', slang: '讲开又讲', newadd: 'exist', jp: 'gong2 hoi1 jau6 gong2', mean: '顺着在讨论的事延伸，再说另一件相关连的事。', ex: '讲开又讲，你上次单野搞成点？' , cantno: 223, cantexno: 2223},
+        { cat: 'comm', slang: '一天都光晒', newadd: 'exist', jp: 'jat1 tin1 dou1 gwong1 saai3', mean: '问题全解决了，出现大好局面。', ex: '终于还清债，一天都光晒。' , cantno: 224, cantexno: 2224},
+        { cat: 'comm', slang: '好瘀', newadd: 'exist', jp: 'hou2 jyu2', mean: '非常丢脸。', ex: '喺大庭广众跌倒，好瘀呀。' , cantno: 225, cantexno: 2225},
+        { cat: 'comm', slang: '诈傻扮懵', newadd: 'exist', jp: 'zaa3 so4 baan6 mung2', mean: '装疯卖傻。', ex: '你唔好诈傻扮懵，我知道系你做嘅。' , cantno: 226, cantexno: 2226},
+        { cat: 'comm', slang: '叠埋心水', newadd: 'exist', jp: 'dip6 maai4 sam1 seoi2', mean: '意指一心一意。', ex: '你叠埋心水温书啦，唔好挂住去玩。' , cantno: 227, cantexno: 2227},
+        { cat: 'comm', slang: '唔觉意', newadd: 'exist', jp: 'm4 gok3 ji3', mean: '不留心、不小心。', ex: '我唔觉意踩亲你，对唔住。' , cantno: 228, cantexno : 2228},
+        { cat: 'comm', slang: '特登', newadd: 'exist', jp: 'dak6 dang1', mean: '特意、故意。', ex: '我特登买早餐俾你食。' , cantno: 229, cantexno: 2229},
+        { cat: 'comm', slang: '唔经唔觉', newadd: 'exist', jp: 'm4 ging1 m4 gok3', mean: '不知不觉。', ex: '唔经唔觉又过咗一年。' , cantno: 230, cantexno: 2230},
+        { cat: 'comm', slang: '咪走鸡', newadd: 'exist', jp: 'mai5 zau2 gai1', mean: '不要错失良机。', ex: '大减价呀，咪走鸡！' , cantno: 231, cantexno: 2231},
+        { cat: 'comm', slang: '黑仔', newadd: 'exist', jp: 'hak1 zai2', mean: '倒霉。', ex: '今日唔见咗银包，真系黑仔。' , cantno: 232, cantexno: 2232},
+
+        // 3. 日常生活
+        { cat: 'daily', slang: '唔知醒', newadd: 'New😊', jp: 'm4 zi1 seng2', mean: '没醒过来，睡过头了。', ex: '今朝唔知醒，搞到迟到。' ,cantno : 314, cantexno : 3314},
+        { cat: 'daily', slang: 'AA制', newadd: 'New😊', jp: 'AA zai3', mean: '费用平摊，各付各的。', ex: '同事食饭，通常都系AA制。' , cantno : 315, cantexno : 3315},
+        { cat: 'daily', slang: '扣底', newadd: 'New😊', jp: 'kau3 dai2', mean: '（点餐时）减少饭或减少面。', ex: '伙计，叉烧饭扣底，唔该。' , cantno : 316, cantexno : 3316},
+        { cat: 'daily', slang: '走青', newadd: 'New😊', jp: 'zau2 ceng1', mean: '（点餐时）不要葱、香菜等绿色配料。', ex: '碗云吞面要走青。' , cantno : 317, cantexno : 3317},
+        { cat: 'daily', slang: '打边炉', newadd: 'New😊', jp: 'daa2 bin1 lou4', mean: '火锅。', ex: '冬天最适合打边炉。' , cantno : 318, cantexno : 3318},
+        { cat: 'daily', slang: '眼阔肚窄', newadd: 'New😊', jp: 'ngaan5 fut3 tou5 zaak3', mean: '贪多吃不下。', ex: '叫咁多野食又食唔晒，真系眼阔肚窄。' , cantno : 319, cantexno : 3319},
+        { cat: 'daily', slang: '黐餐', newadd: 'New😊', jp: 'ci1 caan1', mean: '去别人家蹭饭吃。', ex: '今晚阿妈唔煮饭，我去你度黐餐。' , cantno : 320, cantexno : 3320},
+        { cat: 'daily', slang: '煲剧', newadd: 'New😊', jp: 'bou1 kek6', mean: '连续长时间追看电视剧。', ex: '放假最钟意喺屋企煲剧。' , cantno : 321, cantexno : 3321},
+        { cat: 'daily', slang: '煲电话粥', newadd: 'New😊', jp: 'bou1 din6 waa2 zuk1', mean: '长时间打电话聊天。', ex: '佢哋成日煲电话粥，不停咁讲。' , cantno : 322, cantexno : 3322},
+        { cat: 'daily', slang: '游车河', newadd: 'New😊', jp: 'daai6 tau4 ho2', mean: '坐车兜风，没有特定目的地。', ex: '得闲坐巴士上山顶游车河，好舒服。' , cantno : 323, cantexno : 3323},
+        { cat: 'daily', slang: 'M记', newadd: 'exist', jp: 'em1 gei3', mean: '麦当劳 McDonald\'s 的俗称。', ex: '肚饿啊，不如去食M记？' , cantno: 301, cantexno: 3301},
+        { cat: 'daily', slang: '七仔', newadd: 'exist', jp: 'cat1 zai2', mean: '7-ELEVEN 便利店的俗称。', ex: '我去七仔买支水饮。' , cantno: 302, cantexno: 3302},
+        { cat: 'daily', slang: '拗柴', newadd: 'exist', jp: 'aau2 caai4', mean: '拉伤筋骨、肌肉。', ex: '打波小心啲，好易拗柴。' , cantno: 303, cantexno: 3303},
+        { cat: 'daily', slang: '乸脷', newadd: 'exist', jp: 'naa2 lei6', mean: '高昂。', ex: '呢餐饭好乸脷，成千蚊一位。' , cantno: 304, cantexno: 3304},
+        { cat: 'daily', slang: '身光颈靓', newadd: 'exist', jp: 'san1 gwong1 geng2 leng3', mean: '形容人衣着光鲜。', ex: '着到身光颈靓，去饮呀？' , cantno: 305, cantexno: 3305},
+        { cat: 'daily', slang: '甩皮甩骨', newadd: 'exist', jp: 'lat1 pei4 lat1 gwat1', mean: '残缺不全，不完整。', ex: '架车撞到甩皮甩骨，整返都好贵。' , cantno: 306, cantexno : 3306},
+        { cat: 'daily', slang: '唔就脚', newadd: 'exist', jp: 'm4 zau6 goek3', mean: '交通不太方便。', ex: '呢间餐厅好唔就脚，要转几次车。' , cantno: 307, cantexno: 3307},
+        { cat: 'daily', slang: '放飞机', newadd: 'exist', jp: 'fong3 fei1 gei1', mean: '指爽约或失信行为，即答应了某事却没有兑现或赴约。', ex: '约好咗睇戏，点知佢放我飞机。' , cantno: 308, cantexno: 3308},
+        { cat: 'daily', slang: '食夜粥', newadd: 'exist', jp: 'sik6 je6 zuk1', mean: '练武术，学功夫。', ex: '佢食过夜粥，好打得架。' , cantno: 309, cantexno: 3309},
+        { cat: 'daily', slang: '嫌钱腥', newadd: 'exist', jp: 'jim4 cin2 seng1', mean: '形容人不重视钱财。', ex: '有钱都唔赚，你嫌钱腥呀？' , cantno: 310, cantexno: 3310},
+        { cat: 'daily', slang: '碌卡', newadd: 'exist', jp: 'luk1 kaat1', mean: '刷卡。', ex: '现金唔够，可唔可以碌卡？' , cantno: 311, cantexno: 3311},
+        { cat: 'daily', slang: '易过借火', newadd: 'exist', jp: 'ji6 gwo3 ze3 fo2' , mean: '形容所办的事轻而易举。' , ex:'考试合格易过借火啦。' , cantno: 312, cantexno : 3312},
+        { cat: 'daily', slang: '今时唔同往日' , newadd: 'exist', jp: 'gam1 si4 m4 tung4 wong5 jat6' , mean: '现在和以前不一样了，今非昔比的意思。' , ex: '今时唔同往日，佢已经系大老板啦。' , cantno : 313, cantexno : 3313},
+        
+        // 4. 谚语
+        { cat: 'proverb', slang: '禾秆冚珍珠' , newadd: 'New😊', jp:'wo4 gon2 kam2 zan1 zyu1' , mean:'禾草盖住珍珠。比喻深藏不露，有财不外露。' , ex:'佢平时好低调，原来系隐形富豪，真系禾秆冚珍珠。' , cantno : 416, cantexno : 4416},
+        { cat: 'proverb', slang: '扮猪食老虎' , newadd: 'New😊', jp:'baan6 zyu1 sik6 lou5 fu2' , mean:'装傻充愣来算计别人。' , ex:'佢平时唔出声，原来系扮猪食老虎。' , cantno : 417, cantexno : 4417},
+        { cat: 'proverb', slang: '好心着雷劈' , newadd: 'New😊', jp:'hou2 sam1 zoek6 leoi4 pek3' , mean:'好心没好报。' , ex:'我帮佢反而俾佢闹，真系好心着雷劈。' , cantno : 418, cantexno : 4418},
+        { cat: 'proverb', slang: '各花入各眼', newadd: 'New😊', jp: 'gok3 faa1 jap6 gok3 ngaan5', mean: '萝卜青菜，各有所爱。', ex: '佢觉得靓就得啦，各花入各眼嘛。', cantno : 419, cantexno : 4419 },
+        { cat: 'proverb', slang: '偷雞唔到蝕揸米', newadd: 'New😊', jp: "tau1 gai1 m4 dou2 sit6 zaa1 mai5", mean: '比喻不单拿不到便宜、反而吃亏了。', ex: '佢想呃人钱，点知偷雞唔到蝕揸米，连本金都赔埋。', cantno : 420, cantexno : 4420},
+        { cat: 'proverb', slang: '畫公仔畫出腸', newadd: 'New😊', jp: "waak6 gung1 zai2 waak6 ceot1 coeng2", mean: '说话露骨；或者指揭示细节内幕。', ex: '大家心照就得，唔使畫公仔畫出腸。', cantno : 421, cantexno : 4421 },
+        { cat: 'proverb', slang: '食碗底反碗面', newadd: 'New😊', jp: "sik6 wun2 dai2 faan2 wun2 min2", mean: '忘恩负义，不仁不义。', ex: '公司对佢咁好，佢竟然食碗底反碗面。', cantno : 422, cantexno : 4422 },
+        { cat: 'proverb', slang: '擘大口个得個窿', newadd: 'New😊', jp: "maak3 daai6 go3 hau2 dak1 go3 lung1", mean: '又叫O嘴，比喻哑口无言；或者无言以对。', ex: '听到个消息，大家都擘大个口得個窿。', cantno : 423, cantexno : 4423 },
+        { cat: 'proverb', slang: '十划未有一撇', newadd: 'exist', jp: 'sap6 waak6 mei6 jau5 jat1 pit3', mean: '事情刚刚开始，毫无眉目，要做的还有很多。', ex: '个计划十划未有一撇，迟啲先讲啦。' , cantno: 401, cantexno: 4401},
+        { cat: 'proverb', slang: '大鸡唔食细米', newadd: 'exist', jp: 'daai6 gai1 m4 sik6 sai3 mai5', mean: '大人物唔做小事；或者大商家唔做小生意。', ex: '佢系大老板，大鸡唔食细米，呢啲细生意佢唔做嘅。' , cantno: 402, cantexno: 4402},
+        { cat: 'proverb', slang: '山大斩埋有柴', newadd: 'exist', jp: 'saan1 daai6 zaam2 maai4 jau5 caai4', mean: '每椿收获唔多，但系积聚起来就好多。', ex: '虽然而家赚得少，但山大斩埋有柴。' , cantno: 403, cantexno: 4403},
+        { cat: 'proverb', slang: '手板眼见工夫', newadd: 'exist', jp: 'sau2 baan2 ngaan5 gin3 gung1 fu1', mean: '比喻工作范围细，工作容易。', ex: '洗碗扫地呢啲手板眼见工夫，好易做啫。' , cantno: 404, cantexno: 4404},
+        { cat: 'proverb', slang: '有咁啱得咁跷', newadd: 'exist', jp: 'jau5 gam3 ngaam1 dak1 gam3 kiu2', mean: '太巧合，太意外。', ex: '有咁啱得咁跷，我都系去嗰度旅行。' , cantno: 405, cantexno: 4405},
+        { cat: 'proverb', slang: '有头威冇尾阵', newadd: 'exist', jp: 'jau5 tau4 wai1 mou5 mei5 zan6', mean: '虎头蛇尾，有始没终。', ex:'佢做野成日有头威冇尾阵，信唔过。' , cantno : 406, cantexno : 4406},
+        { cat: 'proverb', slang: '行得正企得正', newadd: 'exist', jp: 'haang4 dak1 zing3 kei5 dak1 zing3', mean: '做人、行为光明正大。', ex: '我行得正企得正，怕咩人讲闲话？' , cantno: 407, cantexno: 4407},
+        { cat: 'proverb', slang: '周身刀冇把利', newadd: 'exist', jp: 'zau1 san1 dou1 mou5 baa2 lei6', mean: '比喻没有一技之长。', ex: '学咁多野有咩用，周身刀冇把利。' , cantno: 408, cantexno: 4408},
+        { cat: 'proverb', slang: '珍珠都冇咁真' , newadd: 'exist', jp:'zan1 zyu1 dou1 mou5 gam3 zan1' , mean:'真正是这样的。' , ex:'我讲嘅野珍珠都冇咁真，你可以去查。' , cantno : 409, cantexno : 4409},
+        { cat: 'proverb', slang: '相请不如偶遇' , newadd: 'exist', jp:'soeng1 ceng2 bat1 jyu4 ngau5 jyu6' , mean:'表示好客。' , ex:'既然见到，不如一齐食饭，相请不如偶遇。' , cantno : 410, cantexno : 4410},
+        { cat: 'proverb', slang: '买棺材唔知埞' , newadd: 'exist', jp:'maai5 gun1 coi4 m4 zi1 deng6' , mean:'行为将会引起好大危险，而本人就意识唔到。' , ex:'你得罪恶霸，真系买棺材唔知埞。' , cantno : 411, cantexno : 4411},
+        { cat: 'proverb', slang: '搞出个大头佛' , newadd: 'exist', jp:'gaau2 ceot1 go3 daai6 tau4 fat6' , mean:'闯祸；或者惹了麻烦。' , ex:'你乱咁搞，搞出个大头佛点算？' , cantno : 412, cantexno : 4412},
+        { cat: 'proverb', slang: '打烂沙盆问到笃', newadd: 'exist', jp: 'daa2 laan6 saa1 pun4 man6 dou3 duk1', mean: '一直问到底。', ex: '你唔好成日打烂沙盆问到笃啦，好烦呀。' , cantno : 413, cantexno : 4413},
+        { cat: 'proverb', slang: '好眉好貌生沙虱' , newadd: 'exist', jp:'hou2 mei4 hou2 maau6 saang1 saa1 sat1' , mean:'生得一副好容貌，但系本性就坏。' , ex:'睇佢斯斯文文，原来好眉好貌生沙虱。' , cantno : 414, cantexno : 4414},
+        { cat: 'proverb', slang: '着起龙袍都唔似太子' , newadd: 'exist', jp:'zoek3 hei2 lung4 pou4 dou1 m4 ci5 taai3 zi2' , mean:'讽刺人不理怎样包装都不象样。' , ex:'佢举止粗鲁，着起龙袍都唔似太子。' , cantno : 415, cantexno : 4415}
+    
+    ];
+
+    const grid = document.getElementById('contentGrid');
+
+    function filterData(category, btnElement) {
+        // 更新按钮状态
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        if(btnElement) btnElement.classList.add('active');
+
+        // 筛选数据
+        const filtered = category === 'all' ? data : data.filter(item => item.cat === category);
+        
+        // 清空并重新生成
+        grid.innerHTML = '';
+        filtered.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.setAttribute('data-cat', item.cat);
+            if (item.newadd === '' || item.newadd === 'exist') {
+            card.innerHTML = `
+                <div class="slang-header">
+                    <span class="slang-word">${item.slang}</span>
+                </div>
+                <span class="jyutping">${item.jp}</span>
+                <div class="meaning">${item.mean}</div>
+                <div class="example-box">
+                    <span class="ex-label">粤语例句：</span>
+                    <span class="ex-text">${item.ex}</span>
+                    <div class="audio-controls">
+                    <button class="play-btn" onclick="playAudio(this,'proverb',${item.cantno})">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 读词
+                    </button>
+                        <button class="play-btn" onclick="playAudio(this,'proverb',${item.cantexno})">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 读例句
+                        </button>
+                    </div>
+                </div>
+            `;
+            }
+            else {
+            card.innerHTML = `
+                <div class="slang-header">
+                    <span class="slang-word">${item.slang}</span>
+                    <span class="new-drop-badge">${item.newadd}</span>
+                </div>
+                <span class="jyutping">${item.jp}</span>
+                <div class="meaning">${item.mean}</div>
+                <div class="example-box">
+                    <span class="ex-label">粤语例句：</span>
+                    <span class="ex-text">${item.ex}</span>
+                    <div class="audio-controls">
+                    <button class="play-btn" onclick="playAudio(this,'proverb',${item.cantno})">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 读词
+                    </button>
+                        <button class="play-btn" onclick="playAudio(this,'proverb',${item.cantexno})">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 读例句
+                        </button>
+                    </div>
+                </div>
+            `;
+            }
+            grid.appendChild(card);
+        });
+        //Scroll to top
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // 默认加载全部
+    filterData('all', document.querySelector('.filter-btn.active'));
+
+</script>
+
+<script src="js/playAudio.js" defer></script>
+
+<script src="js/navBar.js" defer></script>
+
+</body></html>
