@@ -3,6 +3,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>粤语职场会议</title>
     <style>
+        /* 默认浅色模式变量 */
         :root {
             --bg-body: #f4f6f8;
             --bg-card: #ffffff;
@@ -10,17 +11,53 @@
             --text-sub: #718096;
             --border-color: #e2e8f0;
             --accent-color: #5a67d8;
+            --accent-hover: #4c51bf;
             --playing-highlight: #fff9c4;
+            --playing-border: #f6e05e;
             --btn-bg: #edf2f7;
             --btn-hover: #e2e8f0;
+            --status-bg: #f7fafc;
             
-            /* 角色颜色 */
+            /* 角色颜色 (浅色模式) */
             --apple-bg: #e3f2fd;
             --apple-border: #90caf9;
+            --apple-accent: #2196f3;
+            
             --emma-bg: #f3e5f5;
             --emma-border: #ce93d8;
+            --emma-accent: #9c27b0;
+            
             --noah-bg: #e8f5e9;
             --noah-border: #a5d6a7;
+            --noah-accent: #4caf50;
+        }
+
+        /* 深色模式适配 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-body: #1a202c;
+                --bg-card: #2d3748;
+                --text-main: #f7fafc;
+                --text-sub: #a0aec0;
+                --border-color: #4a5568;
+                --accent-color: #7f9cf5;
+                --accent-hover: #667eea;
+                --playing-highlight: #443c16; /* 深黄色背景 */
+                --playing-border: #d69e2e;
+                --btn-bg: #4a5568;
+                --btn-hover: #2d3748;
+                --status-bg: #2d3748;
+
+                /* 角色颜色 (深色模式 - 降低亮度与饱和度以适应深底) */
+                --apple-bg: rgba(33, 150, 243, 0.15);
+                --apple-border: #1e88e5;
+                
+                --emma-bg: rgba(156, 39, 176, 0.15);
+                --emma-border: #8e24aa;
+                
+                --noah-bg: rgba(76, 175, 80, 0.15);
+                --noah-border: #43a047;
+            }
         }
 
         body {
@@ -30,6 +67,7 @@
             margin: 0;
             padding: 20px;
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -40,6 +78,7 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             padding: 30px;
             border: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         header {
@@ -62,6 +101,7 @@
             background: var(--bg-card);
             padding: 10px 0;
             border-bottom: 1px solid transparent;
+            transition: background-color 0.3s;
         }
 
         .main-btn {
@@ -71,14 +111,14 @@
             padding: 8px 16px;
             border-radius: 6px;
             cursor: pointer;
+            font-size: 0.9rem;
             font-weight: 600;
             transition: all 0.2s;
-            font-size: 0.9rem;
         }
 
         .main-btn:hover {
             background-color: var(--accent-color);
-            color: white;
+            color: var(--bg-card); /* 反转颜色 */
         }
 
         /* 列表样式 */
@@ -90,12 +130,12 @@
             padding: 12px 16px;
             border-radius: 8px;
             border-left: 5px solid transparent;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .message-row.playing {
             background-color: var(--playing-highlight) !important;
-            border-left-color: var(--accent-color) !important;
+            border-left-color: var(--playing-border) !important;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
@@ -110,7 +150,7 @@
             font-size: 1rem;
             font-weight: 700;
             text-transform: uppercase;
-            opacity: 0.8;
+            opacity: 0.9;
         }
 
         /* 播放按钮 */
@@ -118,7 +158,7 @@
             background-color: var(--btn-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 8px 12px;
+            padding: 6px 12px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.9rem;
@@ -136,12 +176,24 @@
         }
 
         /* 角色配色 */
-        .role-Apple { background-color: var(--apple-bg); border: 1px solid var(--apple-border); border-left: 5px solid #2196f3; }
-        .role-Emma { background-color: var(--emma-bg); border: 1px solid var(--emma-border); border-left: 5px solid #9c27b0; }
-        .role-Noah { background-color: var(--noah-bg); border: 1px solid var(--noah-border); border-left: 5px solid #4caf50; }
+        .role-Apple { 
+            background-color: var(--apple-bg); 
+            border: 1px solid var(--apple-border); 
+            border-left: 5px solid var(--apple-accent); 
+        }
+        .role-Emma { 
+            background-color: var(--emma-bg); 
+            border: 1px solid var(--emma-border); 
+            border-left: 5px solid var(--emma-accent); 
+        }
+        .role-Noah { 
+            background-color: var(--noah-bg); 
+            border: 1px solid var(--noah-border); 
+            border-left: 5px solid var(--noah-accent); 
+        }
 
         .text-content { font-size: 1.05rem; }
-        .en-term { font-weight: 600; }
+        .en-term { font-weight: 600; opacity: 0.9; }
 
         .status-bar {
             margin-top: 20px;
@@ -149,11 +201,15 @@
             color: var(--text-sub);
             text-align: right;
             padding: 10px;
-            background: #f7fafc;
+            background: var(--status-bg);
             border-radius: 4px;
+            border: 1px solid var(--border-color);
         }
         
         .error-msg { color: #e53e3e; }
+        @media (prefers-color-scheme: dark) {
+            .error-msg { color: #fc8181; }
+        }
     </style>
 </head>
 <body>
@@ -179,12 +235,12 @@
     const scriptData = [
         { id: 1, role: "Apple", text: "大家早晨，今日个 agenda 好简单，主要系想倾下今年个圣诞 party 点搞，大家有冇咩 update？" },
         { id: 2, role: "Emma", text: "有嘅。我哋今年想 book 个酒店宴会厅，搞唱 K 晚会。" },
-        { id: 6, role: "Noah", text: "个 idea 系好，不过今年公司个预算 cut 咗 30%，唔够钱租宴会厅，而且可能唔系咁多同事钟意唱 K。" },
-        { id: 8, role: "Apple", text: "系啰，Noah 讲得啱。最紧要大家开心，同埋唔好 over budget。" },
-        { id: 9, role: "Emma", text: "咁... 不如今年喺公司搞？叫到会啦。大家仲可以玩下游戏。" },
-        { id: 10, role: "Apple", text: "呢个 idea 好好，就咁决定。Emma 你负责游戏嗰 part 同 check 下12月中边日搞好啲。Noah 你就负责 catering 同帮手整个 rundown，听日放工前 send 俾我睇睇。" },
-        { id: 11, role: "Noah", text: "OK，我同 Emma 夹下，听日放工前俾个 draft 你。" },
-        { id: 14, role: "Apple", text: "好，唔该晒大家，冇嘢就散会。" }
+        { id: 3, role: "Noah", text: "个 idea 系好，不过今年公司个预算 cut 咗 30%，唔够钱租宴会厅，而且可能唔系咁多同事钟意唱 K。" },
+        { id: 4, role: "Apple", text: "系啰，Noah 讲得啱。最紧要大家开心，同埋唔好 over budget。" },
+        { id: 5, role: "Emma", text: "咁... 不如今年喺公司搞？叫到会啦。大家仲可以玩下游戏。" },
+        { id: 6, role: "Apple", text: "呢个 idea 好好，就咁决定。Emma 你负责游戏嗰 part 同 check 下12月中边日搞好啲。Noah 你就负责 catering 同帮手整个 rundown，听日放工前 send 俾我睇睇。" },
+        { id: 7, role: "Noah", text: "OK，我同 Emma 夹下，听日放工前俾个 draft 你。" },
+        { id: 8, role: "Apple", text: "好，唔该晒大家，冇嘢就散会。" }
     ];
 
     // 全局音频对象
@@ -237,16 +293,15 @@
         currentAudio.pause();
         currentAudio.currentTime = 0;
 
-        // 构造文件路径：假设文件在 mp3 文件夹下，命名为 1.mp3, 2.mp3...
-        // 你可以根据实际情况修改这里的路径逻辑
+        // 构造文件路径
         const fileIndex = index + 1; 
         const audioPath = `https://cantogo.github.io/voice/meeting_1-${fileIndex}.mp3`; 
 
         currentAudio.src = audioPath;
         
-        // 监听加载错误（例如文件不存在）
+        // 监听加载错误
         currentAudio.onerror = () => {
-            updateStatus(`❌ 错误：找不到文件 ${audioPath}。请检查文件路径。`, true);
+            updateStatus(`❌ 错误：找不到文件 ${audioPath}`, true);
             highlightMessage(null);
             isPlayingAll = false;
         };
@@ -261,7 +316,7 @@
             updateStatus(`正在播放: ${audioPath}`);
         }).catch(e => {
             console.error(e);
-            updateStatus(`❌ 播放失败: 浏览器可能阻止了自动播放，或文件格式错误。`, true);
+            updateStatus(`❌ 播放失败: 请检查文件或浏览器设置`, true);
         });
     }
 
@@ -294,7 +349,6 @@
         highlightMessage(currentIndex);
         
         playAudioFile(currentIndex, () => {
-            // 当前这句播完后，延迟一小会儿播下一句
             currentIndex++;
             setTimeout(playNext, 500);
         });
