@@ -358,7 +358,7 @@
 
         // 开始播放
         currentAudio.play().then(() => {
-            updateStatus(`正在播放...`);
+            updateStatus(`正在播放 ...`);
         }).catch(e => {
             console.error(e);
             updateStatus(`❌ 播放失败: 请检查文件或浏览器设置`, true);
