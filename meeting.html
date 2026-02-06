@@ -17,6 +17,8 @@
             --btn-bg: #edf2f7;
             --btn-hover: #e2e8f0;
             --status-bg: #f7fafc;
+            --accent: #0ea5e9;
+            --accent-hover: #0ea5e9;
             
             /* 角色颜色 (浅色模式) */
             --apple-bg: #e3f2fd;
@@ -47,6 +49,8 @@
                 --btn-bg: #4a5568;
                 --btn-hover: #2d3748;
                 --status-bg: #2d3748;
+                --accent: #4da3ff;
+                --accent-hover: #7bb8ff;
 
                 /* 角色颜色 (深色模式 - 降低亮度与饱和度以适应深底) */
                 --apple-bg: rgba(33, 150, 243, 0.15);
@@ -68,6 +72,14 @@
             padding: 20px;
             line-height: 1.6;
             transition: background-color 0.3s, color 0.3s;
+        }
+
+        a {
+            color: var(--accent);
+        }
+
+        a:hover {
+            color: var(--accent-hover);
         }
 
         .container {
