@@ -100,7 +100,7 @@
         }
 
         h1 { font-size: 1.65rem; margin: 0 0 5px 0; }
-        p.subtitle { margin: 0, 5px, 0 0; font-size: 1.45rem; }
+        p.subtitle { margin: 0, 5px, 0 0; font-size: 1.35rem; }
 
         /* 控制区 */
         .global-controls {
@@ -161,7 +161,6 @@
         .role-label {
             font-size: 1rem;
             font-weight: 700;
-            text-transform: uppercase;
             opacity: 0.9;
         }
 
@@ -289,14 +288,14 @@
 <script>
     // 脚本数据
     const scriptData = [
-        { id: 1, role: "Apple", text: "大家早晨，今日个 agenda 好简单，主要系想倾下今年个圣诞 party 点搞，大家有冇咩 update？" },
-        { id: 2, role: "Emma", text: "有嘅。我哋今年想 book 个酒店宴会厅，搞唱 K 晚会。" },
-        { id: 3, role: "Noah", text: "呢个主意系好，不过今年公司个预算 cut 咗 30%，应该唔够钱租宴会厅。" },
-        { id: 4, role: "Apple", text: "其实都唔一定要搞得好隆重，最紧要大家开心，同埋唔好 over budget。" },
-        { id: 5, role: "Emma", text: "咁... 不如今年喺公司搞？叫到烩啦。大家仲可以玩下游戏。" },
-        { id: 6, role: "Apple", text: "呢个 idea 好好，就咁决定。Emma 你负责游戏嗰 part 同 check 下十二月中边日搞好啲。Noah 你就负责 catering 同帮手整个 rundown，听日放工前用 email send 俾我睇睇。" },
-        { id: 7, role: "Noah", text: "OK，我同 Emma 夹下，听日放工前俾你。" },
-        { id: 8, role: "Apple", text: "好，唔该晒大家。仲有提提大家搞 party 用咗嘅钱记得要 keep 返晒啲单，之后 claim 返钱。如果冇其他嘢，今日个会就开到呢度。" }
+        { id: 1, role: "Apple", jobtitle: "Head", text: "大家早晨，今日个 agenda 好简单，主要系想倾下今年个圣诞 party 点搞，大家有冇咩 update？" },
+        { id: 2, role: "Emma", jobtitle: "Admin", text: "有嘅。我哋今年想 book 个酒店宴会厅，搞唱 K 晚会。" },
+        { id: 3, role: "Noah", jobtitle: "Finance", text: "呢个主意系好，不过今年公司个预算 cut 咗 30%，应该唔够钱租宴会厅。" },
+        { id: 4, role: "Apple", jobtitle: "Head", text: "其实都唔一定要搞得好隆重，最紧要大家开心，同埋唔好 over budget。" },
+        { id: 5, role: "Emma", jobtitle: "Admin", text: "咁... 不如今年喺公司搞？叫到烩啦。大家仲可以玩下游戏。" },
+        { id: 6, role: "Apple", jobtitle: "Head", text: "呢个 idea 好好，就咁决定。Emma 你负责游戏嗰 part 同 check 下十二月中边日搞好啲。Noah 你就负责 catering 同帮手整个 rundown，听日放工前用 email send 俾我睇睇。" },
+        { id: 7, role: "Noah", jobtitle: "Finance", text: "OK，我同 Emma 夹下，听日放工前俾你。" },
+        { id: 8, role: "Apple", jobtitle: "Head", text: "好，唔该晒大家。仲有提提大家搞 party 用咗嘅钱记得要 keep 返晒啲单，之后 claim 返钱。如果冇其他嘢，今日个会就开到呢度。" }
     ];
 
     // 全局音频对象
@@ -312,7 +311,7 @@
             return `
             <div class="message-row role-${line.role}" id="msg-${index}">
                 <div class="msg-header">
-                    <span class="role-label">${line.role}</span>
+                    <span class="role-label">${line.role} [${line.jobtitle}] :</span>
                     <button class="mini-play-btn" onclick="playSingleLine(${index})">
                         🔊 播放
                     </button>
