@@ -32,6 +32,12 @@
             --role3-bg: #e8f5e9;
             --role3-border: #a5d6a7;
             --role3-accent: #4caf50;
+            
+            /* 菜单配色 */
+            --menu-btn-border: #805ad5;
+            --menu-btn-text: #805ad5;
+            --menu-bg: #ffffff;
+            --menu-hover: #f3f0ff;
         }
 
         /* 深色模式适配 */
@@ -61,6 +67,12 @@
                 
                 --role3-bg: rgba(76, 175, 80, 0.15);
                 --role3-border: #43a047;
+
+                /* 菜单配色 */
+                --menu-btn-border: #b794f4; 
+                --menu-btn-text: #b794f4;
+                --menu-bg: #2d3748; 
+                --menu-hover: #44337a;
             }
         }
 
@@ -120,7 +132,7 @@
             background-color: var(--bg-card);
             border: 2px solid var(--accent-color);
             color: var(--accent-color);
-            padding: 8px 16px;
+            padding: 6px 8px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.9rem;
@@ -146,7 +158,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            /*gap: 6px;*/
         }
         
         .menu-btn:hover { background-color: var(--menu-btn-border); color: white; }
@@ -174,13 +186,13 @@
             font-size: 0.9rem;
             border-bottom: 1px solid var(--border-color);
             transition: background 0.2s;
-            text-align: left;
+            text-align: right;
         }
         .menu-item:last-child { border-bottom: none; }
         .menu-item:hover { background-color: var(--menu-hover); }
         .menu-item strong { display: block; margin-bottom: 2px; }
         .menu-item span { font-size: 0.8rem; color: var(--text-sub); }
-        
+
         /* 列表样式 */
         .chat-list { display: flex; flex-direction: column; gap: 16px; }
 
