@@ -169,7 +169,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /*gap: 6px;*/
         }
         
         /* Hover 效果，保持原色 */
@@ -274,17 +273,17 @@
         }
 
         /* 角色配色 */
-        .role-Apple { 
+        .role-person1 { 
             background-color: var(--role1-bg); 
             border: 1px solid var(--role1-border); 
             border-left: 5px solid var(--role1-accent); 
         }
-        .role-Emma { 
+        .role-person2 { 
             background-color: var(--role2-bg); 
             border: 1px solid var(--role2-border); 
             border-left: 5px solid var(--role2-accent); 
         }
-        .role-Noah { 
+        .role-person3 { 
             background-color: var(--role3-bg); 
             border: 1px solid var(--role3-border); 
             border-left: 5px solid var(--role3-accent); 
@@ -391,14 +390,14 @@
 <script>
     // 脚本数据
     const scriptData = [
-        { id: 1, role: "Apple", jobtitle: "Head", text: "大家早晨，今日个 agenda 好简单，主要系想倾下今年个联欢晚会点搞，大家有冇咩 update？" },
-        { id: 2, role: "Emma", jobtitle: "Admin", text: "有嘅。我哋今年想 book 个酒店宴会厅，搞唱 K 晚会。" },
-        { id: 3, role: "Noah", jobtitle: "Finance", text: "呢个主意系好，不过今年公司个预算 cut 咗 30%，应该唔够钱租宴会厅。" },
-        { id: 4, role: "Apple", jobtitle: "Head", text: "其实都唔一定要搞得好隆重，最紧要大家开心，同埋唔好 over budget。" },
-        { id: 5, role: "Emma", jobtitle: "Admin", text: "咁... 不如今年喺公司搞？叫到烩啦。大家仲可以玩下游戏。" },
-        { id: 6, role: "Apple", jobtitle: "Head", text: "呢个 idea 好好，就咁决定。Emma 你负责游戏嗰 part。Noah 你就负责 catering 同帮手整个 rundown，听日放工前用 email send 俾我睇睇。" },
-        { id: 7, role: "Noah", jobtitle: "Finance", text: "OK，我同 Emma 夹下，听日放工前俾你。" },
-        { id: 8, role: "Apple", jobtitle: "Head", text: "好，唔该晒大家。仲有提提大家搞 party 用咗嘅钱记得要 keep 返晒啲单，之后 claim 返钱。如果冇其他嘢，今日个会就开到呢度。" }
+        { id: 1, scene: "1", role: "1", name: "Apple", jobtitle: "Head", text: "大家早晨，今日个 agenda 好简单，主要系想倾下今年个联欢晚会点搞，大家有冇咩 update？" },
+        { id: 2, scene: "1", role: "2", name: "Emma", jobtitle: "Admin", text: "有嘅。我哋今年想 book 个酒店宴会厅，搞唱 K 晚会。" },
+        { id: 3, scene: "1", role: "3", name: "Noah", jobtitle: "Finance", text: "呢个主意系好，不过今年公司个预算 cut 咗 30%，应该唔够钱租宴会厅。" },
+        { id: 4, scene: "1", role: "1", name: "Apple", jobtitle: "Head", text: "其实都唔一定要搞得好隆重，最紧要大家开心，同埋唔好 over budget。" },
+        { id: 5, scene: "1", role: "2", name: "Emma", jobtitle: "Admin", text: "咁... 不如今年喺公司搞？叫到烩啦。大家仲可以玩下游戏。" },
+        { id: 6, scene: "1", role: "1", name: "Apple", jobtitle: "Head", text: "呢个 idea 好好，就咁决定。Emma 你负责游戏嗰 part。Noah 你就负责 catering 同帮手整个 rundown，听日放工前用 email send 俾我睇睇。" },
+        { id: 7, scene: "1", role: "3", name: "Noah", jobtitle: "Finance", text: "OK，我同 Emma 夹下，听日放工前俾你。" },
+        { id: 8, scene: "1", role: "1", name: "Apple", jobtitle: "Head", text: "好，唔该晒大家。仲有提提大家搞 party 用咗嘅钱记得要 keep 返晒啲单，之后 claim 返钱。如果冇其他嘢，今日个会就开到呢度。" }
     ];
 
     // 全局音频对象
@@ -422,9 +421,9 @@
         container.innerHTML = scriptData.map((line, index) => {
             const formattedText = line.text.replace(/([a-zA-Z\s\-]+)/g, '<span class="en-term">$1</span>');
             return `
-            <div class="message-row role-${line.role}" id="msg-${index}">
+            <div class="message-row role-person${line.role}" id="msg-${index}">
                 <div class="msg-header">
-                    <span class="role-label">${line.role} [${line.jobtitle}] :</span>
+                    <span class="role-label">${line.name} [${line.jobtitle}] :</span>
                     <button class="mini-play-btn" onclick="playSingleLine(${index})">
                         🔊 播放
                     </button>
