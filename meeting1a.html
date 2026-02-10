@@ -11,14 +11,14 @@
             --text-sub: #4e6383;
             --border-color: #e2e8f0;
             --accent-color: #5a67d8;
-            --accent-hover: #4c51bf;
             --playing-highlight: #fff9c4;
             --playing-border: #f6e05e;
             --btn-bg: #edf2f7;
             --btn-hover: #e2e8f0;
             --status-bg: #f7fafc;
-            --accent: #0ea5e9;
-            --accent-hover: #0ea5e9;
+
+            --accent: #4da3ff;
+            --accent-hover: #7bb8ff;
             
             /* 角色颜色 (浅色模式) */
             --role1-bg: #e3f2fd;
@@ -49,14 +49,14 @@
                 --text-sub: #b8c0c9;
                 --border-color: #4a5568;
                 --accent-color: #7f9cf5;
-                --accent-hover: #667eea;
                 --playing-highlight: #443c16; /* 深黄色背景 */
                 --playing-border: #d69e2e;
                 --btn-bg: #4a5568;
                 --btn-hover: #2d3748;
                 --status-bg: #2d3748;
-                --accent: #4da3ff;
-                --accent-hover: #7bb8ff;
+
+                --accent: #0ea5e9;
+                --accent-hover: #0ea5e9;
 
                 /* 角色颜色 (深色模式 - 降低亮度与饱和度以适应深底) */
                 --role1-bg: rgba(33, 150, 243, 0.15);
@@ -204,7 +204,7 @@
             z-index: 100;
         }
         
-        .menu-dropdown.show { display: flex; animation: fadeIn 0.2s ease; }
+        .menu-dropdown.show { display: flex; animation: fadeIn 0.1s ease; }
 
         .menu-item {
             padding: 12px 16px;
@@ -216,11 +216,11 @@
         }
         .menu-item:last-child { border-bottom: none; }
         .menu-item:hover { background-color: var(--menu-hover); }
-        .menu-item strong { display: block; margin-bottom: 2px; }
-        .menu-item span { font-size: 0.8rem; color: var(--text-sub); }
+/*        .menu-item strong { display: block; margin-bottom: 2px; }
+        .menu-item span { font-size: 0.8rem; color: var(--text-sub); }*/
 
         /* 列表样式 */
-        .chat-list { display: flex; flex-direction: column; gap: 16px; }
+        .chat-list { display: flex; flex-direction: column; gap: 20px; }
 
         .message-row {
             display: flex;
