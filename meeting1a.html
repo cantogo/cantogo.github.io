@@ -88,6 +88,7 @@
 
         a {
             color: var(--accent);
+            text-decoration: none;
         }
 
         a:hover {
@@ -155,13 +156,29 @@
         .menu-btn {
             border-color: var(--menu-btn-border);
             color: var(--menu-btn-text);
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
             /*gap: 6px;*/
         }
         
-        .menu-btn:hover { background-color: var(--menu-btn-border); color: white; }
+        /*.menu-btn:hover { background-color: var(--menu-btn-border); color: white; }*/
+
+        /* 箭頭圖標樣式 */
+        .arrow-icon {
+            font-size: 1rem;
+            transition: transform 0.3s ease; /* 平滑旋轉動畫 */
+            display: inline-block;
+        }
+        
+        /* 當按鈕有 active 類時（菜單打開），箭頭旋轉 180 度 */
+        .menu-btn.active .arrow-icon {
+            transform: rotate(180deg);
+        }
 
         .menu-dropdown {
             position: absolute;
@@ -341,8 +358,9 @@
 
         <!-- 新增菜单区域 -->
         <div class="menu-wrapper">
-            <button class="main-btn menu-btn" onclick="toggleMenu(event)">
-                <span>📂 场景菜单</span>
+            <button class="main-btn menu-btn" id="menuBtn" onclick="toggleMenu(event)">
+                <span>场景菜单&nbsp;</span>
+                <span class="arrow-icon">▼</span>
             </button>
             <div class="menu-dropdown" id="menuDropdown">
                 <div class="menu-item">
@@ -379,10 +397,13 @@
     let currentIndex = 0;
 
     // 点出菜单
-    function toggleMenu(e) {
+        function toggleMenu(e) {
         e.stopPropagation();
         const menu = document.getElementById('menuDropdown');
+        const btn = document.getElementById('menuBtn');
+        
         menu.classList.toggle('show');
+        btn.classList.toggle('active'); // 切換 active 類來控制箭頭旋轉
     }
 
     // 渲染页面
