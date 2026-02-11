@@ -142,12 +142,6 @@
             word-break: break-all;
         }
 
-        footer {
-            margin-top: 1.75rem;
-            font-size: 0.8rem;
-            opacity: 0.8;
-        }
-
         @media (min-width: 640px) {
             .page {
                 padding-inline: 1.5rem;
@@ -225,56 +219,6 @@
       fill: #0ea5e9;
     }
 
-        /* Updated content */
-        .new-drop-badge {
-            align-items: center;
-            padding: 2px 4px;            
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 16px;
-            cursor: default;
-            user-select: none;
-            
-            /* 動畫設定 */
-            /* 0.8秒完成一次循環，infinite 無限播放 */
-            /* steps(1) 是關鍵：它讓動畫不是平滑過渡，而是瞬間跳變 */
-            animation: bpm-switch 0.8s steps(1) infinite;
-        }
-
-        /* Updated content flashing
-        @keyframes bpm-switch {
-            0%, 100% {
-                background-color: #0d6d62;
-                color: #b2b4a0;
-                transform: scale(1);
-                box-shadow: 0 1px 2px rgba(149, 13, 6, 0.4);
-            }
-            50% {
-                background-color: #14b8a6;
-                color: #ffffff;
-                transform: scale(1.05);
-                box-shadow: 0 4px 6px rgba(20, 184, 166, 0.4);
-            }
-        } */
-
-        /* Updated content flashing */
-        @keyframes bpm-switch {
-            0%, 100% {
-                /* 狀態 A: 亮底深字 (Off beat) */
-                background-color: #ccfbf1; /* Teal-100 */
-                color: #0f766e;            /* Teal-700 */
-                transform: scale(1);
-                box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            }
-            50% {
-                /* 狀態 B: 深底白字 (On beat) */
-                background-color: #14b8a6; /* Teal-500 */
-                color: #ffffff;            /* White */
-                transform: scale(1.05);    /* 稍微放大 */
-                box-shadow: 0 4px 6px rgba(20, 184, 166, 0.4);
-            }
-        }   
-
 </style>
 </head>
 <body>
@@ -283,7 +227,7 @@
     <header id="navbar">
     <div class="title">&#9317 粵語繞口令</div>
       <nav>
-        <div class="logo-section">
+        <div>
           <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
@@ -303,7 +247,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">1.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',1)">
                         ▶ 粵語播放
                     </button>
@@ -318,7 +261,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">2.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',2)">
                         ▶ 粵語播放
                     </button>
@@ -333,7 +275,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">3.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',3)">
                         ▶ 粵語播放
                     </button>
@@ -348,7 +289,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">4.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',4)">
                         ▶ 粵語播放
                     </button>
@@ -363,7 +303,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">5.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',5)">
                         ▶ 粵語播放
                     </button>
@@ -378,7 +317,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">6.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',6)">
                         ▶ 粵語播放
                     </button>
@@ -393,7 +331,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">7.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',7)">
                         ▶ 粵語播放
                     </button>
@@ -408,7 +345,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">8.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',8)">
                         ▶ 粵語播放
                     </button>
@@ -423,7 +359,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">9.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',9)">
                         ▶ 粵語播放
                     </button>
@@ -438,7 +373,6 @@
             <article class="twister-card">
                 <div class="twister-header">
                     <span class="twister-index">10.</span>
-                    <span class="new-drop-badge">[New😊]</span>
                     <button class="play" onclick="playAudio(this,'twister',10)">
                         ▶ 粵語播放
                     </button>
