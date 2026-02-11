@@ -14,7 +14,7 @@
 
             --accent: blue;
             --accent-hover: blue;
-
+            
             /* 角色颜色 (浅色模式) */
             --role1-bg: #e3f2fd;
             --role1-border: #90caf9;
@@ -52,7 +52,6 @@
 
                 --accent: lightblue;
                 --accent-hover: lightblue;
-
 
                 /* 角色颜色 (深色模式 - 降低亮度与饱和度以适应深底) */
                 --role1-bg: rgba(33, 150, 243, 0.15);
@@ -212,7 +211,8 @@
         }
         .menu-item:last-child { border-bottom: none; }
         .menu-item:hover { background-color: var(--menu-hover); }
-/
+
+
         /* 列表样式 */
         .chat-list { display: flex; flex-direction: column; gap: 20px; }
 
