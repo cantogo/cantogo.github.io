@@ -1,14 +1,14 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>粤语会议范例-3</title>
+    <title>粤语会议范例-4</title>
     <link rel="stylesheet" href="css\meeting.css">
 </head>
 <body>
 
 <div class="container">
     <header class="title-bar">
-    <div><h1>&#9319 粤语会议范例-3</h1></div>
+    <div><h1>&#9319 粤语会议范例-4</h1></div>
       <nav>
         <div>
           <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
@@ -20,7 +20,7 @@
       </nav>
     </header>
 
-    <p class="subtitle">场景: 检讨设备保养服务</p>
+    <p class="subtitle">场景: 商讨更换电脑计划</p>
 
     <div class="global-controls">
         <button class="main-btn" onclick="playAll()">▶ 全部播放</button>
@@ -57,15 +57,14 @@
 <script>
     // 脚本数据
     const scriptData = [
-        { id: 1, role: "1", name: "Zoe", jobtitle: "Contract", text: "大家早晨! 今日主要系想检讨吓我哋公司间冷气保养 sub con 嘅服务质素，我哋同佢哋签嘅合约今年年底到期。" },
-        { id: 2, role: "2", name: "Ken", jobtitle: "Engineer", text: "最近几次落 call 整冷气，佢地迟咗成日先嚟。" },
-        { id: 3, role: "1", name: "Zoe", jobtitle: "Contract", text: "我睇返份合约，佢哋承诺要四个钟头内到场㗎。" },
-        { id: 4, role: "3", name: "Mona", jobtitle: "Manager", text: "咁唔得喎，迟成日即系违约，佢哋嘅师傅服务态度点样?" },
-        { id: 5, role: "2", name: "Ken", jobtitle: "Engineer", text: "服务态度好一般，上次叫佢 check 清楚啲出风口，佢求其望两眼就算数。" },
-        { id: 6, role: "3", name: "Mona", jobtitle: "Manager", text: "既然系咁，我建议出封 warning letter 俾佢哋。" },
-        { id: 7, role: "1", name: "Zoe", jobtitle: "Contract", text: "冇问题，我晏昼出信俾佢哋。另外我建议搵吓有冇啲口碑好嘅 sub con。" },
-        { id: 8, role: "2", name: "Ken", jobtitle: "Engineer", text: "听讲隔离公司个 sub con 好好多，我试吓问佢哋攞个初步报价，再喺出面搵多两间好少少嘅比较吓。" },        
-        { id: 9, role: "3", name: "Mona", jobtitle: "Manager", text: "唔该晒你阿 Ken。咁 Zoe 你就帮手出 warning letter，如果佢哋嘅服务都系冇改善，出年就唔同佢哋续 main，换过间冷气保养公司啦。唔该晒大家！" }        
+        { id: 1, role: "1", name: "Cindy", jobtitle: "Admin", text: "早晨阿 Ben，今日我哋倾下公司换电脑个 plan，而家啲机嘅运作情况点样？" },
+        { id: 2, role: "2", name: "Ben", jobtitle: "IT", text: "大部份机都过咗保养期，特别系设计部嗰边，佢哋话部机慢到做唔到嘢。" },
+        { id: 3, role: "1", name: "Cindy", jobtitle: "Admin", text: "如果全部换晒，budget 方面我有啲担心，未必一次过批到咁大笔数。" },
+        { id: 4, role: "2", name: "Ben", jobtitle: "IT", text: "唔使一次过，我地可以分两期换，旧机拆出嚟嘅 RAM 同 hard disk，可以留返用嚟做 spare part。" },
+        { id: 5, role: "1", name: "Cindy", jobtitle: "Admin", text: "分两期都好，换咗啲 urgent 嘅先。我会搵几间 vender 报价，打算下个月出 RFQ。" },
+        { id: 6, role: "2", name: "Ben", jobtitle: "IT", text: "咁我下星期俾啲计算机 spec 你，另外换机前一定要通知同事做 backup，如果唔见咗啲重要资料就大镬。" },
+        { id: 7, role: "1", name: "Cindy", jobtitle: "Admin", text: "放心，换机前我会 send 个 email 通知大家做 backup，你可唔可以帮手写个 procedure 教吓佢哋点做？" },
+        { id: 8, role: "2", name: "Ben", jobtitle: "IT", text: "冇问题，我哋分工合作，希望顺利搞掂，下星期约过时间再倾。" },        
     ];
 
 </script>
@@ -82,7 +81,7 @@
 
         // 构造文件路径
         const fileIndex = index + 1; 
-        const audioPath = `https://cantogo.github.io/voice/meeting_3-${fileIndex}.mp3`; 
+        const audioPath = `https://cantogo.github.io/voice/meeting_4-${fileIndex}.mp3`; 
 
         currentAudio.src = audioPath;
         
