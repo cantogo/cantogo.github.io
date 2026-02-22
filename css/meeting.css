@@ -116,6 +116,10 @@
             font-size: 1.35rem;
         }
 
+        p.keyword { 
+            font-size: 1.1rem;
+        }
+
         /* 控制区 */
         .global-controls {
             display: flex;
