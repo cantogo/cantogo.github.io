@@ -114,6 +114,7 @@
         p.subtitle { 
             margin: 0, 5px, 0 0;
             font-size: 1.35rem;
+            font-weight: 550;
         }
 
         p.keyword { 
