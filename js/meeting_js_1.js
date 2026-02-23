@@ -13,6 +13,20 @@
         btn.classList.toggle('active'); // 切換 active 類來控制箭頭旋轉
     }
 
+    // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById("menuDropdown");
+            const btn = document.getElementById("menuBtn");
+            const menuWrapper = document.querySelector('.menu-wrapper');
+
+            if (dropdown && dropdown.classList.contains('show')) {
+                if (!menuWrapper.contains(event.target)) {
+                    dropdown.classList.remove('show');
+                    btn.classList.remove('active');
+                }
+            }
+        });
+
     // 渲染页面
     function renderScript() {
         const container = document.getElementById('chatContainer');
