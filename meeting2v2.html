@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粤语会议范例-2</title>
+    <link rel="stylesheet" href="css\meetingv2.css">
+</head>
+<body>
+
+<div class="container">
+    <header class="title-bar">
+    <div><h1>&#9319 粤语会议范例-2</h1></div>
+      <nav>
+        <div>
+          <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+            </svg>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <p class="subtitle">场景2: 跟进工程项目进度</p>
+
+    <div class="global-controls">
+        <!-- Row 1: Text (Left Aligned) -->
+        <div class="global-controls-row1">常用词: double-check (覆核)，project (项目)，deadline (最后期限)，training (培训)，OT (Over Time 加班)</div>
+
+        <!-- Row 2: Controls -->
+        <div class="global-controls-row2">
+            <!-- Play/Stop (Left Aligned) -->
+            <button class="main-btn" onclick="playAll()">▶ 全部播放</button>
+            <button class="main-btn" onclick="stopAudio()">⏹ 停止</button>
+
+            <!-- 新增菜单区域 -->
+            <div class="menu-wrapper">
+                <button class="main-btn menu-btn" id="menuBtn" onclick="toggleMenu(event)">
+                    <span>场景菜单&nbsp;</span>
+                    <span class="arrow-icon">▼</span>
+                </button>
+                <div class="menu-dropdown" id="menuDropdown">
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting1.html" title="筹备公司联欢晚会">场景1: 筹备公司联欢晚会</a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting2.html" title="跟进工程项目进度">场景2: 跟进工程项目进度</a>                    
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting3.html" title="检讨设备保养服务">场景3: 检讨设备保养服务</a>                    
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting4.html" title="商讨更换电脑计划">场景4: 商讨更换电脑计划</a>                    
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting5.html" title="准备出席研讨会议">场景5: 准备出席研讨会议</a>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-list" id="chatContainer"></div>
+
+    <div class="status-bar" id="statusBar">准备就绪</div>
+</div>
+
+<script>
+    // 脚本数据
+    const scriptData = [
+        { id: 1, role: "1", name: "Janny", jobtitle: "Project Leader", text: "人齐喇，我哋开始啦。今日我哋 review 一吓旧 system 转去新 cloud platform 嘅进度，我想知 data migration 做成点？" },
+        { id: 2, role: "2", name: "Luca", jobtitle: "Programmer", text: "大部份数据已经同步咗上去 UAT 场做测试，不过发现旧 database 有啲乱码问题，有啲数据同步唔到。" },
+        { id: 3, role: "3", name: "Ruby", jobtitle: "System Analyst", text: "系呀，我 double-check 过测试系统啲数据，发现有大概 5% 嘅客户资料唔见咗。仲有，新系统个界面同旧嗰个好唔同，前线同事话唔识用。" },
+        { id: 4, role: "1", name: "Janny", jobtitle: "Project Leader", text: "下个月就系 project 嘅 deadline，data migration 一定要尽快搞掂。Luca 你预计要几耐解决到个乱码问题？" },
+        { id: 5, role: "2", name: "Luca", jobtitle: "Programmer", text: "我要写个 script 去人手处理啲旧数据，估计要开两日 OT，希望星期一可以再做一次 migration test。" },
+        { id: 6, role: "1", name: "Janny", jobtitle: "Project Leader", text: "咁辛苦晒你喇 Luca。至于 user 唔识用新 system 个问题，Ruby 你可唔可以帮手安排几个 training session 同整份 user guide 俾佢哋？" },
+        { id: 7, role: "3", name: "Ruby", jobtitle: "System Analyst", text: "冇问题。我已经写紧份用户手册，预计星期五可以搞掂。另外我会 book 定会议室，下星期分批同啲同事上堂。" },
+        { id: 8, role: "1", name: "Janny", jobtitle: "Project Leader", text: "太好喇! 我哋总结一吓，Luca 专注搞 data fix，Ruby 负责 user training。有咩 update 大家用个 WeChat group 互相通知啦，唔该晒。" }        
+    ];
+
+</script>
+
+<script src="js/meeting_js_1_v2.js" defer></script>
+
+<script>
+
+    // 核心播放函数
+    function playAudioFile(index, onComplete) {
+        // 停止当前正在播放的
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+
+        // 构造文件路径
+        const fileIndex = index + 1; 
+        const audioPath = `https://cantogo.github.io/voice/meeting_2-${fileIndex}.mp3`; 
+
+        currentAudio.src = audioPath;
+        
+        // 监听加载错误
+        currentAudio.onerror = () => {
+            updateStatus(`❌ 错误：找不到文件 ${audioPath}`, true);
+            highlightMessage(null);
+            isPlayingAll = false;
+        };
+
+        // 监听播放结束
+        currentAudio.onended = () => {
+            if (onComplete) onComplete();
+        };
+
+        // 开始播放
+        currentAudio.play().then(() => {
+            updateStatus(`正在播放 ...`);
+        }).catch(e => {
+            console.error(e);
+            updateStatus(`❌ 播放失败: 请检查文件或浏览器设置`, true);
+        });
+    }
+
+</script>
+
+<script src="js/meeting_js_2.js" defer></script>
+
+</body></html>
