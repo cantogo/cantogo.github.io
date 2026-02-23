@@ -21,36 +21,42 @@
     </header>
 
     <p class="subtitle">场景2: 跟进工程项目进度</p>
-    <p class="keyword">常用词: double-check (覆核)，project (项目)，deadline (最后期限)，training (培训)，OT (Over Time 加班)</p>
 
     <div class="global-controls">
-        <button class="main-btn" onclick="playAll()">▶ 全部播放</button>
-        <button class="main-btn" onclick="stopAudio()">⏹ 停止</button>
+        <!-- Row 1: Text (Left Aligned) -->
+        <div class="global-controls-row1">常用词: double-check (覆核)，project (项目)，deadline (最后期限)，training (培训)，OT (Over Time 加班)</div>
 
-        <!-- 新增菜单区域 -->
-        <div class="menu-wrapper">
-            <button class="main-btn menu-btn" id="menuBtn" onclick="toggleMenu(event)">
-                <span>场景菜单&nbsp;</span>
-                <span class="arrow-icon">▼</span>
-            </button>
-            <div class="menu-dropdown" id="menuDropdown">
-                <div class="menu-item">
-                    <a href="https://cantogo.github.io/meeting1.html" title="筹备公司联欢晚会">场景1: 筹备公司联欢晚会</a>
-                </div>
-                <div class="menu-item">
-                    <a href="https://cantogo.github.io/meeting2.html" title="跟进工程项目进度">场景2: 跟进工程项目进度</a>                    
-                </div>
-                <div class="menu-item">
-                    <a href="https://cantogo.github.io/meeting3.html" title="检讨设备保养服务">场景3: 检讨设备保养服务</a>                    
-                </div>
-                <div class="menu-item">
-                    <a href="https://cantogo.github.io/meeting4.html" title="商讨更换电脑计划">场景4: 商讨更换电脑计划</a>                    
-                </div>
-                <div class="menu-item">
-                    <a href="https://cantogo.github.io/meeting5.html" title="准备出席研讨会议">场景5: 准备出席研讨会议</a>                    
+        <!-- Row 2: Controls -->
+        <div class="global-controls-row2">
+            <!-- Play/Stop (Left Aligned) -->
+            <button class="main-btn" onclick="playAll()">▶ 全部播放</button>
+            <button class="main-btn" onclick="stopAudio()">⏹ 停止</button>
+
+            <!-- 新增菜单区域 -->
+            <div class="menu-wrapper">
+                <button class="main-btn menu-btn" id="menuBtn" onclick="toggleMenu(event)">
+                    <span>场景菜单&nbsp;</span>
+                    <span class="arrow-icon">▼</span>
+                </button>
+                <div class="menu-dropdown" id="menuDropdown">
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting1.html" title="筹备公司联欢晚会">场景1: 筹备公司联欢晚会</a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting2.html" title="跟进工程项目进度">场景2: 跟进工程项目进度</a>                    
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting3.html" title="检讨设备保养服务">场景3: 检讨设备保养服务</a>                    
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting4.html" title="商讨更换电脑计划">场景4: 商讨更换电脑计划</a>                    
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting5.html" title="准备出席研讨会议">场景5: 准备出席研讨会议</a>                    
+                    </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
 
     <div class="chat-list" id="chatContainer"></div>
