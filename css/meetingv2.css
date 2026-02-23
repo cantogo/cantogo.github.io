@@ -136,7 +136,7 @@
         .global-controls-row1 {
             height: 70px;           /* Fixed Height Settings */
             display: flex;          /* Use flexbox to vertically center the text */
-            align-items:baseline;    /* Vertically center */
+            align-items: center;    /* Vertically center */
             font-size: 1.05rem;
             text-align: left;       /* Explicitly align left */
             margin-bottom: 5px;
@@ -355,6 +355,3 @@
       height: 43px;
       fill: #0ea5e9;
     }
-
-
-
