@@ -59,7 +59,7 @@
             if (el) {
                 el.classList.add('playing');
                 // 滚动到当前播放位置
-                const yOffset = -80; 
+                const yOffset = -160; 
                 const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
                 window.scrollTo({top: y, behavior: 'smooth'});
             }
