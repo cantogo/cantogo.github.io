@@ -112,27 +112,43 @@
         }
         
         p.subtitle { 
-            margin: 0, 5px, 0 0;
+            margin: 0, 5px, 0, 0;
             font-size: 1.35rem;
             font-weight: 550;
-        }
-
-        p.keyword { 
-            font-size: 1.05rem;
         }
 
         /* 控制区 */
         .global-controls {
             display: flex;
+            flex-direction: column; /* Creates 2 rows */
             gap: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             position: sticky;
-            top: 10px;
+            top: 0;
             z-index: 10;
             background: var(--bg-card);
-            padding: 10px 0;
+            padding: 15px 0;
             border-bottom: 1px solid transparent;
             transition: background-color 0.3s;
+        }
+
+        /* Row 1: Text */
+        .global-controls-row1 {
+            height: 70px;           /* Fixed Height Settings */
+            display: flex;          /* Use flexbox to vertically center the text */
+            align-items: center;    /* Vertically center */
+            font-size: 1.05rem;
+            text-align: left;       /* Explicitly align left */
+            margin-bottom: 5px;
+            width: 100%;
+        }
+
+        /* Row 2: Buttons Container */
+        .global-controls-row2 {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 15px; /* Space between Play and Stop buttons */
         }
 
         .main-btn {
