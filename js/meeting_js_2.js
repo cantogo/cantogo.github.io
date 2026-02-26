@@ -29,7 +29,7 @@
         
         playAudioFile(currentIndex, () => {
             currentIndex++;
-            setTimeout(playNext, 300);
+            setTimeout(playNext, 200);
         });
     }
 
@@ -40,6 +40,7 @@
         highlightMessage(null);
         updateStatus("已停止");
     }
+
 
     // 初始化
     renderScript();
