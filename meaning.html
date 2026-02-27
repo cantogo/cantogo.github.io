@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="zh-HK"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粵語多義動詞小圖鑑</title>
+    <style>
+        /* 柔和的淺色主題 (預設) */
+        :root {
+            --bg-color: #fcf9f2;
+            --text-color: #5c544d;
+            --card-bg: #ffffff;
+            --accent-color: #d4a3b3;
+            --accent-hover: #c28fa0;
+            --accent-light: rgba(212, 163, 179, 0.15);
+            --border-radius: 16px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            --divider: #f0ebe1;
+        }
+
+        /* 柔和的深色主題 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #212124;
+                --text-color: #e0dcd9;
+                --card-bg: #2d2d31;
+                --accent-color: #b88294;
+                --accent-hover: #c993a5;
+                --accent-light: rgba(184, 130, 148, 0.2);
+                --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                --divider: #3f3f44;
+            }
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem 1.5rem;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: normal;
+            letter-spacing: 2px;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--divider);
+        }
+
+        .word-group {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .char {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .jyutping {
+            font-size: 1.1rem;
+            font-family: monospace;
+            opacity: 0.7;
+        }
+
+        .play-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--accent-color);
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .play-btn:hover {
+            background-color: var(--accent-light);
+            color: var(--accent-hover);
+        }
+
+        .play-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .meanings {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .meanings li {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .meanings li::before {
+            content: "•";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .meaning-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        .example-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background-color: rgba(0,0,0,0.02);
+            padding: 10px 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-light);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .example-container {
+                background-color: rgba(255,255,255,0.02);
+            }
+        }
+
+        .example-text {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .example-translation {
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        .example-audio-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2px;
+            flex-wrap: wrap;
+        }
+
+        .example-jyutping {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+            background-color: var(--accent-light);
+            padding: 2px 8px;
+            border-radius: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .play-btn-small {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--accent-color);
+            padding: 4px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .play-btn-small:hover {
+            background-color: var(--accent-light);
+            color: var(--accent-hover);
+        }
+
+        .play-btn-small svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 600px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+            .card {
+                padding: 1.5rem;
+            }
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>粵語多義動詞小圖鑑</h1>
+        <p class="subtitle">點擊喇叭圖示聆聽單字與例句的發音。頁面會跟隨系統自動切換深/淺色模式。</p>
+    </header>
+
+    <!-- 卡片將由 JavaScript 動態生成並插入到這裡 -->
+    <div class="grid" id="cards-container"></div>
+</div>
+
+<script>
+    // 1. 定義資料結構
+    const wordData = [
+        {
+            char: '整',
+            jyutping: 'zing2',
+            meanings: [
+                { title: '製造 / 製作', text: '整蛋糕', translation: '(做蛋糕)', jp: 'zing2 daan6 gou1' },
+                { title: '修理 / 弄好', text: '部電腦壞咗，要搵人整', translation: '(電腦壞了，要找人修理)', jp: 'bou6 din6 nou5 waai6 zo2, jiu3 wan2 jan4 zing2' },
+                { title: '弄壞 / 弄傷', text: '整親手', translation: '(弄傷手)', jp: 'zing2 can1 sau2' }
+            ]
+        },
+        {
+            char: '炒',
+            jyutping: 'caau2',
+            meanings: [
+                { title: '烹飪方式', text: '炒飯、炒菜', translation: '(炒飯、炒菜)', jp: 'caau2 faan6, caau2 coi3' },
+                { title: '解僱 / 辭職', text: '炒魷魚', translation: '(被解僱)', jp: 'caau2 jau4 jyu2' },
+                { title: '搞砸了 / 不及格', text: '今次考試炒咗', translation: '(這次考試考砸了)', jp: 'gam1 ci3 haau2 si3 caau2 zo2' }
+            ]
+        },
+        {
+            char: '執',
+            jyutping: 'zap1',
+            meanings: [
+                { title: '拾起 / 撿起', text: '執地下啲垃圾', translation: '(撿起地上的垃圾)', jp: 'zap1 dei6 haa2 di1 laap6 saap3' },
+                { title: '整理 / 收拾', text: '執房', translation: '(收拾房間)', jp: 'zap1 fong2' },
+                { title: '結業 / 倒閉', text: '間舖頭執咗啦', translation: '(那家店倒閉了)', jp: 'gaan1 pou3 tau2 zap1 zo2 laa1' }
+            ]
+        },
+        {
+            char: '起',
+            jyutping: 'hei2',
+            meanings: [
+                { title: '建設 / 建造', text: '起樓', translation: '(蓋房子)', jp: 'hei2 lau2' },
+                { title: '挖出 / 剔除', text: '起骨', translation: '(把肉的骨頭剔出來)', jp: 'hei2 gwat1' },
+                { title: '查探 / 揭露', text: '起底', translation: '(查明某人的底細)', jp: 'hei2 dai2' }
+            ]
+        },
+        {
+            char: '食',
+            jyutping: 'sik6',
+            meanings: [
+                { title: '進食 / 吃', text: '食飯', translation: '(吃飯)', jp: 'sik6 faan6' },
+                { title: '承受 / 吃虧', text: '食死貓', translation: '(背黑鍋)', jp: 'sik6 sei2 maau1' },
+                { title: '運用 / 消耗', text: '食腦', translation: '(靠智慧/動腦筋)', jp: 'sik6 nou5' }
+            ]
+        },
+        {
+            char: '打',
+            jyutping: 'daa2',
+            meanings: [
+                { title: '玩 (遊戲/運動)', text: '打機', translation: '(玩電子遊戲)', jp: 'daa2 gei1' },
+                { title: '乘坐 (交通工具)', text: '打的', translation: '(乘搭的士)', jp: 'daa2 dik1' },
+                { title: '打發 / 消耗', text: '打發時間', translation: '(消磨時間)', jp: 'daa2 faat3 si4 gaan3' }
+            ]
+        },
+        {
+            char: '爆',
+            jyutping: 'baau3',
+            meanings: [
+                { title: '滿額 / 極限', text: '間餐廳爆咗', translation: '(餐廳客滿了)', jp: 'gaan1 caan1 teng1 baau3 zo2' },
+                { title: '揭露 (秘密)', text: '爆料', translation: '(揭露內幕)', jp: 'baau3 liu2' },
+                { title: '極度 / 非常 (副詞)', text: '爆好食', translation: '(超級好吃)', jp: 'baau3 hou2 sik6' }
+            ]
+        },
+        {
+            char: '屈',
+            jyutping: 'wat1',
+            meanings: [
+                { title: '冤枉 / 誣陷', text: '屈人', translation: '(冤枉別人)', jp: 'wat1 jan4' },
+                { title: '委屈 / 鬱悶', text: '屈喺屋企', translation: '(悶在家裡)', jp: 'wat1 hai2 uk1 kei2' },
+                { title: '實力碾壓', text: '屈機', translation: '(實力太強，令對手毫無還擊之力)', jp: 'wat1 gei1' }
+            ]
+        },
+        {
+            char: '搞',
+            jyutping: 'gaau2',
+            meanings: [
+                { title: '做 / 處理', text: '搞掂', translation: '(搞定 / 完成)', jp: 'gaau2 dim6' },
+                { title: '舉辦 / 組織', text: '搞活動', translation: '(舉辦活動)', jp: 'gaau2 wut6 dung6' },
+                { title: '破壞 / 搗亂', text: '搞事', translation: '(惹事生非)', jp: 'gaau2 si6' }
+            ]
+        },
+        {
+            char: '頂',
+            jyutping: 'ding2',
+            meanings: [
+                { title: '忍受 / 承受', text: '頂唔順', translation: '(受不了 / 撐不住)', jp: 'ding2 m4 seon6' },
+                { title: '支撐 / 暫代', text: '你幫我頂住先', translation: '(你先幫我撐著/擋著)', jp: 'nei5 bong1 ngo5 ding2 zyu6 sin1' },
+                { title: '撞擊 (用頭)', text: '頂頭槌', translation: '(用頭槌頂球)', jp: 'ding2 tau4 ceoi4' }
+            ]
+        },
+        {
+            char: '吹',
+            jyutping: 'ceoi1',
+            meanings: [
+                { title: '聊天 / 閒聊', text: '吹水', translation: '(聊天 / 吹牛)', jp: 'ceoi1 seoi2' },
+                { title: '催促', text: '唔好再吹我啦', translation: '(不要再催我了)', jp: 'm4 hou2 zoi3 ceoi1 ngo5 laa1' },
+                { title: '無可奈何 (俗語)', text: '你吹得我脹咩', translation: '(你能拿我怎麼樣)', jp: 'nei5 ceoi1 dak1 ngo5 zoeng3 me1' }
+            ]
+        },
+        {
+            char: '抽',
+            jyutping: 'cau1',
+            meanings: [
+                { title: '佔便宜 / 借機嘲諷', text: '抽水', translation: '(佔人便宜 / 藉機挖苦)', jp: 'cau1 seoi2' },
+                { title: '提著 / 拎著', text: '抽住袋餸', translation: '(手裡提著一袋菜)', jp: 'cau1 zyu6 doi6 sung3' },
+                { title: '騰出 (時間)', text: '抽時間陪你', translation: '(抽出時間陪你)', jp: 'cau1 si4 gaan3 pui4 nei5' }
+            ]
+        },
+        {
+            char: '俾',
+            jyutping: 'bei2',
+            meanings: [
+                { title: '給予', text: '俾錢', translation: '(給錢 / 付錢)', jp: 'bei2 cin2' },
+                { title: '允許 / 讓', text: '俾我試下', translation: '(讓我試試看)', jp: 'bei2 ngo5 si3 haa5' },
+                { title: '被 (被動語態)', text: '俾人鬧', translation: '(被人罵)', jp: 'bei2 jan4 naau6' }
+            ]
+        },
+        {
+            char: '收',
+            jyutping: 'sau1',
+            meanings: [
+                { title: '接收 / 收到', text: '收到風', translation: '(收到消息)', jp: 'sau1 dou2 fung1' },
+                { title: '結束 / 停止', text: '收工', translation: '(下班)', jp: 'sau1 gung1' },
+                { title: '隱藏 / 儲存', text: '收埋', translation: '(藏起來 / 收起來)', jp: 'sau1 maai4' }
+            ]
+        }
+    ];
+
+    // 播放 SVG 圖示
+    const playIconSVG = `<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
+
+    // 2. 動態生成卡片的函數
+    function renderCards() {
+        const container = document.getElementById('cards-container');
+        let htmlContent = '';
+
+        wordData.forEach(word => {
+            // 生成每個意思的 HTML
+            let meaningsHtml = '';
+            word.meanings.forEach(meaning => {
+                // 處理單引號跳脫問題，確保 onclick 正常運作
+                const safeText = meaning.text.replace(/'/g, "\\'");
+                
+                meaningsHtml += `
+                    <li>
+                        <span class="meaning-title">${meaning.title}</span>
+                        <div class="example-container">
+                            <span class="example-text">${meaning.text}</span>
+                            <span class="example-translation">${meaning.translation}</span>
+                            <div class="example-audio-row">
+                                <span class="example-jyutping">${meaning.jp}</span>
+                                <button class="play-btn-small" onclick="speakCantonese('${safeText}')" aria-label="播放例句">
+                                    ${playIconSVG}
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                `;
+            });
+
+            // 組合整張卡片的 HTML
+            htmlContent += `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="word-group">
+                            <span class="char">${word.char}</span>
+                            <span class="jyutping">${word.jyutping}</span>
+                        </div>
+                        <button class="play-btn" onclick="speakCantonese('${word.char}')" aria-label="播放發音">
+                            ${playIconSVG}
+                        </button>
+                    </div>
+                    <ul class="meanings">
+                        ${meaningsHtml}
+                    </ul>
+                </div>
+            `;
+        });
+
+        // 將生成的 HTML 插入到容器中
+        container.innerHTML = htmlContent;
+    }
+
+    // 3. 語音播放函數
+    function speakCantonese(text) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-HK';
+            utterance.rate = 0.85; 
+            utterance.pitch = 1.0;
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("抱歉，你的瀏覽器不支援語音功能。");
+        }
+    }
+
+    // 4. 頁面載入完成後執行生成函數
+    document.addEventListener('DOMContentLoaded', renderCards);
+
+</script>
+
+
+
+</body></html>
