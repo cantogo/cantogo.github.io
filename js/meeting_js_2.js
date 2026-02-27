@@ -29,7 +29,7 @@
         
         playAudioFile(currentIndex, () => {
             currentIndex++;
-            setTimeout(playNext, 250);
+            setTimeout(playNext, 300);
         });
     }
 
