@@ -155,12 +155,11 @@
         ul.bullet-list li {
             position: relative;
             padding-left: 20px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-size: 0.95rem;
             display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
+            flex-direction: column;
+            gap: 2px;
         }
 
         ul.bullet-list li::before {
@@ -171,13 +170,13 @@
             font-weight: bold;
             top: 2px;
         }
-
+        
         .sub-examples {
             padding-left: 10px;
             color: #666;
             font-size: 0.9rem;
             border-left: 2px solid var(--accent-purple);
-            margin-top: 4px;
+            margin-top: 2px;
         }
         
         @media (prefers-color-scheme: dark) {
@@ -420,36 +419,52 @@
                 <div class="example-box">
                     <ul class="bullet-list">
                         <li>
-                            <span><strong>喇 <span class="jyutping">(laa3)</span>：</strong>表示状态改变或动作完成（例：落雨<span class="highlight">喇</span> / 走<span class="highlight">喇</span>）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_5-1.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>喇 <span class="jyutping">(laa3)</span>：表示状态改变或动作完成</strong></div>
+                            <div class="sub-examples">
+                                例1：落雨<span class="highlight">喇</span>！（下雨了！表示原本没下，现在下了）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例2：食饭<span class="highlight">喇</span>！（吃饭啦！表示到了吃饭的时间）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例3：我搞掂<span class="highlight">喇</span>！（我弄好了！表示动作已经完成）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>啦 <span class="jyutping">(laa1)</span>：</strong>表示请求、建议或催促（例：快啲<span class="highlight">啦</span> / 食<span class="highlight">啦</span>）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_5-2.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>啦 <span class="jyutping">(laa1)</span>：表示请求、建议或催促</strong></div>
+                            <div class="sub-examples">
+                                例1：快啲<span class="highlight">啦</span>！（快一点吧！催促）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例2：帮下我<span class="highlight">啦</span>。（帮帮我吧。请求）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例3：唔好嬲<span class="highlight">啦</span>。（别生气啦。劝慰）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>㗎 <span class="jyutping">(gaa3)</span>：</strong>带有解释、理所当然、强调事实（例：系咁<span class="highlight">㗎</span>啦）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_5-3.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>㗎 <span class="jyutping">(gaa3)</span>：带有解释、理所当然、强调事实</strong></div>
+                            <div class="sub-examples">
+                                例1：系咁<span class="highlight">㗎</span>啦。（本来就是这样的啦。理所当然）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例2：佢好叻<span class="highlight">㗎</span>。（他很厉害的。强调事实）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例3：唔系我做<span class="highlight">㗎</span>！（不是我做的！极力辩解）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>喎 <span class="jyutping">(wo3)</span>：</strong>表示惊讶、提醒或转述他人的话（例：原来系咁<span class="highlight">喎</span>）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_5-4.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>喎 <span class="jyutping">(wo3)</span>：表示惊讶、提醒或转述他人的话</strong></div>
+                            <div class="sub-examples">
+                                例1：原来系咁<span class="highlight">喎</span>！（原来是这样啊！恍然大悟/惊讶）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例2：佢话唔嚟<span class="highlight">喎</span>。（他说他不来了。转述）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例3：呢件衫几靓<span class="highlight">喎</span>。（这件衣服挺好看的嘛。出乎意料的赞赏）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>咩 <span class="jyutping">(me1)</span>：</strong>表示反问、怀疑或惊讶（例：你唔知<span class="highlight">咩</span>？）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_5-6.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>咩 <span class="jyutping">(me1)</span>：表示反问、怀疑或惊讶</strong> <button class="play-btn" data-src="your-audio-file-6-6.mp3" title="播放语音">🔊</button></div>
+                            <div class="sub-examples">
+                                例1：你唔知<span class="highlight">咩</span>？（你不知道吗？反问）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例2：咁都得<span class="highlight">咩</span>？（这样也行吗？极度怀疑/惊讶）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例3：佢真系咁讲<span class="highlight">咩</span>？（他真的是这么说的吗？怀疑）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>啫 <span class="jyutping">(ze1)</span>：</strong>表示而已、罢了（例：十蚊<span class="highlight">啫</span>）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_5-7.mp3" title="播放语音">🔊</button></span>
-                        </li>
-                        <li>
-                            <span><strong>添 <span class="jyutping">(tim1)</span>：</strong>表示补充，“还、又、甚至”的意思（例：仲落雨<span class="highlight">添</span>）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_5-8.mp3" title="播放语音">🔊</button></span>
-                        </li>
-                        <li>
-                            <span><strong>嘛 <span class="jyutping">(maa3)</span>：</strong>表示原因显而易见，理所当然（例：你无讲<span class="highlight">嘛</span>）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_5-9.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>啫 <span class="jyutping">(ze1)</span>：表示“而已、罢了”，常用于辩解或轻视</strong></div>
+                            <div class="sub-examples">
+                                例1：十蚊<span class="highlight">啫</span>。（十块钱而已。轻视数量小）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例2：讲笑<span class="highlight">啫</span>，唔好咁认真。（开玩笑而已，别认真。辩解）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
+                                例3：我想帮下你<span class="highlight">啫</span>。（我只是想帮帮你而已。委屈/辩解）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                            </div>
                         </li>
                     </ul>
                 </div>
