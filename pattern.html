@@ -131,7 +131,7 @@
 
         .tag {
             display: inline-block;
-            padding: 2px 8px;
+            padding: 2px 10px;
             border-radius: 6px;
             font-size: 0.8rem;
             font-weight: 600;
@@ -149,40 +149,62 @@
 
         ul.bullet-list {
             list-style-type: none;
-            padding-left: 5px;
+            padding-left: 0;
         }
 
-        ul.bullet-list li {
+        ul.bullet-list > li {
             position: relative;
-            padding-left: 20px;
-            margin-bottom: 10px;
+            padding-left: 16px;
+            margin-bottom: 24px;
             font-size: 0.95rem;
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 6px;
+            border-bottom: 1px solid rgba(136, 136, 136, 0.15);
+            padding-bottom: 12px;
         }
 
-        ul.bullet-list li::before {
+        ul.bullet-list > li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        ul.bullet-list > li::before {
             content: "•";
             color: var(--title-color);
             position: absolute;
             left: 0;
             font-weight: bold;
-            top: 2px;
+            top: -6px;
+            font-size: 1.3rem;
         }
         
         .sub-examples {
-            padding-left: 10px;
-            color: #666;
+            padding-left: 12px;
             font-size: 0.9rem;
             border-left: 2px solid var(--accent-purple);
-            margin-top: 2px;
+            margin-top: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
         
-        @media (prefers-color-scheme: dark) {
-            .sub-examples { color: #aaa; }
+        .sub-example-pair {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
-                
+
+        .man-translation {
+            color: #666;
+            padding-left: 2px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .man-translation { color: #aaa; }
+        }
+
         /* 语音播放按钮样式 */
         .play-btn {
             background: none;
@@ -212,7 +234,7 @@
             .rule-card { padding: 20px; }
             h1 { font-size: 1.5rem; }
         }
-
+        
     /* Header CSS */
     #navbar {
       background: var(--bg-color);
@@ -301,12 +323,12 @@
                 <p>在表达“给予”或“借用”等动作时，粤语习惯将<strong>物品（直接宾语）放在前面，人（间接宾语）放在后面</strong>。这与普通话“先人后物”的顺序刚好相反。</p>
                 <div class="example-box">
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>俾 <span class="highlight">本书</span> <span class="highlight">我</span>。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_1-1.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 给 <span class="highlight">我</span> 一<span class="highlight">本书</span>。</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>俾 <span class="highlight">本书</span> <span class="highlight">我</span>。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_1-1.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 给 <span class="highlight">我</span> 一 <span class="highlight">本书</span>。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>借 <span class="highlight">支笔</span> 俾 <span class="highlight">佢</span>啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_1-2.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 借 <span class="highlight">他</span> 一<span class="highlight">支笔</span>吧。</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>借 <span class="highlight">支笔</span> 俾 <span class="highlight">佢</span> 啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_1-2.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 借 <span class="highlight">他</span> 一 <span class="highlight">支笔</span> 吧。</div>
                     </div>
                 </div>
             </article>
@@ -316,98 +338,197 @@
                 <p>粤语经常把修饰动词的副词（如：先、多、少）放在动词或宾语的<strong>后面</strong>，这与普通话将副词放在动词前面的习惯完全相反。</p>
                 <div class="example-box">
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>你走<span class="highlight">先</span>啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_2-1.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 你<span class="highlight">先</span>走吧。</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>你走<span class="highlight"> 先 </span>啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_2-1.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 你<span class="highlight"> 先 </span>走吧。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>天气冻，着<span class="highlight">多</span>件衫。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_2-2.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 天气冷，<span class="highlight">多</span>穿件衣服。</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>天气冻，着<span class="highlight"> 多 </span>件衫。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_2-2.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 天气冷，<span class="highlight"> 多 </span>穿件衣服。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>饮<span class="highlight">少</span>啲甜嘢啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_2-3.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> <span class="highlight">少</span>喝点甜的吧。</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>饮<span class="highlight"> 少 </span>啲甜嘢啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_2-3.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> <span class="highlight"> 少 </span>喝点甜的吧。</div>
                     </div>
                 </div>
             </article>
 
             <article class="rule-card">
-                <p>比较句的结构非常直接，公式为：<strong>A + 形容词 + 过 + B</strong>。这与普通话“A + 比 + B + 形容词”的语序不同。</p>
+               <h2><span>⚖️</span> 3. 比较句的结构</h2>
+               <p>比较句的结构非常直接，公式为：<strong>A + 形容词 + 过 + B</strong>。这与普通话“A + 比 + B + 形容词”的语序不同。</p>
                 <div class="example-box">
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>我高<span class="highlight">过</span>佢。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_3-1.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 我<span class="highlight">比</span>他高。</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>我高<span class="highlight"> 过 </span>佢。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_3-1.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 我<span class="highlight"> 比 </span>他高。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>呢件衫靓<span class="highlight">过</span>嗰件。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_3-2.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 这件衣服<span class="highlight">比</span>那件漂亮。</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>呢件衫靓<span class="highlight"> 过 </span>嗰件。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_3-2.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 这件衣服<span class="highlight"> 比 </span>那件漂亮。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>今日热<span class="highlight">过</span>寻日。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_3-3.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 今天<span class="highlight">比</span>昨天热。</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>今日热<span class="highlight"> 过 </span>寻日。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_3-3.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 今天<span class="highlight"> 比 </span>昨天热。</div>
                     </div>
                 </div>
             </article>
 
             <article class="rule-card">
                 <h2><span>🧩</span> 4. 丰富的动词体貌</h2>
-                <p>粤语不靠词形变化，而是透过在动词后加上特定的“体貌词”来精准表达动作的状态：</p>
-                <div class="example-box">
+                <p>粤语不靠词形变化，而是透过在动词后加上特定的“体貌词”来精准表达动作的状态。以下是详细的分类与中粤对照例句：</p>
+                <div class="example-box" style="background-color: transparent; padding: 0;">
                     <ul class="bullet-list">
                         <li>
-                            <span><strong>进行体“紧”<span class="jyutping">(gan2)</span>：</strong>正在做（例：我食<span class="highlight">紧</span>饭）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-1.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>进行体“紧”<span class="jyutping">(gan2)</span>：表示动作正在进行中</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 我食<span class="highlight">紧</span>饭。 (我正在吃饭。)<button class="play-btn" data-src="patterncan_4-1.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 落<span class="highlight">紧</span>雨啊，带把遮啦。 (正在下雨啊，带把伞吧。)<button class="play-btn" data-src="patterncan_4-2.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>完成体“咗”<span class="jyutping">(zo2)</span>：</strong>已做了（例：我食<span class="highlight">咗</span>饭）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-2.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>完成体“咗”<span class="jyutping">(zo2)</span>：表示动作已经发生或完成</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 佢买<span class="highlight">咗</span>部新电话。 (他买了台新手机。)<button class="play-btn" data-src="patterncan_4-3.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 本书我已经睇<span class="highlight">咗</span>喇。 (这本书我已经看过了。)<button class="play-btn" data-src="patterncan_4-4.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>完结体“完”<span class="jyutping">(jyun4)</span>：</strong>动作彻底结束（例：我做<span class="highlight">完</span>功课喇）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-3.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>完结体“完”<span class="jyutping">(jyun4)</span>：强调动作彻底结束</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 我做<span class="highlight">完</span>功课喇。 (我做完作业了。)<button class="play-btn" data-src="patterncan_4-5.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 听<span class="highlight">完</span>首歌再走啦。 (听完这首歌再走吧。)<button class="play-btn" data-src="patterncan_4-6.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>全部体“晒”<span class="jyutping">(saai3)</span>：</strong>全部完成、毫无保留 / 吃光、走光（例：啲人走<span class="highlight">晒</span>喇）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-4.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>全部体“晒”<span class="jyutping">(saai3)</span>：表示全部完成、毫无保留</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 啲人走<span class="highlight">晒</span>喇。 (人全都走光了。)<button class="play-btn" data-src="patterncan_4-7.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 我明<span class="highlight">晒</span>你嘅意思。 (我完全明白你的意思了。)<button class="play-btn" data-src="patterncan_4-8.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>附带体“埋”<span class="jyutping">(maai4)</span>：</strong>连同、顺便（例：叫<span class="highlight">埋</span>佢一齐去）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-5.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>附带体“埋”<span class="jyutping">(maai4)</span>：表示连同、顺便一起做</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 叫<span class="highlight">埋</span>佢一齐去。 (把他也一起叫去。)<button class="play-btn" data-src="patterncan_4-9.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 帮我买<span class="highlight">埋</span>早餐。 (顺便帮我买早餐。)<button class="play-btn" data-src="patterncan_4-10.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>余尽体“埋”<span class="jyutping">(maai4)</span>：</strong>把剩下的也完成（例：我做<span class="highlight">埋</span>呢份报告就收工）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-6.mp3" title="播放语音">🔊</button></span>
-                        </li>                      
-                        <li>
-                            <span><strong>经验体“过”<span class="jyutping">(gwo3)</span>：</strong>曾经经历过（例：我去<span class="highlight">过</span>澳门）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-7.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>余尽体“埋”<span class="jyutping">(maai4)</span>：表示把剩下的部分也完成</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 我做<span class="highlight">埋</span>呢份报告就收工。 (我把这份报告做完就下班。)<button class="play-btn" data-src="patterncan_4-11.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 食<span class="highlight">埋</span>啲餸佢啦，唔好嘥。 (把剩下的菜吃完吧，别浪费。)<button class="play-btn" data-src="patterncan_4-12.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>持续体“住”<span class="jyutping">(zyu6)</span>：</strong>保持着的状态（例：唔该帮我拎<span class="highlight">住</span>把遮）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-8.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>经验体“过”<span class="jyutping">(gwo3)</span>：表示曾经经历过某事</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 我去<span class="highlight">过</span>澳门。 (我去过澳门。)<button class="play-btn" data-src="patterncan_4-13.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 你试<span class="highlight">过</span>未啊？ (你尝试过没有？)<button class="play-btn" data-src="patterncan_4-14.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>习惯体“开”<span class="jyutping">(hoi1)</span>：</strong>一直以来的习惯 / 经常做（例：我帮衬<span class="highlight">开</span>呢间铺）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-9.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>持续体“住”<span class="jyutping">(zyu6)</span>：表示动作或状态的持续保持</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 唔该帮我拎<span class="highlight">住</span>把遮。 (麻烦帮我拿着伞。)<button class="play-btn" data-src="patterncan_4-15.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 佢着<span class="highlight">住</span>件大褛。 (他穿着件大衣。)<button class="play-btn" data-src="patterncan_4-16.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>预备体“定”<span class="jyutping">(ding6)</span>：</strong>提前做好准备（例：买<span class="highlight">定</span>飞先）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-10.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>习惯体“开”<span class="jyutping">(hoi1)</span>：表示一直以来的习惯或经常做的事</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 我帮衬<span class="highlight">开</span>呢间铺。 (我一直光顾这家店。)<button class="play-btn" data-src="patterncan_4-17.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 我饮<span class="highlight">开</span>黑咖啡。 (我习惯喝黑咖啡。)<button class="play-btn" data-src="patterncan_4-18.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>短暂体“吓”<span class="jyutping">(haa5)</span>：</strong>动作时间短 / 尝试做（例：等我试<span class="highlight">吓</span>先）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-11.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>预备体“定”<span class="jyutping">(ding6)</span>：表示提前做好准备以防万一</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 买<span class="highlight">定</span>演唱会飞先。 (先把演唱会门票买好。)<button class="play-btn" data-src="patterncan_4-19.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 煮<span class="highlight">定</span>饭等佢返嚟。 (提前把饭煮好等他回来。)<button class="play-btn" data-src="patterncan_4-20.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>回复体“返”<span class="jyutping">(faan1)</span>：</strong>回复原本状态 / 重新做（例：著<span class="highlight">返</span>件外套啦）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-12.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>短暂体“吓”<span class="jyutping">(haa5)</span>：表示动作时间短，或尝试做某事</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 等我试<span class="highlight">吓</span>先。 (让我先试一下。)<button class="play-btn" data-src="patterncan_4-21.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 出去行<span class="highlight">吓</span>啦。 (出去走走吧。)<button class="play-btn" data-src="patterncan_4-22.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>条件体“亲”<span class="jyutping">(can1)</span>：</strong>每逢、每次发生（例：我饮<span class="highlight">亲</span>牛奶都肚痛）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-13.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>回复体“返”<span class="jyutping">(faan1)</span>：表示回复原本状态，或重新做某事</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 着<span class="highlight">返</span>件外套啦。 (把外套穿回去吧。)<button class="play-btn" data-src="patterncan_4-23.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 记得还<span class="highlight">返</span>把遮俾人。 (记得把伞还给人家。)<button class="play-btn" data-src="patterncan_4-24.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                         <li>
-                            <span><strong>遭遇体“亲”<span class="jyutping">(can1)</span>：</strong>动作带来负面、意外影响（例：尋晚冇冚被，凍<span class="highlight">亲</span>喇）
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_4-14.mp3" title="播放语音">🔊</button></span>
+                            <div><strong>条件体“亲”<span class="jyutping">(can1)</span>：表示每逢、每次发生某事</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 我饮<span class="highlight">亲</span>牛奶都肚痛。 (我每次喝牛奶都肚子痛。)<button class="play-btn" data-src="patterncan_4-25.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 佢食<span class="highlight">亲</span>海鲜都敏感。 (他每次吃海鲜都过敏。)<button class="play-btn" data-src="patterncan_4-26.mp3">🔊</button></div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>遭遇体“亲”<span class="jyutping">(can1)</span>：表示动作带来了负面或意外的影响（多指受伤/受惊）</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 寻晚冇冚被，冻<span class="highlight">亲</span>喇。 (昨晚没盖被子，着凉了。)<button class="play-btn" data-src="patterncan_4-27.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 小心啲，唔好跌<span class="highlight">亲</span>啊。 (小心点，别摔伤了啊。)<button class="play-btn" data-src="patterncan_4-28.mp3">🔊</button></div>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -416,54 +537,90 @@
             <article class="rule-card">
                 <h2><span>💬</span> 5. 句末语气助词</h2>
                 <p>语气助词是粤语的灵魂，单音节的助词可以完全改变一句话的情感色彩与隐藏含义：</p>
-                <div class="example-box">
+                <div class="example-box" style="background-color: transparent; padding: 0;">
                     <ul class="bullet-list">
                         <li>
                             <div><strong>喇 <span class="jyutping">(laa3)</span>：表示状态改变或动作完成</strong></div>
                             <div class="sub-examples">
-                                例1：落雨<span class="highlight">喇</span>！（下雨了！表示原本没下，现在下了）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例2：食饭<span class="highlight">喇</span>！（吃饭啦！表示到了吃饭的时间）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例3：我搞掂<span class="highlight">喇</span>！（我弄好了！表示动作已经完成）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 落雨<span class="highlight">喇</span>！（下雨了！表示原本没下，现在下了）<button class="play-btn" data-src="patterncan_5-1.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 食饭<span class="highlight">喇</span>！（吃饭啦！表示到了吃饭的时间）<button class="play-btn" data-src="patterncan_5-2.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子3: 我搞掂<span class="highlight">喇</span>！（我弄好了！表示动作已经完成）<button class="play-btn" data-src="patterncan_5-3.mp3">🔊</button></div>
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>啦 <span class="jyutping">(laa1)</span>：表示请求、建议或催促</strong></div>
+                            <div><strong>啦 <span class="jyutping">(laa1)</span>：表示请求、建议、催促或劝慰</strong></div>
                             <div class="sub-examples">
-                                例1：快啲<span class="highlight">啦</span>！（快一点吧！催促）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例2：帮下我<span class="highlight">啦</span>。（帮帮我吧。请求）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例3：唔好嬲<span class="highlight">啦</span>。（别生气啦。劝慰）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 帮下我<span class="highlight">啦</span>。（帮帮我吧。请求）<button class="play-btn" data-src="patterncan_5-4.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 快啲<span class="highlight">啦</span>！（快一点吧！催促）<button class="play-btn" data-src="patterncan_5-5.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子3: 唔好嬲<span class="highlight">啦</span>。（别生气啦。劝慰）<button class="play-btn" data-src="patterncan_5-6.mp3">🔊</button></div>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div><strong>㗎 <span class="jyutping">(gaa3)</span>：带有解释、理所当然、强调事实</strong></div>
                             <div class="sub-examples">
-                                例1：系咁<span class="highlight">㗎</span>啦。（本来就是这样的啦。理所当然）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例2：佢好叻<span class="highlight">㗎</span>。（他很厉害的。强调事实）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例3：唔系我做<span class="highlight">㗎</span>！（不是我做的！极力辩解）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 唔系我做<span class="highlight">㗎</span>！（不是我做的！极力辩解）<button class="play-btn" data-src="patterncan_5-7.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 系咁<span class="highlight">㗎</span>啦。（本来就是这样的啦。理所当然）<button class="play-btn" data-src="patterncan_5-8.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子3: 佢好叻<span class="highlight">㗎</span>。（他很厉害的。强调事实）<button class="play-btn" data-src="patterncan_5-9.mp3">🔊</button></div>
+                                </div>
                             </div>
                         </li>
                         <li>
                             <div><strong>喎 <span class="jyutping">(wo3)</span>：表示惊讶、提醒或转述他人的话</strong></div>
                             <div class="sub-examples">
-                                例1：原来系咁<span class="highlight">喎</span>！（原来是这样啊！恍然大悟/惊讶）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例2：佢话唔嚟<span class="highlight">喎</span>。（他说他不来了。转述）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例3：呢件衫几靓<span class="highlight">喎</span>。（这件衣服挺好看的嘛。出乎意料的赞赏）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 原来系咁<span class="highlight">喎</span>！（原来是这样啊！恍然大悟/惊讶）<button class="play-btn" data-src="patterncan_5-10.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 佢话唔嚟<span class="highlight">喎</span>。（他说他不来了。转述）<button class="play-btn" data-src="patterncan_5-11.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子3: 呢件衫几靓<span class="highlight">喎</span>。（这件衣服挺好看的。出乎意料的赞赏）<button class="play-btn" data-src="patterncan_5-12.mp3">🔊</button></div>
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>咩 <span class="jyutping">(me1)</span>：表示反问、怀疑或惊讶</strong> <button class="play-btn" data-src="your-audio-file-6-6.mp3" title="播放语音">🔊</button></div>
+                            <div><strong>咩 <span class="jyutping">(me1)</span>：表示反问或怀疑</strong></div>
                             <div class="sub-examples">
-                                例1：你唔知<span class="highlight">咩</span>？（你不知道吗？反问）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例2：咁都得<span class="highlight">咩</span>？（这样也行吗？极度怀疑/惊讶）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例3：佢真系咁讲<span class="highlight">咩</span>？（他真的是这么说的吗？怀疑）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 你唔知<span class="highlight">咩</span>？（你不知道吗？反问）<button class="play-btn" data-src="patterncan_5-13.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 咁都得<span class="highlight">咩</span>？（这样也行吗？极度怀疑/惊讶）<button class="play-btn" data-src="patterncan_5-14.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子3: 佢真系咁讲<span class="highlight">咩</span>？（他真的是这么说的吗？怀疑）<button class="play-btn" data-src="patterncan_5-15.mp3">🔊</button></div>
+                                </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>啫 <span class="jyutping">(ze1)</span>：表示“而已、罢了”，常用于辩解或轻视</strong></div>
+                            <div><strong>啫 <span class="jyutping">(ze1)</span>：表示“而已”，常用于辩解或轻视</strong></div>
                             <div class="sub-examples">
-                                例1：十蚊<span class="highlight">啫</span>。（十块钱而已。轻视数量小）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例2：讲笑<span class="highlight">啫</span>，唔好咁认真。（开玩笑而已，别认真。辩解）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button><br>
-                                例3：我想帮下你<span class="highlight">啫</span>。（我只是想帮帮你而已。委屈/辩解）<button class="play-btn" data-src="your-audio-file-6-1.mp3" title="播放语音">🔊</button>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子1: 十蚊<span class="highlight">啫</span>。（十块钱而已。轻视数量小）<button class="play-btn" data-src="patterncan_5-16.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子2: 讲笑<span class="highlight">啫</span>，唔好咁认真。（开玩笑而已，别认真。辩解）<button class="play-btn" data-src="patterncan_5-17.mp3">🔊</button></div>
+                                </div>
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence">例子3: 我想帮下你<span class="highlight">啫</span>。（我只是想帮帮你而已。委屈/辩解）<button class="play-btn" data-src="patterncan_5-18.mp3">🔊</button></div>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -475,16 +632,16 @@
                 <p>最常用的否定词是“唔”（不）和“冇”（没有）。发问时，非常喜欢使用逻辑清晰的“正反问句”（A-not-A），直接将肯定与否定并列来提问。</p>
                 <div class="example-box">
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>你<span class="highlight">食唔食</span>饭？</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_6-1.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 你<span class="highlight">吃不吃</span>饭？</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>你<span class="highlight"> 食唔食 </span>饭？</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_6-1.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 你<span class="highlight"> 吃不吃 </span>饭？</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>你<span class="highlight">有冇</span>钱？</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_6-2.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 你<span class="highlight">有没有</span>钱？</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>你<span class="highlight"> 有冇 </span>钱？</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_6-2.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 你<span class="highlight"> 有没有 </span>钱？</div>
                     </div>
                      <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤语</span> <span>呢件衫<span class="highlight">靓唔靓</span>？</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_6-3.mp3" title="播放语音">🔊</button></div>
-                        <div><span class="tag tag-man">普通话</span> 这件衣服<span class="highlight">漂不漂亮</span>？</div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>呢件衫<span class="highlight"> 靓唔靓 </span>？</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_6-3.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 这件衣服<span class="highlight"> 漂不漂亮 </span>？</div>
                     </div>
                 </div>
             </article>
