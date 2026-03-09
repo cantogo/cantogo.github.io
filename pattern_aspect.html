@@ -188,18 +188,29 @@
 
         .card-header {
             display: flex;
+            flex-direction: row;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 4px;
-        }
-
-        .combo-container {
-            display: flex;
-            align-items: center;
             gap: 6px;
             flex-wrap: wrap;
         }
 
+        /* 左侧元素组 */
+        .card-header-left {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 6px; /* 左侧元素之间的间距 */
+        }
+
+        /* 右侧按钮组 */
+        .card-header-right {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 6px; /* 按钮之间的间距 */
+        }        
         .combo-word {
             font-size: 1.3rem;
             font-weight: bold;
@@ -302,7 +313,6 @@
             color: #38A169;
             padding: 0 10px; /* 左右加宽形成长方形 */
             height: 28px;
-            margin-left: 50px;
         }
 
         .play-btn-word:hover {
@@ -604,14 +614,14 @@
 
         return `
             <div class="card-header">
-                <div class="combo-container">
+                <div class="card-header-left">
                     <span class="tag">${m.type}</span>
                     <span class="combo-word" style="margin-left:5px">${v.char}${m.char}</span>
                     <span class="combo-jp">(${v.jyutping} ${m.jyutping})</span>
-                    <span>
-                        <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon} 读词组</button>
-                        <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon} 读例子</button>
-                    </span>
+                </div>
+                <div class="card-header-right">
+                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon} 读词组</button>
+                    <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon} 读例子</button>
                 </div>
             </div>
             <div class="explanation">${data.expl}</div>
