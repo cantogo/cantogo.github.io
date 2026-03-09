@@ -170,7 +170,7 @@
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 16px;
         }
 
@@ -295,69 +295,69 @@
             fill: currentColor;
         }
 
-        /* 词语发音按钮 (浅蓝色系长方形) */
-        .play-btn-word {
-            background-color: #EBF8FF;
-            border: 1.5px solid #90CDF4;
-            color: #3182CE;
-            padding: 0 12px; /* 左右加宽形成长方形 */
-            height: 28px;
-        }
-
-        .play-btn-word:hover {
-            background-color: #BEE3F8;
-            border-color: #63B3ED;
-            color: #2B6CB0;
-            transform: translateY(-1px);
-        }
-
-        .play-btn-word svg {
-            width: 14px;
-            height: 14px;
-        }
-
         /* 例句发音按钮 (浅绿色系长方形) */
-        .play-btn-sentence {
+        .play-btn-word {
             background-color: #F0FFF4;
             border: 1.5px solid #9AE6B4;
             color: #38A169;
             padding: 0 10px; /* 左右加宽形成长方形 */
-            height: 24px;
-            margin-left: 4px;
+            height: 28px;
+            margin-left: 50px;
         }
 
-        .play-btn-sentence:hover {
+        .play-btn-word:hover {
             background-color: #C6F6D5;
             border-color: #68D391;
             color: #2F855A;
             transform: translateY(-1px);
         }
 
+        .play-btn-word svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* 词语发音按钮 (浅蓝色系长方形) */
+        .play-btn-sentence {
+            background-color: #EBF8FF;
+            border: 1.5px solid #90CDF4;
+            color: #3182CE;
+            padding: 0 10px; /* 左右加宽形成长方形 */
+            height: 28px;
+            margin-left: 8px;
+        }
+
+        .play-btn-sentence:hover {
+            background-color: #BEE3F8;
+            border-color: #63B3ED;
+            color: #2B6CB0;
+            transform: translateY(-1px);
+        }
+
         .play-btn-sentence svg {
-            width: 12px;
-            height: 12px;
+            width: 16px;
+            height: 16px;
         }
 
         /* 深色模式下的播放按钮颜色调整 */
         @media (prefers-color-scheme: dark) {
             .play-btn-word {
-                background-color: rgba(49, 130, 206, 0.15);
-                border-color: rgba(144, 205, 244, 0.4);
-                color: #90CDF4;
-            }
-            .play-btn-word:hover {
-                background-color: rgba(49, 130, 206, 0.3);
-                border-color: rgba(144, 205, 244, 0.6);
-            }
-            
-            .play-btn-sentence {
                 background-color: rgba(56, 161, 105, 0.15);
                 border-color: rgba(154, 230, 180, 0.4);
                 color: #9AE6B4;
             }
-            .play-btn-sentence:hover {
+            .play-btn-word:hover {
                 background-color: rgba(56, 161, 105, 0.3);
                 border-color: rgba(154, 230, 180, 0.6);
+            }
+            .play-btn-sentence {
+                background-color: rgba(49, 130, 206, 0.15);
+                border-color: rgba(144, 205, 244, 0.4);
+                color: #90CDF4;
+            }
+            .play-btn-sentence:hover {
+                background-color: rgba(49, 130, 206, 0.3);
+                border-color: rgba(144, 205, 244, 0.6);
             }
         }
 
@@ -376,100 +376,105 @@
             .verb-heoi { border-left: 4px solid #6B21A8; }
         }
 
-    /* Header CSS */
-    #navbar {
-      background: var(--bg-color);
-      padding: 0.75rem 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      max-width: 1000px;
-      margin: 0 auto;
-      margin-bottom: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
+        /* Header CSS */
+        #navbar {
+            width: 100%;
+            /* Explicitly set solid white background to prevent transparency */
+            background-color: var(--bg-color); 
+            /* Ensure header stays on top of scrolling content */
+            z-index: 1000; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+        }
 
-    #navbar nav {
-      position: absolute;
-      right: 2rem;
-      display: flex;
-      gap: 20px;
-    }
+        #navbar .title {
+            color: var(--text-main);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-left: 0;
+        }
 
-    #navbar .title {
-      color: var(--text-color);
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-left: 0;
-    }
+        #navbar a {
+            color: var(--text-main);
+        }
 
-    #navbar a {
-      text-decoration: none;
-      color: var(--text-color);
-      font-size: 1.0rem;
-      font-weight: 500;
-      margin-left: 0;
-    }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
 
-    .home-icon {
-      width: 43px;
-      height: 43px;
-      background: gba(255,255,255,0.2);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      border: 2px solid;
-    }
-        
-    .home-icon:hover {
-      background: lightgreen;
-      border-color: lightgreen;
-      transform: translateY(-2px);
-    }
-        
-    .home-icon svg {
-      width: 43px;
-      height: 43px;
-      fill: #0ea5e9;
-    }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+    
+        .home-icon {
+            width: 43px;
+            height: 43px;
+            background: gba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid;
+        }
+
+        .home-icon:hover {
+            background: lightgreen;
+            border-color: lightgreen;
+            transform: translateY(-2px);
+        }
+
+        /* SVG Icons */
+        svg {
+            width: 43px;
+            height: 43px;
+            fill: #0ea5e9;
+        }
 
     </style>
 </head>
 <body>
 
 <div class="container">
-        <header id="navbar">
-        <div class="title">&#9318 粤语体貌词</div>
-          <nav>
-            <div>
-              <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
-                </svg>
-              </a>
+
+    <header id="navbar">
+        <div class="header-content">
+            <!-- Top Bar containing Title and Home Icon -->
+            <div class="top-bar">
+                <div class="title">&#9318 粤语体貌词</div>
+                    <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                        </svg>
+                    </a>
             </div>
-          </nav>
-        </header>
+            <!-- Filter Container moved here -->
+            <div class="controls">
+                <div class="toggle-wrapper">
+                    <!-- 左右对调，并将 active 预设放在体貌词上 -->
+                    <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按「体貌词」分类</button>
+                    <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按「动词」分类</button>
+                </div>
+            </div>
+        </div>
+    </header>        
 
     <div class="grammar-intro">
         在粤语语法中，<strong>体貌词</strong> 是接在动词后面的后缀字，用来表示动作的<strong> 状态、阶段或时间进程 </strong>（例如：正在进行、已经完成、持续中、习惯性等）。与英语的「时态」不同，体貌词不绝对受限于过去、现在或未来，而是专注于描述动作本身的「面貌」。
     </div>    
     
-    <div class="controls">
-        <div class="toggle-wrapper">
-            <!-- 左右对调，并将 active 预设放在体貌词上 -->
-            <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按「体貌词」分类</button>
-            <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按「动词」分类</button>
-        </div>
-    </div>
-
     <div id="content-area">
         <!-- 内容将由 JavaScript 动态生成 -->
     </div>
@@ -600,11 +605,14 @@
         return `
             <div class="card-header">
                 <div class="combo-container">
-                    <span class="combo-word">${v.char}${m.char}</span>
+                    <span class="tag">${m.type}</span>
+                    <span class="combo-word" style="margin-left:5px">${v.char}${m.char}</span>
                     <span class="combo-jp">(${v.jyutping} ${m.jyutping})</span>
-                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon} 发音</button>
+                    <span>
+                        <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon} 读词组</button>
+                        <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon} 读例子</button>
+                    </span>
                 </div>
-                <span class="tag">${m.type}</span>
             </div>
             <div class="explanation">${data.expl}</div>
             <div class="sentences">
@@ -612,7 +620,6 @@
                     <span class="lang-label label-yue">粤</span>
                     <span class="sentence-text">
                         <span>${data.yue}</span>
-                        <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon}</button>
                     </span>
                 </div>
                 <div class="sentence-row">
@@ -651,7 +658,7 @@
         markers.forEach(m => {
             html += `<div class="section-group">
                         <div class="section-title">
-                            + ${m.char} <span class="jyutping-title">(${m.jyutping})</span> <span class="tag" style="margin-left:10px">${m.type}</span>
+                            <span class="tag">${m.type}</span> + ${m.char} <span class="jyutping-title" style="margin-left:5px">(${m.jyutping})</span>
                         </div>
                         <div class="marker-desc">
                             <strong>用法解释：</strong>${m.desc}
@@ -685,6 +692,6 @@
     renderByMarker();
 </script>
 
-
+<script src="js/navBar.js" defer></script>
 
 </body></html>

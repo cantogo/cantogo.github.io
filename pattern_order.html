@@ -155,30 +155,54 @@
             color: var(--title-color);
         }
 
-        /* 语音播放按钮样式 */
+        /* 播放按钮基础样式 (改为长方形) */
         .play-btn {
-            background: none;
-            border: none;
             cursor: pointer;
-            font-size: 1.1rem;
-            padding: 4px;
-            border-radius: 50%;
-            transition: transform 0.1s, background-color 0.2s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-left: 4px;
+            border-radius: 6px; /* 长方形微圆角 */
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 0.8rem;
+            font-weight: 600;
+            gap: 4px; /* 图标与文字的间距 */
+            background-color: #EBF8FF;
+            border: 1.5px solid #90CDF4;
+            color: #3182CE;
+            padding: 0 10px; /* 左右加宽形成长方形 */
+            height: 28px;
+            margin-left: 50px;
         }
-        
+
+        .play-btn svg {
+            fill: currentColor;
+            width: 16px;
+            height: 16px;
+        }
+
         .play-btn:hover {
-            background-color: rgba(107, 91, 149, 0.1);
-            transform: scale(1.1);
+            background-color: #BEE3F8;
+            border-color: #63B3ED;
+            color: #2B6CB0;
+            transform: translateY(-1px);
         }
 
-        .play-btn:active {
-            transform: scale(0.95);
-        }
 
+        /* 深色模式下的播放按钮颜色调整 */
+        @media (prefers-color-scheme: dark) {
+            .play-btn {
+                background-color: rgba(49, 130, 206, 0.15);
+                border-color: rgba(144, 205, 244, 0.4);
+                color: #90CDF4;
+            }
+            .play-btn:hover {
+                background-color: rgba(49, 130, 206, 0.3);
+                border-color: rgba(144, 205, 244, 0.6);
+            }
+        }
+                
         @media (max-width: 600px) {
             body { padding: 20px 15px; }
             .rule-card { padding: 20px; }
@@ -276,11 +300,11 @@
                 <p>在表达“给予”或“借用”等动作时，粤语习惯将<strong>物品（直接宾语）放在前面，人（间接宾语）放在后面</strong>。这与普通话“先人后物”的顺序刚好相反。</p>
                 <div class="example-box">
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>俾 <span class="highlight">本书</span> <span class="highlight">我</span>。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_1-1.mp3" title="播放语音">🔊</button></div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>俾 <span class="highlight">本书</span> <span class="highlight">我</span>。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_1-1.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>  读例子</button></div>
                         <div><span class="tag tag-man">普</span> 给 <span class="highlight">我</span> 一 <span class="highlight">本书</span>。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>借 <span class="highlight">支笔</span> 俾 <span class="highlight">佢</span> 啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_1-2.mp3" title="播放语音">🔊</button></div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>借 <span class="highlight">支笔</span> 俾 <span class="highlight">佢</span> 啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_1-2.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>  读例子</button></div>
                         <div><span class="tag tag-man">普</span> 借 <span class="highlight">他</span> 一 <span class="highlight">支笔</span> 吧。</div>
                     </div>
                 </div>
@@ -291,15 +315,15 @@
                 <p>粤语经常把修饰动词的副词（如：先、多、少）放在动词或宾语的<strong>后面</strong>，这与普通话将副词放在动词前面的习惯完全相反。</p>
                 <div class="example-box">
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>你走<span class="highlight"> 先 </span>啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-1.mp3" title="播放语音">🔊</button></div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>你走<span class="highlight"> 先 </span>啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-1.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>  读例子</button></div>
                         <div><span class="tag tag-man">普</span> 你<span class="highlight"> 先 </span>走吧。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>天气冻，着<span class="highlight"> 多 </span>件衫。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-2.mp3" title="播放语音">🔊</button></div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>天气冻，着<span class="highlight"> 多 </span>件衫。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-2.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>  读例子</button></div>
                         <div><span class="tag tag-man">普</span> 天气冷，<span class="highlight"> 多 </span>穿件衣服。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>饮<span class="highlight"> 少 </span>啲甜嘢啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-3.mp3" title="播放语音">🔊</button></div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>饮<span class="highlight"> 少 </span>啲甜嘢啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-3.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>  读例子</button></div>
                         <div><span class="tag tag-man">普</span> <span class="highlight"> 少 </span>喝点甜的吧。</div>
                     </div>
                 </div>
@@ -310,15 +334,15 @@
                <p>比较句的结构非常直接，公式为：<strong>A + 形容词 + 过 + B</strong>。这与普通话“A + 比 + B + 形容词”的语序不同。</p>
                 <div class="example-box">
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>我高<span class="highlight"> 过 </span>佢。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-1.mp3" title="播放语音">🔊</button></div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>我高<span class="highlight"> 过 </span>佢。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-1.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>  读例子</button></div>
                         <div><span class="tag tag-man">普</span> 我<span class="highlight"> 比 </span>他高。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>呢件衫靓<span class="highlight"> 过 </span>嗰件。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-2.mp3" title="播放语音">🔊</button></div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>呢件衫靓<span class="highlight"> 过 </span>嗰件。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-2.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>  读例子</button></div>
                         <div><span class="tag tag-man">普</span> 这件衣服<span class="highlight"> 比 </span>那件漂亮。</div>
                     </div>
                     <div class="example-item">
-                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>今日热<span class="highlight"> 过 </span>寻日。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-3.mp3" title="播放语音">🔊</button></div>
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>今日热<span class="highlight"> 过 </span>寻日。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-3.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>  读例子</button></div>
                         <div><span class="tag tag-man">普</span> 今天<span class="highlight"> 比 </span>昨天热。</div>
                     </div>
                 </div>
