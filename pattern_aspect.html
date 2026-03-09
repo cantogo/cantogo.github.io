@@ -1,0 +1,690 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粤语体貌词</title>
+    <style>
+        /* 基础变量与浅色模式 */
+        :root {
+            --bg-color: #F4F6F8;
+            --text-main: #4A4C4E;
+            --text-muted: #455267;
+            --card-bg: #FFFFFF;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            --border-color: #E2E8F0;
+            
+            --accent-color: #8DA9C4; 
+            --accent-hover: #7A96B1;
+            --accent-purple: #E8E2F8;
+            --accent-green: #E2F0CB;
+
+            --tag-bg: #e0dfdf;
+            --tag-text: #4A5568;
+
+            /* 动词专属颜色 (低饱和马卡龙色) */
+            --color-sik: #FDE8E8; /* 食 - 柔粉 */
+            --color-zo: #E1F0DA;  /* 做 - 柔绿 */
+            --color-tai: #E1EBF5; /* 睇 - 柔蓝 */
+            --color-maai: #FEF3C7;/* 买 - 柔黄 */
+            --color-heoi: #F3E8FD;/* 去 - 柔紫 */
+            
+        }
+
+        /* 深色模式 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1E1E24; 
+                --text-main: #E0E0E0;
+                --text-muted: #d0d4dc;
+                --card-bg: #2B2B32; 
+                --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+                --border-color: #383838; 
+                
+                --accent-color: #749dc1;
+                --accent-purple: #4A445D;
+                --accent-green: #3E5045;
+
+                --tag-bg: #505050;
+                --tag-text: #E0E0E0;
+
+                --color-sik: #3A2020; 
+                --color-zo: #203A20;  
+                --color-tai: #202A3A; 
+                --color-maai: #3A3520;
+                --color-heoi: #2D203A;
+                
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* 语法简介区块 */
+        .grammar-intro {
+            background-color: var(--card-bg);
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            text-align: left;
+        }
+
+        .grammar-intro strong {
+            color: var(--accent-color);
+        }
+
+        /* 切换开关设计 */
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .toggle-wrapper {
+            display: inline-flex;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 4px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 26px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .toggle-btn.active {
+            background-color: var(--accent-color);
+            color: #FFF;
+        }
+
+        /* 矩阵网格布局 */
+        .section-group {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .jyutping-title {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .marker-desc, .verb-desc {
+            font-size: 0.95rem;
+            font-weight: normal;
+            color: var(--text-muted);
+            width: 100%;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 16px;
+        }
+
+        /* 卡片设计 */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .combo-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .combo-word {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .combo-jp {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .tag {
+            font-size: 0.9rem;
+            background-color: var(--tag-bg);
+            color: var(--tag-text);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .explanation {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            background-color: rgba(0,0,0,0.05);
+            padding: 10px;
+            border-radius: 8px;
+            line-height: 1.5;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .explanation { background-color: rgba(255,255,255,0.09); }
+        }
+
+        .sentences {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+
+        .sentence-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .lang-label {
+            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 0px;
+        }
+
+        .label-yue  { background-color: var(--accent-purple); color: var(--text-main); }
+        .label-pu { background-color: var(--accent-green); color: var(--text-main); }
+
+        .sentence-text {
+            color: var(--text-muted);
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .sentence-text strong {
+            color: var(--text-main);
+            font-weight: 600;
+            border-bottom: 1px dashed var(--accent-color);
+        }
+
+        /* 播放按钮基础样式 (改为长方形) */
+        .play-btn {
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px; /* 长方形微圆角 */
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 0.8rem;
+            font-weight: 600;
+            gap: 4px; /* 图标与文字的间距 */
+        }
+
+        .play-btn svg {
+            fill: currentColor;
+        }
+
+        /* 词语发音按钮 (浅蓝色系长方形) */
+        .play-btn-word {
+            background-color: #EBF8FF;
+            border: 1.5px solid #90CDF4;
+            color: #3182CE;
+            padding: 0 12px; /* 左右加宽形成长方形 */
+            height: 28px;
+        }
+
+        .play-btn-word:hover {
+            background-color: #BEE3F8;
+            border-color: #63B3ED;
+            color: #2B6CB0;
+            transform: translateY(-1px);
+        }
+
+        .play-btn-word svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* 例句发音按钮 (浅绿色系长方形) */
+        .play-btn-sentence {
+            background-color: #F0FFF4;
+            border: 1.5px solid #9AE6B4;
+            color: #38A169;
+            padding: 0 10px; /* 左右加宽形成长方形 */
+            height: 24px;
+            margin-left: 4px;
+        }
+
+        .play-btn-sentence:hover {
+            background-color: #C6F6D5;
+            border-color: #68D391;
+            color: #2F855A;
+            transform: translateY(-1px);
+        }
+
+        .play-btn-sentence svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        /* 深色模式下的播放按钮颜色调整 */
+        @media (prefers-color-scheme: dark) {
+            .play-btn-word {
+                background-color: rgba(49, 130, 206, 0.15);
+                border-color: rgba(144, 205, 244, 0.4);
+                color: #90CDF4;
+            }
+            .play-btn-word:hover {
+                background-color: rgba(49, 130, 206, 0.3);
+                border-color: rgba(144, 205, 244, 0.6);
+            }
+            
+            .play-btn-sentence {
+                background-color: rgba(56, 161, 105, 0.15);
+                border-color: rgba(154, 230, 180, 0.4);
+                color: #9AE6B4;
+            }
+            .play-btn-sentence:hover {
+                background-color: rgba(56, 161, 105, 0.3);
+                border-color: rgba(154, 230, 180, 0.6);
+            }
+        }
+
+        /* 颜色分类标识 */
+        .verb-sik { border-left: 4px solid #FCA5A5; }
+        .verb-zo { border-left: 4px solid #86EFAC; }
+        .verb-tai { border-left: 4px solid #93C5FD; }
+        .verb-maai { border-left: 4px solid #FDE047; }
+        .verb-heoi { border-left: 4px solid #D8B4FE; }
+        
+        @media (prefers-color-scheme: dark) {
+            .verb-sik { border-left: 4px solid #991B1B; }
+            .verb-zo { border-left: 4px solid #166534; }
+            .verb-tai { border-left: 4px solid #1E3A8A; }
+            .verb-maai { border-left: 4px solid #854D0E; }
+            .verb-heoi { border-left: 4px solid #6B21A8; }
+        }
+
+    /* Header CSS */
+    #navbar {
+      background: var(--bg-color);
+      padding: 0.75rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    #navbar nav {
+      position: absolute;
+      right: 2rem;
+      display: flex;
+      gap: 20px;
+    }
+
+    #navbar .title {
+      color: var(--text-color);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-left: 0;
+    }
+
+    #navbar a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 1.0rem;
+      font-weight: 500;
+      margin-left: 0;
+    }
+
+    .home-icon {
+      width: 43px;
+      height: 43px;
+      background: gba(255,255,255,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid;
+    }
+        
+    .home-icon:hover {
+      background: lightgreen;
+      border-color: lightgreen;
+      transform: translateY(-2px);
+    }
+        
+    .home-icon svg {
+      width: 43px;
+      height: 43px;
+      fill: #0ea5e9;
+    }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+        <header id="navbar">
+        <div class="title">&#9318 粤语体貌词</div>
+          <nav>
+            <div>
+              <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                </svg>
+              </a>
+            </div>
+          </nav>
+        </header>
+
+    <div class="grammar-intro">
+        在粤语语法中，<strong>体貌词</strong> 是接在动词后面的后缀字，用来表示动作的<strong> 状态、阶段或时间进程 </strong>（例如：正在进行、已经完成、持续中、习惯性等）。与英语的「时态」不同，体貌词不绝对受限于过去、现在或未来，而是专注于描述动作本身的「面貌」。
+    </div>    
+    
+    <div class="controls">
+        <div class="toggle-wrapper">
+            <!-- 左右对调，并将 active 预设放在体貌词上 -->
+            <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按「体貌词」分类</button>
+            <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按「动词」分类</button>
+        </div>
+    </div>
+
+    <div id="content-area">
+        <!-- 内容将由 JavaScript 动态生成 -->
+    </div>
+</div>
+
+<script>
+    // 基础数据定义 (加入粤拼)
+    const verbs = [
+        { char: '食', jyutping: 'sik6', meaning: '吃', class: 'verb-sik', mp3: '1' },
+        { char: '做', jyutping: 'zou6', meaning: '做', class: 'verb-zo', mp3: '2' },
+        { char: '睇', jyutping: 'tai2', meaning: '看', class: 'verb-tai', mp3: '3' },
+        { char: '买', jyutping: 'maai5', meaning: '买', class: 'verb-maai', mp3: '4' },
+        { char: '去', jyutping: 'heoi3', meaning: '去', class: 'verb-heoi', mp3: '5' }
+    ];
+
+    // 每个体貌词的总体语法解释 (加入粤拼)
+    const markers = [
+        { char: '紧', jyutping: 'gan2', type: '进行体', desc: '表示动作正在进行中。相当于普通话的「正在...」或「...着」。', mp3: '1' },
+        { char: '咗', jyutping: 'zo2', type: '完成体', desc: '表示动作已经发生或完成。相当于普通话的「了」。', mp3: '2' },
+        { char: '完', jyutping: 'jyun4', type: '完结体', desc: '表示动作的过程已经彻底结束。相当于普通话的「完」。', mp3: '3' },
+        { char: '晒', jyutping: 'saai3', type: '全部体', desc: '表示动作涵盖了全部对象，或毫无保留。相当于普通话的「光了」、「全...了」。', mp3: '4' },
+        { char: '埋', jyutping: 'maai4', type: '附加体', desc: '表示动作顺便涵盖剩余的部分，或连同其他事物一起进行。相当于普通话的「顺便...」、「连同...也」。', mp3: '5' },
+        { char: '过', jyutping: 'gwo3', type: '经历体', desc: '表示过去曾经有过该动作的经历。相当于普通话的「过」。', mp3: '6' },
+        { char: '住', jyutping: 'zyu6', type: '持续体', desc: '表示动作或状态的持续，常作暂时性或过渡性的安排。相当于普通话的「先...着」。', mp3: '7' },
+        { char: '开', jyutping: 'hoi1', type: '习惯体', desc: '表示一直以来习惯进行的动作或常态。普通话多译为「习惯...」、「一直...」。', mp3: '8' },
+        { char: '定', jyutping: 'ding6', type: '预备体', desc: '表示为了未来的需要而提前做好该动作。相当于普通话的「提前...好」。', mp3: '9' },
+        { char: '吓', jyutping: 'haa5', type: '短暂体', desc: '表示动作短暂、随意或尝试性质。相当于普通话的「...一下」。', mp3: '10' },
+        { char: '返', jyutping: 'faan1', type: '回复体', desc: '表示动作回到原来的状态，或重新进行以前的动作。相当于普通话的「重新...」、「...回」。', mp3: '11' },
+        { char: '亲', jyutping: 'can1', type: '条件体', desc: '表示只要发生该动作，就必定会引发某种结果。相当于普通话的「每次...都」、「每逢...就」。', mp3: '12' }
+    ];
+
+    // 详尽数据库：每个组合都有独立的解释、粤语例句、普通话翻译
+    const db = {
+        '食': {
+            '紧': { expl: '正在吃。强调进食的动作此刻正在进行中。', yue: '我<strong>食紧</strong>饭呀，转头再打俾你啦。', pu: '我正在吃饭，晚点再打给你吧。' },
+            '咗': { expl: '吃过了。强调吃这个动作已经发生或完成。', yue: '我朝早<strong>食咗</strong>个面，依家仲未肚饿。', pu: '我早上吃了个面，现在还不饿。' },
+            '完': { expl: '吃完了。强调进食的过程已经彻底结束。', yue: '你<strong>食完</strong>未呀？我哋要出发喇。', pu: '你吃完了吗？我们要出发了。' },
+            '晒': { expl: '全部吃光。强调食物被一点不剩地消耗殆尽。', yue: '啲雪糕俾细佬<strong>食晒</strong>喇！', pu: '那些冰淇淋被弟弟全吃光了！' },
+            '埋': { expl: '顺便吃掉、连同剩下的也一起吃完不留。', yue: '唔好嘥，你<strong>食埋</strong>最后呢件蛋糕啦。', pu: '别浪费，你把最后这块蛋糕也吃了吧。' },
+            '过': { expl: '曾经吃过。强调过去有过品尝某种食物的经验。', yue: '我未<strong>食过</strong>呢种生果，好唔好食㗎？', pu: '我没吃过这种水果，好吃吗？' },
+            '住': { expl: '先吃着。作为暂时充饥或等待时的过渡动作。', yue: '啲餸未上齐，你哋<strong>食住</strong>先啦。', pu: '菜还没上齐，你们先吃着吧。' },
+            '开': { expl: '习惯吃、一直以来的饮食偏好。', yue: '我平时<strong>食开</strong>清淡，顶唔顺太辣。', pu: '我平时习惯吃清淡的，受不了太辣。' },
+            '定': { expl: '提前吃好。为了应对接下来的状况而预先吃。', yue: '一阵要搭船，我<strong>食定</strong>晕浪丸先。', pu: '等下要坐船，我先提前吃好晕船药。' },
+            '吓': { expl: '随便吃吃、偶尔吃一点当消遣。', yue: '放假喺屋企睇戏，<strong>食吓</strong>零食，好放松。', pu: '放假在家看戏，随便吃点零食，很放松。' },
+            '返': { expl: '重新吃回（以前吃过的东西）或恢复饮食能力。', yue: '病好喇，终于可以<strong>食返</strong>海鲜喇！', pu: '病好了，终于可以重新吃海鲜啦！' },
+            '亲': { expl: '每次吃都会...。强调只要一吃某物，必然引发特定结果。', yue: '我<strong>食亲</strong>辣嘢都会肚痛。', pu: '我每次吃辣的东西都会肚子痛。' }
+        },
+        '做': {
+            '紧': { expl: '正在做。强调工作或事情此刻正在进行中。', yue: '我<strong>做紧</strong>嘢呀，晏啲再倾啦。', pu: '我正在做事，晚点再聊吧。' },
+            '咗': { expl: '做了。强调某项任务或动作已经发生。', yue: '我今朝<strong>做咗</strong>半个钟头运动。', pu: '我今早做了半个小时运动。' },
+            '完': { expl: '做完了。强调任务或动作已经彻底结束。', yue: '你<strong>做完</strong>功课未呀？', pu: '你做完作业了吗？' },
+            '晒': { expl: '全部做完。强调所有任务清单上的事情毫无遗漏地完成了。', yue: '今日嘅工作<strong>做晒</strong>喇，可以准时收工！', pu: '今天的工作全做完了，可以准时下班！' },
+            '埋': { expl: '顺便做、连同剩下的部分一起完成。', yue: '你帮我<strong>做埋</strong>呢份文件啦。', pu: '你帮我顺便把这份文件也做了吧。' },
+            '过': { expl: '曾经做过。强调过去有过从事某项工作或事情的经验。', yue: '我以前<strong>做过</strong>侍应，知呢行有几辛苦。', pu: '我以前做过服务员，知道这行多辛苦。' },
+            '住': { expl: '先做着。作为暂时性的安排或过渡状态。', yue: '老板未返，你<strong>做住</strong>手头上嘅事先啦。', pu: '老板还没回来，你先做着手头上的事吧。' },
+            '开': { expl: '习惯做、一直从事的熟练领域。', yue: '我<strong>做开</strong>文职，未试过做销售。', pu: '我一直习惯做文职，没试过做销售。' },
+            '定': { expl: '提前做好。为了将来的需要预先完成任务。', yue: '听日开会嘅资料，我已经<strong>做定</strong>喇。', pu: '明天开会的资料，我已经提前做好了。' },
+            '吓': { expl: '随便做做、当作消遣或短暂尝试。', yue: '得闲无事就<strong>做吓</strong>家务当运动啦。', pu: '闲着没事就随便做点家务当运动啦。' },
+            '返': { expl: '重新做回（以前做过的事或职业）。', yue: '转咗几次行，最后都系<strong>做返</strong>老本行。', pu: '转了几次行，最后还是做回老本行。' },
+            '亲': { expl: '每次做都会...。强调只要一做某事，必然引发特定结果。', yue: '我<strong>做亲</strong>运动都会流好多汗。', pu: '我每次做运动都会流很多汗。' }
+        },
+        '睇': {
+            '紧': { expl: '正在看。强调观看或阅读的动作正在进行。', yue: '我<strong>睇紧</strong>电视呀，唔好嘈。', pu: '我正在看电视，别吵。' },
+            '咗': { expl: '看了。强调观看的动作已经发生（也常用于“看了医生”）。', yue: '我今朝<strong>睇咗</strong>医生，食咗药好啲喇。', pu: '我今早看了医生，吃了药好点了。' },
+            '完': { expl: '看完了。强调观看或阅读的过程已经结束。', yue: '你<strong>睇完</strong>份报纸未呀？', pu: '你看完这份报纸了吗？' },
+            '晒': { expl: '全部看光。强调剧集、书籍等内容毫无遗漏地全部看完了。', yue: '呢套剧得十集，我寻晚一口气<strong>睇晒</strong>。', pu: '这部剧只有十集，我昨晚一口气全看完了。' },
+            '埋': { expl: '顺便看完、连同剩下的部分一起看完再做其他事。', yue: '等我<strong>睇埋</strong>呢集先去冲凉啦。', pu: '等我顺便把这集看完再去洗澡吧。' },
+            '过': { expl: '曾经看过。强调过去有过观看或阅读的经验。', yue: '呢本书我以前<strong>睇过</strong>，几好睇㗎。', pu: '这本书我以前看过，挺好看的。' },
+            '住': { expl: '先看着（或帮忙盯着/照顾着）。作为暂时的动作。', yue: '你<strong>睇住</strong>餐牌先，我去个洗手间。', pu: '你先看着菜单，我去个洗手间。' },
+            '开': { expl: '习惯看、一直光顾（某位医生）或一直追看的类型。', yue: '我平时<strong>睇开</strong>陈医生，唔想换人。', pu: '我平时习惯看陈医生，不想换人。' },
+            '定': { expl: '提前看好。预先查阅资料或看准目标作准备。', yue: '听日去旅行，我已经<strong>睇定</strong>地图喇。', pu: '明天去旅行，我已经提前看好地图了。' },
+            '吓': { expl: '随便看看、短暂地浏览一下。', yue: '我入去呢间铺头<strong>睇吓</strong>有咩买先。', pu: '我进去这家店随便看看有什么买的。' },
+            '返': { expl: '重新看回（以前看过的东西）、重温。', yue: '得闲<strong>睇返</strong>啲旧相，真系怀念。', pu: '有空重新看看些旧照片，真怀念。' },
+            '亲': { expl: '每次看都会...。强调只要一看某物，必然引发特定反应。', yue: '我<strong>睇亲</strong>呢套戏都会喊。', pu: '我每次看这部戏都会哭。' }
+        },
+        '买': {
+            '紧': { expl: '正在买。强调购买的动作此刻正在进行中。', yue: '我喺超市<strong>买紧</strong>嘢，转头覆你。', pu: '我正在超市买东西，晚点回复你。' },
+            '咗': { expl: '买了。强调购买行为已经发生，物品已归属自己。', yue: '我<strong>买咗</strong>演唱会飞喇，今晚一齐去。', pu: '我买了演唱会门票了，今晚一起去。' },
+            '完': { expl: '买完了。强调购物的过程已经结束。', yue: '你<strong>买完</strong>餸未呀？快啲返屋企啦。', pu: '你买完菜了吗？快点回家吧。' },
+            '晒': { expl: '全部买光。强调清单上的东西全买齐了，或商品被抢购一空。', yue: '啲特价货俾人<strong>买晒</strong>喇！', pu: '那些特价货被别人全买光了！' },
+            '埋': { expl: '顺便买、连同其他东西一起附加购买。', yue: '你去便利店，顺便帮我<strong>买埋</strong>支水。', pu: '你去便利店，顺便帮我把水也买了吧。' },
+            '过': { expl: '曾经买过。强调过去有过购买某物的经验。', yue: '我以前<strong>买过</strong>呢只牌子，觉得麻麻哋。', pu: '我以前买过这个牌子，觉得一般般。' },
+            '住': { expl: '先买着。作为暂时的应对措施，先买一部分顶替。', yue: '唔知够唔够食，我哋<strong>买住</strong>两盒先啦。', pu: '不知道够不够吃，我们先买两盒顶着吧。' },
+            '开': { expl: '习惯买、一直光顾的店铺或一直购买的品牌。', yue: '我<strong>买开</strong>呢间铺头啲生果，贪佢新鲜。', pu: '我习惯买这间店的水果，图它新鲜。' },
+            '定': { expl: '提前买好。预先买来作准备以应对未来情况。', yue: '听日打风，我已经<strong>买定</strong>杯面喇。', pu: '明天刮台风，我已经提前买好泡面了。' },
+            '吓': { expl: '随便买买、偶尔买一点哄自己开心。', yue: '平时行街见到靓衫就<strong>买吓</strong>啰。', pu: '平时逛街见到漂亮衣服就随便买买啰。' },
+            '返': { expl: '重新买回。尝试其他后，再次购买以前用过的同款。', yue: '试完新牌子唔好用，最后都系<strong>买返</strong>旧嗰只。', pu: '试完新牌子不好用，最后还是买回旧的那种。' },
+            '亲': { expl: '每次买都会...。强调每逢购买某物，就会引发固定结果。', yue: '真系黑仔，我<strong>买亲</strong>边只股票，嗰只就跌。', pu: '真倒霉，我每次买哪只股票，那只就跌。' }
+        },
+        '去': {
+            '紧': { expl: '正在去。强调前往某个目的地的动作正在进行中，即在路途上。', yue: '我而家<strong>去紧</strong>搭车，大概十个字后到。', pu: '我现在正在去坐车，大概五十分钟后到。' },
+            '咗': { expl: '去了。强调前往某地的动作已经发生，或者人已经离开不在原处。', yue: '佢啱啱<strong>去咗</strong>洗手间，你等佢一阵啦。', pu: '他刚刚去了洗手间，你等他一会儿吧。' },
+            '完': { expl: '去完了。强调已经结束了某个行程或活动并返回。', yue: '我啱啱<strong>去完</strong>日本旅行返嚟，买咗好多手信。', pu: '我刚刚去完日本旅行回来，买了很多伴手礼。' },
+            '晒': { expl: '全去了。强调所有人都前往了某地，或者所有计划的目的地都已经去过。', yue: '啲同事<strong>去晒</strong>食饭，得返我一个喺公司。', pu: '同事们全去吃饭了，只剩我一个人在公司。' },
+            '埋': { expl: '顺便去、连同剩下的地方也一起去。', yue: '既然出开街，不如<strong>去埋</strong>超市买日用品啦。', pu: '既然出门了，不如顺便去超市买日用品吧。' },
+            '过': { expl: '曾经去过。强调过去有前往某个地方的经历。', yue: '我以前<strong>去过</strong>呢间餐厅，啲嘢食几好味㗎。', pu: '我以前去过这家餐厅，东西挺好吃的。' },
+            '住': { expl: '先去着。作为暂时的安排，先前往某地逗留或等待。', yue: '酒店仲未可以check-in，我哋<strong>去住</strong>商场行街先啦。', pu: '酒店还不能入住，我们暂时先去商场逛街吧。' },
+            '开': { expl: '习惯去（某地），或者刚好顺路前往某地。', yue: '我平时<strong>去开</strong>楼下间茶餐厅食早餐，贪佢够近。', pu: '我平时习惯去楼下那家茶餐厅吃早餐，图它够近。' },
+            '定': { expl: '提前去。为了避开人潮或应对突发情况而预先前往某地。', yue: '听日会场实好多人，我哋提早出发<strong>去定</strong>霸位先。', pu: '明天会场肯定很多人，我们提早出发先去占位置。' },
+            '吓': { expl: '随便去去、偶尔去逛逛当作消遣。', yue: '放假无嘢做，不如去离岛行吓、<strong>去吓</strong>沙滩啦。', pu: '放假没事做，不如去离岛走走、随便去去沙滩啦。' },
+            '返': { expl: '重新去回（以前去过的地方）。', yue: '兜咗好耐都揾唔到路，不如<strong>去返</strong>头先个路口再睇过。', pu: '绕了很久都找不到路，不如回去刚才那个路口再看看。' },
+            '亲': { expl: '每次去都会...。强调只要一前往某地，必然会发生特定情况。', yue: '我<strong>去亲</strong>主题公园都会落雨，真系黑仔。', pu: '我每次去主题公园都会下雨，真倒霉。' }
+        }
+    };
+
+    // SVG 播放图标
+    const playIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+
+    // 播放音频函数
+    function playAudio(audioPath) {
+        const audio = new Audio(audioPath);
+        audio.play().catch(e => {
+            console.warn(`无法播放音频: ${audioPath}。请确保档案存在。`, e);
+        });
+    }
+
+    const contentArea = document.getElementById('content-area');
+
+    // 生成卡片内部HTML的辅助函数 (加入了「读音」文字使长方形更自然)
+    function generateCardContent(v, m) {
+        const data = db[v.char][m.char];
+        
+        // 组合音频路径
+        const wordAudioPath = `https://cantogo.github.io/voice/pattern_aspect_a_${v.mp3}_${m.mp3}.mp3`;
+        // 例句音频路径
+        const sentenceAudioPath = `https://cantogo.github.io/voice/pattern_aspect_b_${v.mp3}_${m.mp3}.mp3`;
+
+        return `
+            <div class="card-header">
+                <div class="combo-container">
+                    <span class="combo-word">${v.char}${m.char}</span>
+                    <span class="combo-jp">(${v.jyutping} ${m.jyutping})</span>
+                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon} 发音</button>
+                </div>
+                <span class="tag">${m.type}</span>
+            </div>
+            <div class="explanation">${data.expl}</div>
+            <div class="sentences">
+                <div class="sentence-row">
+                    <span class="lang-label label-yue">粤</span>
+                    <span class="sentence-text">
+                        <span>${data.yue}</span>
+                        <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon}</button>
+                    </span>
+                </div>
+                <div class="sentence-row">
+                    <span class="lang-label label-pu">普</span>
+                    <span class="sentence-text">${data.pu}</span>
+                </div>
+            </div>
+        `;
+    }
+
+    // 渲染按「动词」分类的视图
+    function renderByVerb() {
+        let html = '';
+        verbs.forEach(v => {
+            html += `<div class="section-group">
+                        <div class="section-title">
+                            ${v.char} <span class="jyutping-title">(${v.jyutping})</span>
+                        </div>
+                        <div class="verb-desc">
+                            <span style="font-size: 0.95rem; color: var(--text-muted);"><strong>动词意思：</strong>${v.meaning}</span>
+                        </div>
+                        <div class="grid">`;
+            markers.forEach(m => {
+                html += `<div class="card ${v.class}">
+                            ${generateCardContent(v, m)}
+                         </div>`;
+            });
+            html += `</div></div>`;
+        });
+        contentArea.innerHTML = html;
+    }
+
+    // 渲染按「体貌词」分类的视图
+    function renderByMarker() {
+        let html = '';
+        markers.forEach(m => {
+            html += `<div class="section-group">
+                        <div class="section-title">
+                            + ${m.char} <span class="jyutping-title">(${m.jyutping})</span> <span class="tag" style="margin-left:10px">${m.type}</span>
+                        </div>
+                        <div class="marker-desc">
+                            <strong>用法解释：</strong>${m.desc}
+                        </div>
+                        <div class="grid">`;
+            verbs.forEach(v => {
+                html += `<div class="card ${v.class}">
+                            ${generateCardContent(v, m)}
+                         </div>`;
+            });
+            html += `</div></div>`;
+        });
+        contentArea.innerHTML = html;
+    }
+
+    // 切换视图逻辑
+    function switchView(mode) {
+        document.getElementById('btn-verb').classList.remove('active');
+        document.getElementById('btn-marker').classList.remove('active');
+        
+        if (mode === 'verb') {
+            document.getElementById('btn-verb').classList.add('active');
+            renderByVerb();
+        } else {
+            document.getElementById('btn-marker').classList.add('active');
+            renderByMarker();
+        }
+    }
+
+    // 初始化预设视图 (改为预设显示体貌词分类)
+    renderByMarker();
+</script>
+
+
+
+</body></html>

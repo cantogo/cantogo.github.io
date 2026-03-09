@@ -1,0 +1,714 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粤语夹杂英文</title>
+    <style>
+        /* 浅色模式 (默认) */
+        :root {
+            --bg-color: #F9F8F6;
+            --text-color: #4A4C4E;
+            --card-bg: #FFFFFF;
+            --title-color: #6B5B95;
+            --accent-purple: #E8E2F8;
+            --accent-green: #E2F0CB;
+            --accent-peach: #FFEDDA;
+            --example-bg: #F4F4F4;
+            --border-radius: 16px;
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            --btn-bg: #E0E0E0;
+            --btn-active-bg: #6B5B95;
+            --btn-active-text: #FFFFFF;
+
+            --accent-color: #8DA9C4; 
+            --accent-hover: #7A96B1;
+        }
+
+        /* 深色模式 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1E1E24;
+                --text-color: #E0E0E0;
+                --card-bg: #2B2B32;
+                --title-color: #A594F9;
+                --accent-purple: #4A445D;
+                --accent-green: #3E5045;
+                --accent-peach: #5C4B43;
+                --example-bg: #222228;
+                --shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+                --btn-bg: #3A3A42;
+                --btn-active-bg: #A594F9;
+                --btn-active-text: #1E1E24;
+
+                --accent-color: #749dc1;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            padding: 1.5vw 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            max-width: 1000px;
+            margin: 0 auto 10px auto;
+            text-align: center;
+        }
+
+         /* 语法简介区块 */
+        .grammar-intro {
+            background-color: var(--card-bg);
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 50px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            text-align: left;
+        }
+
+        .grammar-intro strong {
+            color: var(--accent-color);
+        }
+
+        .rule-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            border-left: 8px solid var(--accent-purple);
+            transition: transform 0.2s ease;
+        }
+
+        .rule-card:nth-child(3n+1) { border-left-color: var(--accent-purple); }
+        .rule-card:nth-child(3n+2) { border-left-color: var(--accent-green); }
+        .rule-card:nth-child(3n+3) { border-left-color: var(--accent-peach); }
+
+        .rule-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rule-card p {
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        /* 切换按钮样式 */
+        .toggle-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            background-color: var(--example-bg);
+            padding: 6px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+
+        .toggle-btn {
+            border: none;
+            background-color: transparent;
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.active {
+            background-color: var(--btn-active-bg);
+            color: var(--btn-active-text);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .example-box {
+            background-color: var(--example-bg);
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .example-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed rgba(136, 136, 136, 0.3);
+        }
+
+        .example-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .yue-sentence {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 4px;
+            width: 40px;
+            text-align: center;
+        }
+
+        .tag-yue { background-color: var(--accent-purple); color: var(--text-color); }
+        .tag-man { background-color: var(--accent-green); color: var(--text-color); }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--title-color);
+        }
+
+        ul.bullet-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul.bullet-list > li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-bottom: 1px solid rgba(136, 136, 136, 0.15);
+            padding-bottom: 16px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        ul.bullet-list > li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        ul.bullet-list > li::before {
+            content: "•";
+            color: var(--title-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            top: -4px;
+            font-size: 1.2rem;
+        }
+        
+        .sub-examples {
+            padding-left: 12px;
+            font-size: 0.9rem;
+            border-left: 2px solid var(--accent-purple);
+            margin-top: 7px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .sub-example-pair {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .man-translation {
+            color: #666;
+            padding-left: 2px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .man-translation { color: #d0d4dc; }
+        }
+
+        /* 语音播放按钮样式 */
+        .play-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px;
+            border-radius: 50%;
+            transition: transform 0.1s, background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+        }
+        
+        .play-btn:hover {
+            background-color: rgba(107, 91, 149, 0.1);
+            transform: scale(1.1);
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 15px; }
+            .rule-card { padding: 20px; }
+            .toggle-container { width: 100%; display: flex; }
+            .toggle-btn { flex: 1; text-align: center; }
+        }
+
+    /* Header CSS */
+    #navbar {
+      background: var(--bg-color);
+      padding: 0.75rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    #navbar nav {
+      position: absolute;
+      right: 2rem;
+      display: flex;
+      gap: 20px;
+    }
+
+    #navbar .title {
+      color: var(--text-color);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-left: 0;
+    }
+
+    #navbar a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 1.0rem;
+      font-weight: 500;
+      margin-left: 0;
+    }
+
+    .home-icon {
+      width: 43px;
+      height: 43px;
+      background: gba(255,255,255,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid;
+    }
+        
+    .home-icon:hover {
+      background: lightgreen;
+      border-color: lightgreen;
+      transform: translateY(-2px);
+    }
+        
+    .home-icon svg {
+      width: 43px;
+      height: 43px;
+      fill: #0ea5e9;
+    }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header id="navbar">
+        <div class="title">&#9321 粤语夹杂英文</div>
+          <nav>
+            <div>
+              <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                </svg>
+              </a>
+            </div>
+          </nav>
+        </header>
+
+        <div class="grammar-intro">
+            <strong>粤语夹杂英文 </strong> 是一种非常普遍的语言现象，尤其在职场。表面上看似随意，但其实有着一定的语法规律。句子的核心文法结构仍然是「粤语」，<strong>英文字只是作为词汇被「镶嵌」到粤语的语法框架中</strong>。以下是粤语夹杂英文中最常见的语法规律。
+        </div> 
+
+        <main>
+            <article class="rule-card">
+                <h2>1. 英文动词 + 粤语体貌词</h2>
+                <p>在职场和日常交流中，粤语使用者经常将特定的英文动词（如: book, check, confirm, hold, keep, send, update）直接当作粤语动词使用，并在其后无缝接上粤语的体貌词（如: 紧、咗、定、过、返、住、晒）。</p>
+                
+                <!-- 切换按钮 -->
+                <div class="toggle-container">
+                    <button class="toggle-btn active" id="btn-particle" onclick="renderData('particle')">按体貌词排列</button>
+                    <button class="toggle-btn" id="btn-verb" onclick="renderData('verb')">按英文动词排列</button>
+                </div>
+
+                <div class="example-box" style="background-color: transparent; padding: 0;">
+                    <ul class="bullet-list" id="dynamic-list">
+                        <!-- 内容由 JavaScript 动态生成 -->
+                    </ul>
+                </div>
+            </article>
+
+            <article class="rule-card">
+                <h2>2. 粤语动词 + 英文名词</h2>
+                <p>除了将英文动词粤语化，职场中更常见的是使用地道的粤语单音节动词，直接搭配英文职场名词。</p>
+                
+                <div class="example-box" style="background-color: transparent; padding: 0;">
+                    <ul class="bullet-list">
+                        <li>
+                            <div><strong>1. 交 report (提交报告)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 今日做完系统年检，下个礼拜要 <span class="highlight">交 report</span> 。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-1.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 今天完成了系统年检，下周要提交报告。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>2. 入 data (录入数据)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 呢两日净系坐喺度 <span class="highlight">入 data</span>，做到眼都花。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-2.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 这两天光是坐在这里录入数据，弄得眼都花了。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>3. 签 contract (签合同)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 个客终于肯 <span class="highlight">签 contract</span> 喇，今个月够数啦！
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-3.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 客户终于肯签合同了，这个月业绩达标啦！</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>4. 覆 message (回复信息)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 我开紧会，转头先 <span class="highlight">覆 message</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-4.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 我正在开会，晚点再回复信息。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>5. 填 form (填写表格)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 申请报销要先 <span class="highlight">填 form</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-5.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 申请报销要先填写表格。</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="rule-card">
+                <h2>3. 英文动词 + 粤语名词</h2>
+                <p>在职场交流中，除了“粤语动词+英文名词”，同样常见的是直接使用英文动词搭配粤语名词。</p>
+                
+                <div class="example-box" style="background-color: transparent; padding: 0;">
+                    <ul class="bullet-list">
+                         <li>
+                            <div><strong>1. book 房 (预订会议室)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 听日下昼开会，记得 <span class="highlight">book 房</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-1.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 明天下午开会，记紧预订会议室。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>2. claim 钱 (报销款项)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 出差搭的士啲收据记得留低 <span class="highlight">claim 钱</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-2.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 出差打车的收据记得留下来报销。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>3. check 数 (核对账目/数据)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 会计部月底要 <span class="highlight">check 数</span>，大家交齐单未？
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-3.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 财务部月底要核对账目，大家交齐票据了吗？</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>4. set 场 (布置场地)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 听日有发布会，今晚大家要留低 <span class="highlight">set 场</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-4.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 明天有发布会，今晚大家要留下来布置场地。</div>
+                                </div>
+                            </div>
+                        </li>
+                
+                        <li>
+                            <div><strong>5. update 资料 (更新资料)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 客户转咗电话，记得帮佢 <span class="highlight">update 资料</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-5.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 客户换了电话，记得帮他更新资料。</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="rule-card">
+                <h2>4.  程度副词 + 形容词</h2>
+                <p>使用粤语的程度副词（如“好”、“超”、“鬼死咁”）直接修饰英文形容词。</p>
+                
+                <div class="example-box" style="background-color: transparent; padding: 0;">
+                    <ul class="bullet-list">
+                         <li>
+                            <div><strong>1. 好 nice</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 佢个人 <span class="highlight">好 nice</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-1.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 他这个人很友善。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>4. 好 cute</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 只猫 <span class="highlight">好 cute</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-2.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 这只猫很可爱。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>6. 好 pro (professional)</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 佢做嘢 <span class="highlight">好 pro</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-3.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 他做事很专业。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>8. 好 urgent</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 件事 <span class="highlight">好 urgent</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-4.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 这件事很紧急。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div><strong>9. 好 relax</strong></div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 感觉 <span class="highlight">好 relax</span>。
+                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-5.mp3" title="播放语音">🔊</button></div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 感觉很放松。</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </article>
+
+        </main>
+    </div>
+
+    <script>
+        // 包含 7 个体貌词，每个体貌词 3 个例子，涵盖指定的英文动词
+        const grammarData = [
+            // 紧
+            { particle: "紧", verb: "send", yue: "份文件 send 紧 出去，网速有啲慢。", man: "文件正在发送出去，网速有点慢。", particleDesc: "进行体：表示动作正在进行中", mp3: "1" },
+            { particle: "紧", verb: "update", yue: "个系统 update 紧，暂时用唔到。", man: "那个系统正在更新中，暂时用不了。", particleDesc: "进行体：表示动作正在进行中", mp3: "2" },
+            { particle: "紧", verb: "keep", yue: "我 Keep 紧 fit，今日中午想食沙律。", man: "我正在瘦身，今天中午想吃沙律。", particleDesc: "进行体：表示动作正在进行中", mp3: "3" },
+            
+            // 咗
+            { particle: "咗", verb: "book", yue: "我已经 book 咗 下个礼拜嘅机票。", man: "我已经预订了下个星期的机票。", particleDesc: "完成体：表示动作已经发生或完成", mp3: "4" },
+            { particle: "咗", verb: "send", yue: "份 report 寻晚已经 Send 咗 畀老板。", man: "那份报告昨晚已经发给老板了。", particleDesc: "完成体：表示动作已经发生或完成", mp3: "5" },
+            { particle: "咗", verb: "confirm", yue: "啱啱同客 confirm 咗 开会时间。", man: "刚刚和客户确认了开会时间。", particleDesc: "完成体：表示动作已经发生或完成", mp3: "6" },
+            
+            // 晒
+            { particle: "晒", verb: "send", yue: "啲邀请信我已经 send 晒 出去喇。", man: "那些邀请信我已经全部发送出去了。", particleDesc: "全部体：表示动作全部完成，毫无保留", mp3: "19" },
+            { particle: "晒", verb: "check", yue: "仓入面啲货我头先 check 晒，数量啱。", man: "仓库里面的货我刚才全部检查完了，数量对的。", particleDesc: "全部体：表示动作全部完成，毫无保留", mp3: "20" },
+            { particle: "晒", verb: "confirm", yue: "所有行程都已经 confirm 晒，听日准时出发。", man: "所有行程都已经全部确认好了，明天准时出发。", particleDesc: "全部体：表示动作全部完成，毫无保留", mp3: "21" },
+
+            // 过
+            { particle: "过", verb: "check", yue: "呢条数我寻日 check 过，应该冇错。", man: "这笔账我昨天核对过，应该没错。", particleDesc: "经历体：表示曾经经历过某事", mp3: "10" },
+            { particle: "过", verb: "confirm", yue: "我之前同佢 confirm 过，佢话唔得闲。", man: "我之前和他确认过，他说没空。", particleDesc: "经历体：表示曾经经历过某事", mp3: "11" },
+            { particle: "过", verb: "send", yue: "我记得上个月 send 过 呢份资料畀你㗎。", man: "我记得上个月发过这份资料给你的。", particleDesc: "经历体：表示曾经经历过某事", mp3: "12" },
+
+            // 住
+            { particle: "住", verb: "keep", yue: "大家 keep 住 呢个进度，下个礼拜就搞掂。", man: "大家保持住这个进度，下个星期就搞定了。", particleDesc: "持续体：表示动作或状态的持续保持", mp3: "16" },
+            { particle: "住", verb: "hold", yue: "个客话要谂谂先，张单暂时 hold 住 先。", man: "客户说要先考虑一下，这个订单暂时先保留着。", particleDesc: "持续体：表示动作或状态的持续保持", mp3: "17" },
+            { particle: "住", verb: "book", yue: "我哋 book 住 两间房先，睇下到时有几多人去。", man: "我们先预订着两间房，看看届时有多少人去。", particleDesc: "持续体：表示动作或状态的持续保持", mp3: "18" },
+
+            // 定
+            { particle: "定", verb: "book", yue: "听晚食饭我哋 book 定 台先啦。", man: "明晚吃饭我们先提前预订好桌子吧。", particleDesc: "预备体：表示提前做好准备以防万一", mp3: "7" },
+            { particle: "定", verb: "hold", yue: "麻烦你帮我 hold 定 呢件货，我转头过嚟畀钱。", man: "麻烦你帮我提前保留这件货，我回头过来付钱。", particleDesc: "预备体：表示提前做好准备以防万一", mp3: "8" },
+            { particle: "定", verb: "update", yue: "我 update 定 个软件，费事听日开会死机。", man: "我提前更新好软件，免得明天开会死机。", particleDesc: "预备体：表示提前做好准备以防万一", mp3: "9" },
+            
+            // 返
+            { particle: "返", verb: "send", yue: "你改好之后记得 send 返 畀我。", man: "你改好之后记得发回给我。", particleDesc: "回复体：表示回复原本状态，或重新/回应做某事", mp3: "13" },
+            { particle: "返", verb: "update", yue: "有咩最新消息麻烦 update 返 大家。", man: "有什么最新消息麻烦更新/通知回大家。", particleDesc: "回复体：表示回复原本状态，或重新/回应做某事", mp3: "14" },
+            { particle: "返", verb: "check", yue: "等我 check 返 之前嘅记录先。", man: "等我重新查一下之前的记录先。", particleDesc: "回复体：表示回复原本状态，或重新/回应做某事", mp3: "15" }
+            
+        ];
+
+        // 高亮处理函数：将句子中的 "动词 + 体貌词" 加粗变色
+        function highlightSentence(sentence, verb, particle) {
+            const regex = new RegExp(`(${verb}\\s*${particle})`, 'gi');
+            return sentence.replace(regex, '<span class="highlight">$1</span>');
+        }
+
+        // 渲染列表
+        function renderData(groupBy) {
+            const listContainer = document.getElementById('dynamic-list');
+            listContainer.innerHTML = ''; // 清空当前内容
+
+            // 更新按钮状态
+            document.getElementById('btn-particle').className = groupBy === 'particle' ? 'toggle-btn active' : 'toggle-btn';
+            document.getElementById('btn-verb').className = groupBy === 'verb' ? 'toggle-btn active' : 'toggle-btn';
+
+            // 数据分组
+            const groupedData = {};
+            
+            grammarData.forEach(item => {
+                const key = groupBy === 'particle' ? item.particle : item.verb;
+                if (!groupedData[key]) {
+                    groupedData[key] = {
+                        title: groupBy === 'particle' ? `“${item.particle}” (${item.particleDesc})` : `动词: ${item.verb}`,
+                        items: []
+                    };
+                }
+                groupedData[key].items.push(item);
+            });
+
+            // 生成 HTML
+            let counter = 1;
+            for (const key in groupedData) {
+                const group = groupedData[key];
+                
+                let subExamplesHtml = '';
+                group.items.forEach((item, index) => {
+                    const highlightedYue = highlightSentence(item.yue, item.verb, item.particle);
+                    subExamplesHtml += `
+                        <div class="sub-example-pair">
+                            <div class="yue-sentence"><span class="tag tag-yue">例 ${index + 1}</span> ${highlightedYue}
+                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_1-${item.mp3}.mp3" title="播放语音">🔊</button></div>
+                            <div class="man-translation"><span class="tag tag-man">普</span> ${item.man}</div>
+                        </div>
+                    `;
+                });
+
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div><strong>${counter}. ${group.title}</strong></div>
+                    <div class="sub-examples">
+                        ${subExamplesHtml}
+                    </div>
+                `;
+                listContainer.appendChild(li);
+                counter++;
+            }
+        }
+
+        // 页面加载时默认按体貌词渲染
+        window.onload = () => {
+            renderData('particle');
+        };
+    </script>
+
+    <script>
+        // 音频播放控制逻辑
+        let currentAudio = null;
+
+        document.querySelectorAll('.play-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const audioSrc = this.getAttribute('data-src');
+                
+                if (!audioSrc || audioSrc === '') {
+                    console.error("未设置音频路径");
+                    return;
+                }
+
+                // 如果有正在播放的音频，先停止它
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+
+                // 建立新的音频对象并播放
+                currentAudio = new Audio(audioSrc);
+                
+                // 播放并处理可能的错误 (例如文件不存在)
+                currentAudio.play().catch(error => {
+                    console.error("音频播放失败:", error);
+                    // 这里仅用 console.error 提示，避免在沙盒环境中弹出警告窗口
+                });
+            });
+        });
+    </script>
+
+<script src="js/navBar.js" defer></script>
+
+</body></html>

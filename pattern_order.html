@@ -1,0 +1,362 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粤语词序变化</title>
+    <style>
+        /* 浅色模式 (默认) */
+        :root {
+            --bg-color: #F9F8F6;
+            --text-color: #4A4C4E;
+            --card-bg: #FFFFFF;
+            --title-color: #6B5B95;
+            --accent-purple: #E8E2F8;
+            --accent-green: #E2F0CB;
+            --accent-peach: #FFEDDA;
+            --example-bg: #F4F4F4;
+            --border-radius: 16px;
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+
+            --accent-color: #8DA9C4; 
+            --accent-hover: #7A96B1;
+        }
+
+        /* 深色模式 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1E1E24;
+                --text-color: #E0E0E0;
+                --card-bg: #2B2B32;
+                --title-color: #A594F9;
+                --accent-purple: #4A445D;
+                --accent-green: #3E5045;
+                --accent-peach: #5C4B43;
+                --example-bg: #222228;
+                --shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+                --accent-color: #749dc1;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            padding: 1.5vw 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            max-width: 1000px;
+            margin: 0 auto 10px auto;
+            text-align: center;
+        }
+
+         /* 语法简介区块 */
+        .grammar-intro {
+            background-color: var(--card-bg);
+            padding: 16px 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 50px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            text-align: left;
+        }
+
+        .grammar-intro strong {
+            color: var(--accent-color);
+        }
+
+        .rule-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 28px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            border-left: 8px solid var(--accent-purple);
+            transition: transform 0.2s ease;
+        }
+
+        .rule-card:nth-child(3n+1) { border-left-color: var(--accent-purple); }
+        .rule-card:nth-child(3n+2) { border-left-color: var(--accent-green); }
+        .rule-card:nth-child(3n+3) { border-left-color: var(--accent-peach); }
+
+        .rule-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rule-card p {
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .example-box {
+            background-color: var(--example-bg);
+            border-radius: 10px;
+            padding: 16px;
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .example-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed rgba(136, 136, 136, 0.3);
+        }
+
+        .example-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .yue-sentence {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 4px;
+        }
+
+        .tag-yue { background-color: var(--accent-purple); color: var(--text-color); }
+        .tag-man { background-color: var(--accent-green); color: var(--text-color); }
+        .jyutping { color: #888; font-family: monospace; font-size: 0.9em; margin-left: 4px; }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--title-color);
+        }
+
+        /* 语音播放按钮样式 */
+        .play-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 4px;
+            border-radius: 50%;
+            transition: transform 0.1s, background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 4px;
+        }
+        
+        .play-btn:hover {
+            background-color: rgba(107, 91, 149, 0.1);
+            transform: scale(1.1);
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 15px; }
+            .rule-card { padding: 20px; }
+        }
+        
+    /* Header CSS */
+    #navbar {
+      background: var(--bg-color);
+      padding: 0.75rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    #navbar nav {
+      position: absolute;
+      right: 2rem;
+      display: flex;
+      gap: 20px;
+    }
+
+    #navbar .title {
+      color: var(--text-color);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-left: 0;
+    }
+
+    #navbar a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 1.0rem;
+      font-weight: 500;
+      margin-left: 0;
+    }
+
+    .home-icon {
+      width: 43px;
+      height: 43px;
+      background: gba(255,255,255,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid;
+    }
+        
+    .home-icon:hover {
+      background: lightgreen;
+      border-color: lightgreen;
+      transform: translateY(-2px);
+    }
+        
+    .home-icon svg {
+      width: 43px;
+      height: 43px;
+      fill: #0ea5e9;
+    }
+      
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header id="navbar">
+        <div class="title">&#9317 粤语词序变化</div>
+          <nav>
+            <div>
+              <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                </svg>
+              </a>
+            </div>
+          </nav>
+        </header>
+
+        <div class="grammar-intro">
+            粤语的语法基本结构与普通话相似，都是以「主谓宾」结构为主。然而，在某些特定的句型和词序上，粤语有着独特的语法规律。其中，<strong>「词序变化」（尤其是修饰语或宾语的位置）</strong>是粤语语法中的特点之一。以下是粤语中最常见的词序变化规律。
+        </div> 
+
+        <main>
+            <article class="rule-card">
+                <h2><span>🔄</span> 1. 双宾语的顺序</h2>
+                <p>在表达“给予”或“借用”等动作时，粤语习惯将<strong>物品（直接宾语）放在前面，人（间接宾语）放在后面</strong>。这与普通话“先人后物”的顺序刚好相反。</p>
+                <div class="example-box">
+                    <div class="example-item">
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>俾 <span class="highlight">本书</span> <span class="highlight">我</span>。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_1-1.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 给 <span class="highlight">我</span> 一 <span class="highlight">本书</span>。</div>
+                    </div>
+                    <div class="example-item">
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>借 <span class="highlight">支笔</span> 俾 <span class="highlight">佢</span> 啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_1-2.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 借 <span class="highlight">他</span> 一 <span class="highlight">支笔</span> 吧。</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="rule-card">
+                <h2><span>⏳</span> 2. 副词后置</h2>
+                <p>粤语经常把修饰动词的副词（如：先、多、少）放在动词或宾语的<strong>后面</strong>，这与普通话将副词放在动词前面的习惯完全相反。</p>
+                <div class="example-box">
+                    <div class="example-item">
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>你走<span class="highlight"> 先 </span>啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-1.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 你<span class="highlight"> 先 </span>走吧。</div>
+                    </div>
+                    <div class="example-item">
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>天气冻，着<span class="highlight"> 多 </span>件衫。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-2.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 天气冷，<span class="highlight"> 多 </span>穿件衣服。</div>
+                    </div>
+                    <div class="example-item">
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>饮<span class="highlight"> 少 </span>啲甜嘢啦。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-3.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> <span class="highlight"> 少 </span>喝点甜的吧。</div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="rule-card">
+               <h2><span>⚖️</span> 3. 比较句的结构</h2>
+               <p>比较句的结构非常直接，公式为：<strong>A + 形容词 + 过 + B</strong>。这与普通话“A + 比 + B + 形容词”的语序不同。</p>
+                <div class="example-box">
+                    <div class="example-item">
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>我高<span class="highlight"> 过 </span>佢。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-1.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 我<span class="highlight"> 比 </span>他高。</div>
+                    </div>
+                    <div class="example-item">
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>呢件衫靓<span class="highlight"> 过 </span>嗰件。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-2.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 这件衣服<span class="highlight"> 比 </span>那件漂亮。</div>
+                    </div>
+                    <div class="example-item">
+                        <div class="yue-sentence"><span class="tag tag-yue">粤</span> <span>今日热<span class="highlight"> 过 </span>寻日。</span><button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-3.mp3" title="播放语音">🔊</button></div>
+                        <div><span class="tag tag-man">普</span> 今天<span class="highlight"> 比 </span>昨天热。</div>
+                    </div>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <script>
+        // 音频播放控制逻辑
+        let currentAudio = null;
+
+        document.querySelectorAll('.play-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const audioSrc = this.getAttribute('data-src');
+                
+                if (!audioSrc || audioSrc === '') {
+                    console.error("未设置音频路径");
+                    return;
+                }
+
+                // 如果有正在播放的音频，先停止它
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
+
+                // 建立新的音频对象并播放
+                currentAudio = new Audio(audioSrc);
+                
+                // 播放并处理可能的错误 (例如文件不存在)
+                currentAudio.play().catch(error => {
+                    console.error("音频播放失败:", error);
+                    // 这里仅用 console.error 提示，避免在沙盒环境中弹出警告窗口
+                });
+            });
+        });
+    </script>
+
+<script src="js/navBar.js" defer></script>
+
+</body></html>
