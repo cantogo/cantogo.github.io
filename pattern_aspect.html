@@ -121,13 +121,13 @@
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 20px;
+            padding: 10px;
             box-shadow: var(--card-shadow);
             margin-bottom: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 10px;
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
@@ -145,9 +145,9 @@
         .toggle-btn {
             background: transparent;
             border: none;
-            padding: 8px 24px;
+            padding: 6px 24px;
             border-radius: 26px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
             cursor: pointer;
             font-weight: 500;
@@ -164,10 +164,10 @@
         .quick-nav {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
             border-top: 1px dashed var(--border-color);
-            padding-top: 16px;
+            padding-top: 10px;
         }
 
         .nav-row {
@@ -175,14 +175,6 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 8px;
-        }
-
-        .nav-label {
-            font-size: 0.9rem;
-            font-weight: bold;
-            color: var(--text-muted);
-            width: 75px;
-            flex-shrink: 0;
         }
 
         .nav-btn {
@@ -200,6 +192,19 @@
             background-color: var(--accent-color);
             color: #FFF;
             border-color: var(--accent-color);
+        }
+
+        /* 高亮显示的导航按钮 */
+        .nav-btn.active-nav {
+            background-color: var(--accent-color);
+            color: #FFF;
+            border-color: var(--accent-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn.active-nav:hover {
+            background-color: var(--accent-hover);
+            border-color: var(--accent-hover);
         }
 
         /* 矩阵网格布局 */
@@ -353,7 +358,7 @@
             transition: all 0.2s ease;
             vertical-align: middle;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
             gap: 4px;
         }
@@ -366,7 +371,7 @@
             background-color: #EBF8FF;
             border: 1.5px solid #90CDF4;
             color: #3182CE;
-            padding: 0 12px;
+            padding: 0 8px;
             height: 28px;
         }
 
@@ -521,8 +526,8 @@
     <!-- 统一的控制面板 -->
     <div class="control-panel">
         <div class="toggle-wrapper">
-            <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按「体貌词」分类</button>
-            <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按「动词」分类</button>
+            <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按<strong>体貌词</strong>分类</button>
+            <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按<strong>动词</strong>分类</button>
         </div>
 
         <!-- 快速跳转导航区 -->
@@ -686,21 +691,25 @@
         `;
     }
 
-    // 生成快速跳转导航
-    function renderQuickNav() {
+    // 生成快速跳转导航，并根据当前模式高亮对应的按钮
+    function renderQuickNav(mode) {
         const navContainer = document.getElementById('quick-nav-container');
         
+        // 判断当前激活的类别，赋予高亮 class
+        const verbClass = mode === 'verb' ? 'nav-btn active-nav' : 'nav-btn';
+        const markerClass = mode === 'marker' ? 'nav-btn active-nav' : 'nav-btn';
+
         // 动词跳转行
-        let verbNavHtml = `<div class="nav-row"><span class="nav-label">动 词:</span>`;
+        let verbNavHtml = `<div class="nav-row">`;
         verbs.forEach(v => {
-            verbNavHtml += `<button class="nav-btn" onclick="jumpTo('verb', '${v.char}')">${v.char}</button>`;
+            verbNavHtml += `<button class="${verbClass}" onclick="jumpTo('verb', '${v.char}')">${v.char}</button>`;
         });
         verbNavHtml += `</div>`;
 
         // 体貌词跳转行
-        let markerNavHtml = `<div class="nav-row"><span class="nav-label">体貌词:</span>`;
+        let markerNavHtml = `<div class="nav-row">`;
         markers.forEach(m => {
-            markerNavHtml += `<button class="nav-btn" onclick="jumpTo('marker', '${m.char}')">${m.char}</button>`;
+            markerNavHtml += `<button class="${markerClass}" onclick="jumpTo('marker', '${m.char}')">${m.char}</button>`;
         });
         markerNavHtml += `</div>`;
 
@@ -711,10 +720,10 @@
     function jumpTo(type, char) {
         // 如果当前不在对应的视图，则先切换视图
         const isVerbView = document.getElementById('btn-verb').classList.contains('active');
-        if (type === 'verb' && !isVerbView) {
-            switchView('verb');
-        } else if (type === 'marker' && isVerbView) {
-            switchView('marker');
+        const currentMode = isVerbView ? 'verb' : 'marker';
+        
+        if (type !== currentMode) {
+            switchView(type);
         }
 
         // 延迟一点点等 DOM 渲染完成后再滚动
@@ -736,7 +745,7 @@
                             ${v.char} <span class="jyutping-title">(${v.jyutping})</span>
                         </div>
                         <div class="verb-desc">
-                            <span style="font-size: 0.95rem; color: var(--text-muted);">动词意思：${v.meaning}</span>
+                            <span style="font-size: 0.95rem; color: var(--text-muted);"><strong>动词意思：</strong>${v.meaning}</span>
                         </div>
                         <div class="grid">`;
             markers.forEach(m => {
@@ -794,11 +803,13 @@
             document.getElementById('btn-marker').classList.add('active');
             renderByMarker();
         }
+        
+        // 每次切换视图时，重新渲染导航栏以更新高亮状态
+        renderQuickNav(mode);
     }
 
-    // 初始化
-    renderQuickNav();
-    renderByMarker();
+    // 初始化（默认按体貌词分类）
+    switchView('marker');
 </script>
 
 <script src="js/navBar.js" defer></script>
