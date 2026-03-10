@@ -55,6 +55,12 @@
             }
         }
 
+        html {
+            scroll-behavior: smooth; /* 开启平滑滚动 */
+            font-size: 110%;
+
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -62,16 +68,12 @@
             transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
-        html {
-        font-size: 110%;
-        }
-        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
-            padding: 10px;
+            padding: 15px;
         }
 
         .container {
@@ -91,9 +93,16 @@
             letter-spacing: 1px;
         }
 
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
         /* 语法简介区块 */
         .grammar-intro {
             background-color: var(--card-bg);
+            border-left: 4px solid var(--accent-color);
             padding: 16px 20px;
             border-radius: 8px;
             box-shadow: var(--card-shadow);
@@ -107,26 +116,36 @@
             color: var(--accent-color);
         }
 
-        /* 切换开关设计 */
-        .controls {
+        /* 统一的控制面板 (Control Box) */
+        .control-panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 10px;
             display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
+        /* 切换开关设计 */
         .toggle-wrapper {
             display: inline-flex;
-            background-color: var(--card-bg);
+            background-color: var(--bg-color); /* 在卡片内使用背景色作为对比 */
             border: 1px solid var(--border-color);
             border-radius: 30px;
             padding: 4px;
-            box-shadow: var(--card-shadow);
         }
 
         .toggle-btn {
             background: transparent;
             border: none;
-            padding: 8px 20px;
+            padding: 8px 24px;
             border-radius: 26px;
             font-size: 0.95rem;
             color: var(--text-muted);
@@ -138,11 +157,55 @@
         .toggle-btn.active {
             background-color: var(--accent-color);
             color: #FFF;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* 快速跳转导航区 */
+        .quick-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 16px;
+        }
+
+        .nav-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .nav-label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--text-muted);
+            width: 75px;
+            flex-shrink: 0;
+        }
+
+        .nav-btn {
+            background-color: var(--tag-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background-color: var(--accent-color);
+            color: #FFF;
+            border-color: var(--accent-color);
         }
 
         /* 矩阵网格布局 */
         .section-group {
             margin-bottom: 40px;
+            scroll-margin-top: 20px; /* 跳转时顶部留出边距 */
         }
 
         .section-title {
@@ -192,29 +255,18 @@
 
         .card-header {
             display: flex;
-            flex-direction: row;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 4px;
+        }
+
+        .combo-container {
+            display: flex;
+            align-items: center;
             gap: 6px;
             flex-wrap: wrap;
         }
 
-        /* 左侧元素组 */
-        .card-header-left {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 6px; /* 左侧元素之间的间距 */
-        }
-
-        /* 右侧按钮组 */
-        .card-header-right {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 6px; /* 按钮之间的间距 */
-        }        
         .combo-word {
             font-size: 1.3rem;
             font-weight: bold;
@@ -291,87 +343,79 @@
             border-bottom: 1px dashed var(--accent-color);
         }
 
-        /* 播放按钮基础样式 (改为长方形) */
+        /* 播放按钮基础样式 */
         .play-btn {
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px; /* 长方形微圆角 */
+            border-radius: 6px;
             transition: all 0.2s ease;
             vertical-align: middle;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
-            gap: 4px; /* 图标与文字的间距 */
+            gap: 4px;
         }
 
         .play-btn svg {
             fill: currentColor;
         }
 
-        /* 例句发音按钮 (浅绿色系长方形) */
         .play-btn-word {
-            background-color: #F0FFF4;
-            border: 1.5px solid #9AE6B4;
-            color: #38A169;
-            padding: 0 10px; /* 左右加宽形成长方形 */
+            background-color: #EBF8FF;
+            border: 1.5px solid #90CDF4;
+            color: #3182CE;
+            padding: 0 12px;
             height: 28px;
         }
 
         .play-btn-word:hover {
-            background-color: #C6F6D5;
-            border-color: #68D391;
-            color: #2F855A;
-            transform: translateY(-1px);
-        }
-
-        .play-btn-word svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* 词语发音按钮 (浅蓝色系长方形) */
-        .play-btn-sentence {
-            background-color: #EBF8FF;
-            border: 1.5px solid #90CDF4;
-            color: #3182CE;
-            padding: 0 10px; /* 左右加宽形成长方形 */
-            height: 28px;
-            margin-left: 8px;
-        }
-
-        .play-btn-sentence:hover {
             background-color: #BEE3F8;
             border-color: #63B3ED;
             color: #2B6CB0;
             transform: translateY(-1px);
         }
 
-        .play-btn-sentence svg {
-            width: 16px;
-            height: 16px;
+        .play-btn-word svg { width: 14px; height: 14px; }
+
+        .play-btn-sentence {
+            background-color: #F0FFF4;
+            border: 1.5px solid #9AE6B4;
+            color: #38A169;
+            padding: 0 10px;
+            height: 24px;
+            margin-left: 4px;
         }
 
-        /* 深色模式下的播放按钮颜色调整 */
+        .play-btn-sentence:hover {
+            background-color: #C6F6D5;
+            border-color: #68D391;
+            color: #2F855A;
+            transform: translateY(-1px);
+        }
+
+        .play-btn-sentence svg { width: 12px; height: 12px; }
+
         @media (prefers-color-scheme: dark) {
             .play-btn-word {
-                background-color: rgba(56, 161, 105, 0.15);
-                border-color: rgba(154, 230, 180, 0.4);
-                color: #9AE6B4;
-            }
-            .play-btn-word:hover {
-                background-color: rgba(56, 161, 105, 0.3);
-                border-color: rgba(154, 230, 180, 0.6);
-            }
-            .play-btn-sentence {
                 background-color: rgba(49, 130, 206, 0.15);
                 border-color: rgba(144, 205, 244, 0.4);
                 color: #90CDF4;
             }
-            .play-btn-sentence:hover {
+            .play-btn-word:hover {
                 background-color: rgba(49, 130, 206, 0.3);
                 border-color: rgba(144, 205, 244, 0.6);
+            }
+            
+            .play-btn-sentence {
+                background-color: rgba(56, 161, 105, 0.15);
+                border-color: rgba(154, 230, 180, 0.4);
+                color: #9AE6B4;
+            }
+            .play-btn-sentence:hover {
+                background-color: rgba(56, 161, 105, 0.3);
+                border-color: rgba(154, 230, 180, 0.6);
             }
         }
 
@@ -398,9 +442,9 @@
             /* Ensure header stays on top of scrolling content */
             z-index: 1000; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 0.5rem 0;
+            padding: 0.5rem 0.2rem;
             position: sticky;
-            top: 0;
+            top: 20px;
         }
 
         #navbar .title {
@@ -415,7 +459,7 @@
         }
 
         .header-content {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 0.5rem;
             display: flex;
@@ -455,8 +499,7 @@
             width: 43px;
             height: 43px;
             fill: #0ea5e9;
-        }
-
+        }        
     </style>
 </head>
 <body>
@@ -475,20 +518,26 @@
                     </a>
             </div>
             <!-- Filter Container moved here -->
-            <div class="controls">
-                <div class="toggle-wrapper">
-                    <!-- 左右对调，并将 active 预设放在体貌词上 -->
-                    <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按「体貌词」分类</button>
-                    <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按「动词」分类</button>
-                </div>
-            </div>
+    <!-- 统一的控制面板 -->
+    <div class="control-panel">
+        <div class="toggle-wrapper">
+            <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按「体貌词」分类</button>
+            <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按「动词」分类</button>
         </div>
-    </header>        
 
-    <div class="grammar-intro">
-        在粤语语法中，<strong>体貌词</strong> 是接在动词后面的后缀字，用来表示动作的<strong> 状态、阶段或时间进程 </strong>（例如：正在进行、已经完成、持续中、习惯性等）。与英语的「时态」不同，体貌词不绝对受限于过去、现在或未来，而是专注于描述动作本身的「面貌」。
-    </div>    
+        <!-- 快速跳转导航区 -->
+        <div class="quick-nav" id="quick-nav-container">
+            <!-- 由 JS 动态生成跳转按钮 -->
+        </div>
+    </div>
+
+        </div>
+    </header>   
     
+    <div class="grammar-intro">
+        在粤语语法中，<strong>体貌词</strong> 是接在动词后面的后缀字，用来表示动作的<strong> 状态、阶段或时间进程 </strong>（例如：正在进行、已经完成、持续中、习惯性等）。
+    </div>    
+
     <div id="content-area">
         <!-- 内容将由 JavaScript 动态生成 -->
     </div>
@@ -520,7 +569,6 @@
         { char: '亲', jyutping: 'can1', type: '条件体', desc: '表示只要发生该动作，就必定会引发某种结果。相当于普通话的「每次...都」、「每逢...就」。', mp3: '12' }
     ];
 
-    // 详尽数据库：每个组合都有独立的解释、粤语例句、普通话翻译
     const db = {
         '食': {
             '紧': { expl: '正在吃。强调进食的动作此刻正在进行中。', yue: '我<strong>食紧</strong>饭呀，转头再打俾你啦。', pu: '我正在吃饭，晚点再打给你吧。' },
@@ -594,10 +642,8 @@
         }
     };
 
-    // SVG 播放图标
     const playIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
 
-    // 播放音频函数
     function playAudio(audioPath) {
         const audio = new Audio(audioPath);
         audio.play().catch(e => {
@@ -607,10 +653,8 @@
 
     const contentArea = document.getElementById('content-area');
 
-    // 生成卡片内部HTML的辅助函数 (加入了「读音」文字使长方形更自然)
     function generateCardContent(v, m) {
         const data = db[v.char][m.char];
-        
         // 组合音频路径
         const wordAudioPath = `https://cantogo.github.io/voice/pattern_aspect_a_${v.mp3}_${m.mp3}.mp3`;
         // 例句音频路径
@@ -618,15 +662,12 @@
 
         return `
             <div class="card-header">
-                <div class="card-header-left">
-                    <span class="tag">${m.type}</span>
-                    <span class="combo-word" style="margin-left:5px">${v.char}${m.char}</span>
+                <div class="combo-container">
+                    <span class="combo-word">${v.char}${m.char}</span>
                     <span class="combo-jp">(${v.jyutping} ${m.jyutping})</span>
+                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon} 发音</button>
                 </div>
-                <div class="card-header-right">
-                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon} 读词组</button>
-                    <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon} 读例子</button>
-                </div>
+                <span class="tag">${m.type}</span>
             </div>
             <div class="explanation">${data.expl}</div>
             <div class="sentences">
@@ -634,6 +675,7 @@
                     <span class="lang-label label-yue">粤</span>
                     <span class="sentence-text">
                         <span>${data.yue}</span>
+                        <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon}</button>
                     </span>
                 </div>
                 <div class="sentence-row">
@@ -644,16 +686,57 @@
         `;
     }
 
+    // 生成快速跳转导航
+    function renderQuickNav() {
+        const navContainer = document.getElementById('quick-nav-container');
+        
+        // 动词跳转行
+        let verbNavHtml = `<div class="nav-row"><span class="nav-label">动 词:</span>`;
+        verbs.forEach(v => {
+            verbNavHtml += `<button class="nav-btn" onclick="jumpTo('verb', '${v.char}')">${v.char}</button>`;
+        });
+        verbNavHtml += `</div>`;
+
+        // 体貌词跳转行
+        let markerNavHtml = `<div class="nav-row"><span class="nav-label">体貌词:</span>`;
+        markers.forEach(m => {
+            markerNavHtml += `<button class="nav-btn" onclick="jumpTo('marker', '${m.char}')">${m.char}</button>`;
+        });
+        markerNavHtml += `</div>`;
+
+        navContainer.innerHTML = verbNavHtml + markerNavHtml;
+    }
+
+    // 跳转逻辑
+    function jumpTo(type, char) {
+        // 如果当前不在对应的视图，则先切换视图
+        const isVerbView = document.getElementById('btn-verb').classList.contains('active');
+        if (type === 'verb' && !isVerbView) {
+            switchView('verb');
+        } else if (type === 'marker' && isVerbView) {
+            switchView('marker');
+        }
+
+        // 延迟一点点等 DOM 渲染完成后再滚动
+        setTimeout(() => {
+            const targetId = `${type}-${char}`;
+            const element = document.getElementById(targetId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 50);
+    }
+
     // 渲染按「动词」分类的视图
     function renderByVerb() {
         let html = '';
         verbs.forEach(v => {
-            html += `<div class="section-group">
+            html += `<div class="section-group" id="verb-${v.char}">
                         <div class="section-title">
                             ${v.char} <span class="jyutping-title">(${v.jyutping})</span>
                         </div>
                         <div class="verb-desc">
-                            <span style="font-size: 0.95rem; color: var(--text-muted);"><strong>动词意思：</strong>${v.meaning}</span>
+                            <span style="font-size: 0.95rem; color: var(--text-muted);">动词意思：${v.meaning}</span>
                         </div>
                         <div class="grid">`;
             markers.forEach(m => {
@@ -664,15 +747,21 @@
             html += `</div></div>`;
         });
         contentArea.innerHTML = html;
+
+        //Scroll to top
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
     // 渲染按「体貌词」分类的视图
     function renderByMarker() {
         let html = '';
         markers.forEach(m => {
-            html += `<div class="section-group">
+            html += `<div class="section-group" id="marker-${m.char}">
                         <div class="section-title">
-                            <span class="tag">${m.type}</span> + ${m.char} <span class="jyutping-title" style="margin-left:5px">(${m.jyutping})</span>
+                            + ${m.char} <span class="jyutping-title">(${m.jyutping})</span> <span class="tag" style="margin-left:10px">${m.type}</span>
                         </div>
                         <div class="marker-desc">
                             <strong>用法解释：</strong>${m.desc}
@@ -686,9 +775,14 @@
             html += `</div></div>`;
         });
         contentArea.innerHTML = html;
+
+        //Scroll to top
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
 
-    // 切换视图逻辑
     function switchView(mode) {
         document.getElementById('btn-verb').classList.remove('active');
         document.getElementById('btn-marker').classList.remove('active');
@@ -702,10 +796,12 @@
         }
     }
 
-    // 初始化预设视图 (改为预设显示体貌词分类)
+    // 初始化
+    renderQuickNav();
     renderByMarker();
 </script>
 
 <script src="js/navBar.js" defer></script>
+
 
 </body></html>
