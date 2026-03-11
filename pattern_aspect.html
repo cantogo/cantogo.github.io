@@ -525,8 +525,8 @@
     <!-- 统一的控制面板 -->
     <div class="control-panel">
         <div class="toggle-wrapper">
-            <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按「体貌词」分类</button>
-            <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按「动词」分类</button>
+            <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按 体貌词 分类</button>
+            <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按 动词 分类</button>
         </div>
 
         <!-- 快速跳转导航区 -->
@@ -659,9 +659,9 @@
     function generateCardContent(v, m) {
         const data = db[v.char][m.char];
         // 组合音频路径
-        const wordAudioPath = `https://cantogo.github.io/voice/pattern_aspect_w_${v.mp3}_${m.mp3}.mp3`;
+        const wordAudioPath = `https://cantogo.github.io/voice/pattern_aspect_w_${v.mp3}-${m.mp3}.mp3`;
         // 例句音频路径
-        const sentenceAudioPath = `https://cantogo.github.io/voice/pattern_aspect_s_${v.mp3}_${m.mp3}.mp3`;
+        const sentenceAudioPath = `https://cantogo.github.io/voice/pattern_aspect_s_${v.mp3}-${m.mp3}.mp3`;
 
         return `
             <div class="card-header">
