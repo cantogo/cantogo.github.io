@@ -102,12 +102,11 @@
         /* 语法简介区块 */
         .grammar-intro {
             background-color: var(--card-bg);
-            border-left: 4px solid var(--accent-color);
-            padding: 16px 20px;
+            padding: 10px 10px;
             border-radius: 8px;
             box-shadow: var(--card-shadow);
-            margin-bottom: 30px;
-            font-size: 0.95rem;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
             color: var(--text-main);
             text-align: left;
         }
@@ -123,7 +122,7 @@
             border-radius: 12px;
             padding: 10px;
             box-shadow: var(--card-shadow);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -288,10 +287,10 @@
             font-size: 0.9rem;
             background-color: var(--tag-bg);
             color: var(--tag-text);
-            padding: 4px 10px;
+            padding: 4px 8px;
             border-radius: 12px;
             font-weight: 500;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.2px;
         }
 
         .explanation {
@@ -372,7 +371,7 @@
             border: 1.5px solid #90CDF4;
             color: #3182CE;
             padding: 0 8px;
-            height: 28px;
+            height: 30px;
         }
 
         .play-btn-word:hover {
@@ -388,8 +387,8 @@
             background-color: #F0FFF4;
             border: 1.5px solid #9AE6B4;
             color: #38A169;
-            padding: 0 10px;
-            height: 24px;
+            padding: 0 8px;
+            height: 30px;
             margin-left: 4px;
         }
 
@@ -400,7 +399,7 @@
             transform: translateY(-1px);
         }
 
-        .play-btn-sentence svg { width: 12px; height: 12px; }
+        .play-btn-sentence svg { width: 14px; height: 14px; }
 
         @media (prefers-color-scheme: dark) {
             .play-btn-word {
@@ -438,7 +437,7 @@
             .verb-maai { border-left: 4px solid #854D0E; }
             .verb-heoi { border-left: 4px solid #6B21A8; }
         }
-
+  
         /* Header CSS */
         #navbar {
             width: 100%;
@@ -525,6 +524,9 @@
             <!-- Filter Container moved here -->
     <!-- 统一的控制面板 -->
     <div class="control-panel">
+    <div class="grammar-intro">
+        <strong>体貌词</strong> 是接在 <strong>动词</strong> 后面的后缀字，用来表示动作的<strong> 状态、阶段或时间进程 </strong>（例如：正在进行、已经完成、持续中、习惯性等）。
+    </div>    
         <div class="toggle-wrapper">
             <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按  <strong>体貌词</strong>  分类</button>
             <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按  <strong>动词</strong>  分类</button>
@@ -538,10 +540,6 @@
 
         </div>
     </header>   
-    
-    <div class="grammar-intro">
-        在粤语语法中，<strong>体貌词</strong> 是接在动词后面的后缀字，用来表示动作的<strong> 状态、阶段或时间进程 </strong>（例如：正在进行、已经完成、持续中、习惯性等）。
-    </div>    
 
     <div id="content-area">
         <!-- 内容将由 JavaScript 动态生成 -->
@@ -670,7 +668,7 @@
                 <div class="combo-container">
                     <span class="combo-word">${v.char}${m.char}</span>
                     <span class="combo-jp">(${v.jyutping} ${m.jyutping})</span>
-                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon} 发音</button>
+                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon}播放</button>
                 </div>
                 <span class="tag">${m.type}</span>
             </div>
@@ -680,7 +678,7 @@
                     <span class="lang-label label-yue">粤</span>
                     <span class="sentence-text">
                         <span>${data.yue}</span>
-                        <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon}</button>
+                        <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon}播放</button>
                     </span>
                 </div>
                 <div class="sentence-row">
@@ -731,9 +729,13 @@
             const targetId = `${type}-${char}`;
             const element = document.getElementById(targetId);
             if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
+                element.scrollIntoView({ behavior: 'instant', block: 'start' });
+                }
         }, 50);
+        
+        setTimeout(() => {
+        navbar.style.top = `-${navbarHeight}px`;
+        }, 100);
     }
 
     // 渲染按「动词」分类的视图
@@ -810,9 +812,34 @@
 
     // 初始化（默认按体貌词分类）
     switchView('marker');
+
+    //Hidden Header Navigation Bar when scroling down
+        let lastScrollTop = 0;
+        const navbar = document.getElementById("navbar");
+        const navbarHeight = navbar.offsetHeight;
+
+        window.addEventListener("scroll", function() {
+            // Get current scroll position
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            // Prevent negative scrolling (bounce effect on mobile)
+            if (scrollTop < 0) {
+                scrollTop = 0;
+            }
+
+            if (scrollTop > lastScrollTop) {
+                // User is scrolling DOWN
+                // Move the navbar up by its height (negative top value)
+                navbar.style.top = `-${navbarHeight}px`;
+            } else {
+                // User is scrolling UP
+                // Reset top to 0
+                navbar.style.top = "0";
+            }
+            
+            // Update last scroll position
+            lastScrollTop = scrollTop;
+        });
 </script>
-
-<script src="js/navBar.js" defer></script>
-
 
 </body></html>
