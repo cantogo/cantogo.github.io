@@ -658,13 +658,56 @@
     };
 
     const playIcon = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
+        
+    // Create objects for reuse
+        let currentAudio = null;
+        let currentButton = null;
+        let currentOldText = null;
 
-    function playAudio(audioPath) {
-        const audio = new Audio(audioPath);
-        audio.play().catch(e => {
-            console.warn(`无法播放音频: ${audioPath}。请确保档案存在。`, e);
-        });
-    }
+        function playAudio(btn, audiourl) {
+            // Stop any currently playing audio
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                // Reset the previous button state immediately
+            if (currentButton) {
+                currentButton.disabled = false;
+                currentButton.innerHTML = currentOldText;
+                }
+            }
+            
+            // Get the URL for the audio file
+            const url = audiourl;
+
+            if (!url) {
+                alert(`音频文件的未配置。`);
+                return;
+            }
+
+            // disable the button
+            const oldText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = "播放中...";
+
+            // Create new audio element with the web URL
+            currentAudio = new Audio(url);
+
+            // Store current button information
+            currentButton = btn;
+            currentOldText = oldText;
+            
+            // Play the audio
+            currentAudio.play().catch(error => {
+                console.error('Error playing audio:', error);
+                alert(`无法播放音频文件。请不要太快重复点击播放按钮。`);
+            });
+
+            // enable the button after playing the audio
+            currentAudio.addEventListener('ended', function() {
+                btn.disabled = false;
+                btn.innerHTML = oldText;
+            });         
+        }
 
     const contentArea = document.getElementById('content-area');
 
@@ -686,8 +729,8 @@
             <div class="explanation">${data.expl}</div>
             <div class="sentences">
                 <div class="audio-controls">
-                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon}播放粤语词组</button>
-                    <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon}播放粤语例子</button>
+                    <button class="play-btn play-btn-word" onclick="playAudio(this, '${wordAudioPath}')" title="播放词语发音">${playIcon}播放粤语词组</button>
+                    <button class="play-btn play-btn-sentence" onclick="playAudio(this, '${sentenceAudioPath}')" title="播放例句发音">${playIcon}播放粤语例子</button>
                 </div>
                 <div class="sentence-row">
                     <span class="lang-label label-yue">粤</span>
