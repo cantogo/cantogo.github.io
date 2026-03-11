@@ -307,6 +307,15 @@
             .explanation { background-color: rgba(255,255,255,0.09); }
         }
 
+        /* 播放按钮样式 */
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 2px 8px 4px;
+        }
+
         .sentences {
             display: flex;
             flex-direction: column;
@@ -350,6 +359,7 @@
 
         /* 播放按钮基础样式 */
         .play-btn {
+            flex: 1;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
@@ -359,8 +369,9 @@
             vertical-align: middle;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 500;
             gap: 4px;
+            opacity: 0.8;            
         }
 
         .play-btn svg {
@@ -382,7 +393,7 @@
             transform: translateY(-1px);
         }
 
-        .play-btn-word svg { width: 14px; height: 14px; }
+        .play-btn-word svg { width: 16px; height: 16px; }
 
         .play-btn-sentence {
             background-color: #F0FFF4;
@@ -400,7 +411,7 @@
             transform: translateY(-1px);
         }
 
-        .play-btn-sentence svg { width: 14px; height: 14px; }
+        .play-btn-sentence svg { width: 16px; height: 16px; }
 
         @media (prefers-color-scheme: dark) {
             .play-btn-word {
@@ -669,18 +680,18 @@
                 <div class="combo-container">
                     <span class="combo-word">${v.char}${m.char}</span>
                     <span class="combo-jp">(${v.jyutping} ${m.jyutping})</span>
-                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon}播放</button>
                 </div>
                 <span class="tag">${m.type}</span>
             </div>
             <div class="explanation">${data.expl}</div>
             <div class="sentences">
+                <div class="audio-controls">
+                    <button class="play-btn play-btn-word" onclick="playAudio('${wordAudioPath}')" title="播放词语发音">${playIcon}播放粤语词组</button>
+                    <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon}播放粤语例子</button>
+                </div>
                 <div class="sentence-row">
                     <span class="lang-label label-yue">粤</span>
-                    <span class="sentence-text">
-                        <span>${data.yue}</span>
-                        <button class="play-btn play-btn-sentence" onclick="playAudio('${sentenceAudioPath}')" title="播放例句发音">${playIcon}播放</button>
-                    </span>
+                    <span class="sentence-text">${data.yue}</span>
                 </div>
                 <div class="sentence-row">
                     <span class="lang-label label-pu">普</span>
