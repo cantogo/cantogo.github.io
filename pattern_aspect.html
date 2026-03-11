@@ -138,13 +138,13 @@
             background-color: var(--bg-color); /* 在卡片内使用背景色作为对比 */
             border: 1px solid var(--border-color);
             border-radius: 30px;
-            padding: 4px;
+            padding: 6px;
         }
 
         .toggle-btn {
             background: transparent;
             border: none;
-            padding: 6px 24px;
+            padding: 8px 24px;
             border-radius: 26px;
             font-size: 0.9rem;
             color: var(--text-muted);
@@ -173,7 +173,7 @@
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 9px;
         }
 
         .nav-btn {
@@ -525,8 +525,8 @@
     <!-- 统一的控制面板 -->
     <div class="control-panel">
         <div class="toggle-wrapper">
-            <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按 体貌词 分类</button>
-            <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按 动词 分类</button>
+            <button class="toggle-btn active" id="btn-marker" onclick="switchView('marker')">按 <strong>体貌词</strong> 分类</button>
+            <button class="toggle-btn" id="btn-verb" onclick="switchView('verb')">按 <strong>动词</strong> 分类</button>
         </div>
 
         <!-- 快速跳转导航区 -->
