@@ -659,9 +659,9 @@
     function generateCardContent(v, m) {
         const data = db[v.char][m.char];
         // 组合音频路径
-        const wordAudioPath = `https://cantogo.github.io/voice/pattern_aspect_a_${v.mp3}_${m.mp3}.mp3`;
+        const wordAudioPath = `https://cantogo.github.io/voice/pattern_aspect_w_${v.mp3}_${m.mp3}.mp3`;
         // 例句音频路径
-        const sentenceAudioPath = `https://cantogo.github.io/voice/pattern_aspect_b_${v.mp3}_${m.mp3}.mp3`;
+        const sentenceAudioPath = `https://cantogo.github.io/voice/pattern_aspect_s_${v.mp3}_${m.mp3}.mp3`;
 
         return `
             <div class="card-header">
@@ -762,7 +762,7 @@
         //Scroll to top
         window.scrollTo({
             top: 0,
-            behavior: 'smooth'
+            behavior: 'instant'
         });
     }
 
@@ -790,7 +790,7 @@
         //Scroll to top
         window.scrollTo({
             top: 0,
-            behavior: 'smooth'
+            behavior: 'instant'
         });
     }
 
