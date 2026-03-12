@@ -852,7 +852,7 @@
                 scrollTop = 0;
             }
 
-            if ((scrollTop + 10) > lastScrollTop) {
+            if (scrollTop > lastScrollTop) {
                 // User is scrolling DOWN
                 // Move the navbar up by its height (negative top value)
                 navbar.style.top = `-${navbarHeight}px`;
