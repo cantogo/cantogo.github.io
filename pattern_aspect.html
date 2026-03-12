@@ -393,6 +393,13 @@
             opacity: 1;
         }
 
+        /* Reset Hover State */
+        .play-btn.no-hover:hover {
+            background-color: initial; /* Reset to default */
+            color: initial;
+            cursor: default;
+        }
+        
         @media (prefers-color-scheme: dark) {
             .play-btn {
                 background-color: rgba(18, 86, 50, 0.15);
@@ -676,6 +683,7 @@
             currentAudio.addEventListener('ended', function() {
                 btn.disabled = false;
                 btn.innerHTML = oldText;
+                btn.classList.add("no-hover");
             });         
         }
 
