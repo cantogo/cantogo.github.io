@@ -192,11 +192,10 @@
             font-size: 0.8rem;
             font-weight: 500;
             cursor: pointer;
-            border: 1.5px solid #90CDF4;
-            color: #3182CE;
+            border: 1.5px solid #9AE6B4;
+            color: #38A169;
             padding: 0 8px;
             height: 30px;
-            opacity: 0.85;
         }
 
         .play-btn svg {
@@ -206,23 +205,14 @@
         }
 
         .play-btn:hover {
-            border-color: #63B3ED;
-            color: #2B6CB0;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
         }
 
-        /* Reset Hover State */
-        .play-btn.no-hover:hover {
-            color: #3182CE;
-            cursor: default;
-        }        
-
-        /* 深色模式下的播放按钮颜色调整 */
         @media (prefers-color-scheme: dark) {
             .play-btn {
-                background-color: rgba(49, 130, 206, 0.15);
-                border-color: rgba(144, 205, 244, 0.4);
-                color: #90CDF4;
+                background-color: rgba(18, 86, 50, 0.15);
+                border-color: rgba(154, 230, 180, 0.4);
+                color: #9AE6B4;
             }
         }
                 
@@ -492,61 +482,7 @@
         </main>
     </div>
 
-    <script>
-
-        // Create objects for reuse
-        let currentAudio = null;
-        let currentButton = null;
-        let currentOldText = null;
-
-        function playAudio(btn, catName, number) {
-            // Stop any currently playing audio
-            if (currentAudio) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-                // Reset the previous button state immediately
-            if (currentButton) {
-                currentButton.disabled = false;
-                currentButton.innerHTML = currentOldText;
-                }
-            }
-            
-            // Get the URL for the audio file
-            const url = "https://cantogo.github.io/voice/" + catName + "_" + number + ".mp3";
-            //const url = "voice/" + catName + "_" + number + ".mp3";
-
-            if (!url) {
-                alert(`音频文件的未配置。`);
-                return;
-            }
-
-            // disable the button
-            const oldText = btn.innerHTML;
-            btn.disabled = true;
-            btn.innerHTML = "播放中...";
-
-            // Create new audio element with the web URL
-            currentAudio = new Audio(url);
-
-            // Store current button information
-            currentButton = btn;
-            currentOldText = oldText;
-            
-            // Play the audio
-            currentAudio.play().catch(error => {
-                console.error('Error playing audio:', error);
-                alert(`无法播放音频文件。请不要太快重复点击播放按钮。`);
-            });
-
-            // enable the button after playing the audio
-            currentAudio.addEventListener('ended', function() {
-                btn.disabled = false;
-                btn.innerHTML = oldText;
-                btn.classList.add("no-hover");
-            });         
-        }
-
-    </script>
+<script src="js/playAudio.js" defer></script>
 
 <script src="js/navBar.js" defer></script>
 
