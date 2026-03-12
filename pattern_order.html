@@ -86,7 +86,7 @@
         .rule-card {
             background-color: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 20px;
+            padding: 20px 15px 20px;
             margin-bottom: 25px;
             box-shadow: var(--shadow);
             border-left: 8px solid var(--accent-purple);
@@ -113,7 +113,7 @@
         .example-box {
             background-color: var(--example-bg);
             border-radius: 10px;
-            padding: 16px;
+            padding: 16px 12px 16px;
             font-size: 0.9rem;
             display: flex;
             flex-direction: column;
@@ -141,6 +141,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 4px;
+            margin-bottom: 10px;
         }
 
         .yue-sentence-left {
@@ -175,24 +176,27 @@
             color: var(--title-color);
         }
 
-        /* 播放按钮基础样式 (改为长方形) */
+
+        /* 播放按钮基础样式 */
         .play-btn {
-            cursor: pointer;
+            flex: 1;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px; /* 长方形微圆角 */
+            gap: 4px;
+            background: transparent;
+            border-radius: 10px;
             transition: all 0.2s ease;
             vertical-align: middle;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             font-size: 0.8rem;
-            font-weight: 600;
-            gap: 4px; /* 图标与文字的间距 */
-            background-color: #EBF8FF;
+            font-weight: 500;
+            cursor: pointer;
             border: 1.5px solid #90CDF4;
             color: #3182CE;
-            padding: 0 10px; /* 左右加宽形成长方形 */
-            height: 28px;
+            padding: 0 8px;
+            height: 30px;
+            opacity: 0.85;
         }
 
         .play-btn svg {
@@ -202,12 +206,16 @@
         }
 
         .play-btn:hover {
-            background-color: #BEE3F8;
             border-color: #63B3ED;
             color: #2B6CB0;
             transform: translateY(-1px);
         }
 
+        /* Reset Hover State */
+        .play-btn.no-hover:hover {
+            color: #3182CE;
+            cursor: default;
+        }        
 
         /* 深色模式下的播放按钮颜色调整 */
         @media (prefers-color-scheme: dark) {
@@ -215,10 +223,6 @@
                 background-color: rgba(49, 130, 206, 0.15);
                 border-color: rgba(144, 205, 244, 0.4);
                 color: #90CDF4;
-            }
-            .play-btn:hover {
-                background-color: rgba(49, 130, 206, 0.3);
-                border-color: rgba(144, 205, 244, 0.6);
             }
         }
                 
@@ -324,7 +328,7 @@
                                 <span class="tag tag-yue">粤</span> <span>俾 <span class="highlight">本书</span> <span class="highlight">我</span>。</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_1-1.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','1-1')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -337,7 +341,7 @@
                                 <span class="tag tag-yue">粤</span> <span>借 <span class="highlight">支笔</span> 俾 <span class="highlight">佢</span> 啦。</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_1-2.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','1-2')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -357,7 +361,7 @@
                                 <span class="tag tag-yue">粤</span> <span>你走<span class="highlight"> 先 </span>啦。</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-1.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','2-1')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -370,7 +374,7 @@
                                 <span class="tag tag-yue">粤</span> <span>天气冻，着<span class="highlight"> 多 </span>件衫。</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-2.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','2-2')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -383,7 +387,7 @@
                                 <span class="tag tag-yue">粤</span> <span>饮<span class="highlight"> 少 </span>啲甜嘢啦。</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_2-3.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','2-3')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -403,7 +407,7 @@
                                 <span class="tag tag-yue">粤</span> <span>我高<span class="highlight"> 过 </span>佢。</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-1.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','3-1')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -416,7 +420,7 @@
                                 <span class="tag tag-yue">粤</span> <span>呢件衫靓<span class="highlight"> 过 </span>嗰件。</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-2.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','3-2')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -429,7 +433,7 @@
                                 <span class="tag tag-yue">粤</span> <span>今日热<span class="highlight"> 过 </span>寻日。</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_3-3.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','3-3')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -449,7 +453,7 @@
                                 <span class="tag tag-yue">粤</span> <span>你<span class="highlight"> 食唔食 </span>饭？</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_4-1.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','4-1')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -462,7 +466,7 @@
                                 <span class="tag tag-yue">粤</span> <span>你<span class="highlight"> 有冇 </span>钱？</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_4-2.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','4-2')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -475,7 +479,7 @@
                                 <span class="tag tag-yue">粤</span> <span>呢件衫<span class="highlight"> 靓唔靓 </span>？</span>
                             </div>
                             <div class="yue-sentence-right">
-                                <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_order_4-3.mp3" title="播放语音"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
+                                <button class="play-btn" onclick="playAudio(this,'pattern_order','4-3')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放</button>
                             </div>
                         </div>
                         <div>
@@ -489,34 +493,59 @@
     </div>
 
     <script>
-        // 音频播放控制逻辑
+
+        // Create objects for reuse
         let currentAudio = null;
+        let currentButton = null;
+        let currentOldText = null;
 
-        document.querySelectorAll('.play-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const audioSrc = this.getAttribute('data-src');
-                
-                if (!audioSrc || audioSrc === '') {
-                    console.error("未设置音频路径");
-                    return;
+        function playAudio(btn, catName, number) {
+            // Stop any currently playing audio
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                // Reset the previous button state immediately
+            if (currentButton) {
+                currentButton.disabled = false;
+                currentButton.innerHTML = currentOldText;
                 }
+            }
+            
+            // Get the URL for the audio file
+            const url = "https://cantogo.github.io/voice/" + catName + "_" + number + ".mp3";
+            //const url = "voice/" + catName + "_" + number + ".mp3";
 
-                // 如果有正在播放的音频，先停止它
-                if (currentAudio) {
-                    currentAudio.pause();
-                    currentAudio.currentTime = 0;
-                }
+            if (!url) {
+                alert(`音频文件的未配置。`);
+                return;
+            }
 
-                // 建立新的音频对象并播放
-                currentAudio = new Audio(audioSrc);
-                
-                // 播放并处理可能的错误 (例如文件不存在)
-                currentAudio.play().catch(error => {
-                    console.error("音频播放失败:", error);
-                    // 这里仅用 console.error 提示，避免在沙盒环境中弹出警告窗口
-                });
+            // disable the button
+            const oldText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = "播放中...";
+
+            // Create new audio element with the web URL
+            currentAudio = new Audio(url);
+
+            // Store current button information
+            currentButton = btn;
+            currentOldText = oldText;
+            
+            // Play the audio
+            currentAudio.play().catch(error => {
+                console.error('Error playing audio:', error);
+                alert(`无法播放音频文件。请不要太快重复点击播放按钮。`);
             });
-        });
+
+            // enable the button after playing the audio
+            currentAudio.addEventListener('ended', function() {
+                btn.disabled = false;
+                btn.innerHTML = oldText;
+                btn.classList.add("no-hover");
+            });         
+        }
+
     </script>
 
 <script src="js/navBar.js" defer></script>

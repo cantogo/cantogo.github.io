@@ -381,13 +381,11 @@
 
         .play-btn svg {
             fill: currentColor;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
         }
 
         .play-btn:hover {
-            background-color: #C6F6D5;
-            border-color: #68D391;
             color: #2F855A;
             transform: translateY(-1px);
             opacity: 1;
@@ -395,8 +393,7 @@
 
         /* Reset Hover State */
         .play-btn.no-hover:hover {
-            background-color: initial; /* Reset to default */
-            color: initial;
+            color: #38A169;
             cursor: default;
         }
         
@@ -405,10 +402,6 @@
                 background-color: rgba(18, 86, 50, 0.15);
                 border-color: rgba(154, 230, 180, 0.4);
                 color: #9AE6B4;
-            }
-            .play-btn:hover {
-                background-color: rgba(12, 67, 37, 0.3);
-                border-color: rgba(154, 230, 180, 0.6);
             }
         }
 
@@ -707,8 +700,8 @@
             <div class="explanation">${data.expl}</div>
             <div class="sentences">
                 <div class="audio-controls">
-                    <button class="play-btn" onclick="playAudio(this, '${wordAudioPath}')" title="播放词语发音">${playIcon}播放粤语词组</button>
-                    <button class="play-btn" onclick="playAudio(this, '${sentenceAudioPath}')" title="播放例句发音">${playIcon}播放粤语例子</button>
+                    <button class="play-btn" onclick="playAudio(this, '${wordAudioPath}')" title="播放词语发音">${playIcon}播放词组</button>
+                    <button class="play-btn" onclick="playAudio(this, '${sentenceAudioPath}')" title="播放例句发音">${playIcon}播放例句</button>
                 </div>
                 <div class="sentence-row">
                     <span class="lang-label label-yue">粤</span>
