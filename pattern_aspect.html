@@ -422,7 +422,7 @@
             padding: 0.5rem 0.2rem;
             position: sticky;
             top: 20px;
-            transition: top 0.2s ease-in-out;
+            transition: top 0.3s ease-in-out;
         }
 
         #navbar .title {
@@ -833,7 +833,7 @@
     //Hidden Header Navigation Bar when scroling down
         let lastScrollTop = 0;
         const header = document.getElementById('navbar');
-        const delta = 5; // The 5px threshold
+        const delta = 50; // The 5px threshold
 
         window.addEventListener('scroll', () => {
             // Get current scroll position
