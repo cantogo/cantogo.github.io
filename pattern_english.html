@@ -19,7 +19,7 @@
             --btn-active-bg: #6B5B95;
             --btn-active-text: #FFFFFF;
 
-            --accent-color: #8DA9C4; 
+            --accent-color: #166534; 
             --accent-hover: #7A96B1;
         }
 
@@ -41,6 +41,12 @@
 
                 --accent-color: #749dc1;
             }
+        }
+
+        html {
+            /*scroll-behavior: smooth; 开启平滑滚动 */
+            font-size: 115%;
+
         }
 
         * {
@@ -179,7 +185,7 @@
             font-size: 0.8rem;
             font-weight: 600;
             margin-right: 4px;
-            width: 40px;
+            width: 38px;
             text-align: center;
         }
 
@@ -375,7 +381,7 @@
         <main>
             <article class="rule-card">
                 <h2>1. 英文动词 + 粤语体貌词</h2>
-                <p>在职场和日常交流中，粤语使用者经常将特定的英文动词（如: book, check, confirm, hold, keep, send, update）直接当作粤语动词使用，并在其后无缝接上粤语的体貌词（如: 紧、咗、定、过、返、住、晒）。</p>
+                <p>在职场和日常交流中，粤语使用者经常将特定的英文动词（如: send, update, keep, book, confirm, check, hold）直接当作粤语动词使用，并在其后无缝接上粤语的体貌词（如: 紧、咗、晒、过、住、定）。</p>
                 
                 <!-- 切换按钮 -->
                 <div class="toggle-container">
@@ -528,7 +534,7 @@
                             </div>
                         </li>
                         <li>
-                            <div><strong>4. 好 cute</strong></div>
+                            <div><strong>2. 好 cute</strong></div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
                                     <div class="yue-sentence"><span class="tag tag-yue">粤</span> 只猫 <span class="highlight">好 cute</span>。
@@ -538,7 +544,7 @@
                             </div>
                         </li>
                         <li>
-                            <div><strong>6. 好 pro (professional)</strong></div>
+                            <div><strong>3. 好 pro (professional)</strong></div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
                                     <div class="yue-sentence"><span class="tag tag-yue">粤</span> 佢做嘢 <span class="highlight">好 pro</span>。
@@ -548,7 +554,7 @@
                             </div>
                         </li>
                         <li>
-                            <div><strong>8. 好 urgent</strong></div>
+                            <div><strong>4. 好 urgent</strong></div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
                                     <div class="yue-sentence"><span class="tag tag-yue">粤</span> 件事 <span class="highlight">好 urgent</span>。
@@ -558,7 +564,7 @@
                             </div>
                         </li>
                         <li>
-                            <div><strong>9. 好 relax</strong></div>
+                            <div><strong>5. 好 relax</strong></div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
                                     <div class="yue-sentence"><span class="tag tag-yue">粤</span> 感觉 <span class="highlight">好 relax</span>。
@@ -607,11 +613,6 @@
             { particle: "定", verb: "hold", yue: "麻烦你帮我 hold 定 呢件货，我转头过嚟畀钱。", man: "麻烦你帮我提前保留这件货，我回头过来付钱。", particleDesc: "预备体：表示提前做好准备以防万一", mp3: "8" },
             { particle: "定", verb: "update", yue: "我 update 定 个软件，费事听日开会死机。", man: "我提前更新好软件，免得明天开会死机。", particleDesc: "预备体：表示提前做好准备以防万一", mp3: "9" },
             
-            // 返
-            { particle: "返", verb: "send", yue: "你改好之后记得 send 返 畀我。", man: "你改好之后记得发回给我。", particleDesc: "回复体：表示回复原本状态，或重新/回应做某事", mp3: "13" },
-            { particle: "返", verb: "update", yue: "有咩最新消息麻烦 update 返 大家。", man: "有什么最新消息麻烦更新/通知回大家。", particleDesc: "回复体：表示回复原本状态，或重新/回应做某事", mp3: "14" },
-            { particle: "返", verb: "check", yue: "等我 check 返 之前嘅记录先。", man: "等我重新查一下之前的记录先。", particleDesc: "回复体：表示回复原本状态，或重新/回应做某事", mp3: "15" }
-            
         ];
 
         // 高亮处理函数：将句子中的 "动词 + 体貌词" 加粗变色
@@ -653,7 +654,7 @@
                     const highlightedYue = highlightSentence(item.yue, item.verb, item.particle);
                     subExamplesHtml += `
                         <div class="sub-example-pair">
-                            <div class="yue-sentence"><span class="tag tag-yue">例 ${index + 1}</span> ${highlightedYue}
+                            <div class="yue-sentence"><span class="tag tag-yue">例${index + 1}</span> ${highlightedYue}
                             <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_1-${item.mp3}.mp3" title="播放语音">🔊</button></div>
                             <div class="man-translation"><span class="tag tag-man">普</span> ${item.man}</div>
                         </div>
