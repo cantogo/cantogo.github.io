@@ -170,7 +170,31 @@
             padding-bottom: 0;
             border-bottom: none;
         }
-        
+
+        .item-row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 10px;
+        }
+
+        .item-row-left {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4px; /* 左侧元素之间的间距 */
+        }
+
+        .item-row-right {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4px; /* 左侧元素之间的间距 */
+        }        
+
         .yue-sentence {
             display: flex;
             align-items: center;
@@ -261,28 +285,43 @@
             .man-translation { color: #d0d4dc; }
         }
 
-        /* 语音播放按钮样式 */
+        /* 播放按钮基础样式 */
         .play-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 4px;
-            border-radius: 50%;
-            transition: transform 0.1s, background-color 0.2s;
+            flex: 1;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-left: 4px;
-        }
-        
-        .play-btn:hover {
-            background-color: rgba(107, 91, 149, 0.1);
-            transform: scale(1.1);
+            gap: 4px;
+            background: transparent;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            vertical-align: middle;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1.5px solid #9AE6B4;
+            color: #38A169;
+            padding: 0 8px;
+            height: 30px;
         }
 
-        .play-btn:active {
-            transform: scale(0.95);
+        .play-btn svg {
+            fill: currentColor;
+            width: 16px;
+            height: 16px;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .play-btn {
+                background-color: rgba(18, 86, 50, 0.15);
+                border-color: rgba(154, 230, 180, 0.4);
+                color: #9AE6B4;
+            }
         }
 
         @media (max-width: 600px) {
@@ -375,23 +414,91 @@
         </header>
 
         <div class="grammar-intro">
-            <strong>粤语夹杂英文 </strong> 是一种非常普遍的语言现象，尤其在职场。表面上看似随意，但其实有着一定的语法规律。句子的核心文法结构仍然是「粤语」，<strong>英文字只是作为词汇被「镶嵌」到粤语的语法框架中</strong>。以下是粤语夹杂英文中最常见的语法规律。
+            <strong>粤语夹杂英文 </strong> 是一种非常普遍的语言现象，尤其在职场。表面上看似随意，但其实有着一定的语法规律。句子的核心文法结构仍然是「粤语」，<strong>英文字只是作为词汇被「镶嵌」到粤语的语法框架中</strong>。
         </div> 
 
         <main>
             <article class="rule-card">
                 <h2>1. 英文动词 + 粤语体貌词</h2>
-                <p>在职场和日常交流中，粤语使用者经常将特定的英文动词（如: send, update, keep, book, confirm, check, hold）直接当作粤语动词使用，并在其后无缝接上粤语的体貌词（如: 紧、咗、晒、过、住、定）。</p>
+                <p>在职场交流中，经常将英文动词直接当作粤语动词使用，并在其后接上粤语的体貌词（如: 紧、咗、晒、过、住）。</p>
                 
-                <!-- 切换按钮 -->
-                <div class="toggle-container">
-                    <button class="toggle-btn active" id="btn-particle" onclick="renderData('particle')">按体貌词排列</button>
-                    <button class="toggle-btn" id="btn-verb" onclick="renderData('verb')">按英文动词排列</button>
-                </div>
-
                 <div class="example-box" style="background-color: transparent; padding: 0;">
-                    <ul class="bullet-list" id="dynamic-list">
-                        <!-- 内容由 JavaScript 动态生成 -->
+                    <ul class="bullet-list">
+                        <li>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>1. update 紧</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-1-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-1-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 个系统 <span class="highlight">update 紧</span>，暂时用唔到。</div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 那个系统正在更新中，暂时用不了。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>2. book 咗</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-2-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-2-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 我已经 <span class="highlight">book 咗</span> 下个礼拜嘅机票。</div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 我已经预订了下个星期的机票。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>3. confirm 晒</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-3-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-3-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 所有行程都已经 <span class="highlight">confirm 晒</span>，听日准时出发。</div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 所有行程都已经全部确认好了，明天准时出发。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>4. check 过</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-4-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-4-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 呢条数我寻日 <span class="highlight">check 过</span>，应该冇错。</div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 这笔账我昨天核对过，应该没错。</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>5. keep 住</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-5-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','1-5-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
+                            <div class="sub-examples">
+                                <div class="sub-example-pair">
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 大家 <span class="highlight">keep 住</span> 呢个进度，下个礼拜就搞掂。</div>
+                                    <div class="man-translation"><span class="tag tag-man">普</span> 大家保持住这个进度，下个星期就搞定了。</div>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </article>
@@ -403,51 +510,76 @@
                 <div class="example-box" style="background-color: transparent; padding: 0;">
                     <ul class="bullet-list">
                         <li>
-                            <div><strong>1. 交 report (提交报告)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>1. 交 report</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-1-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-1-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 今日做完系统年检，下个礼拜要 <span class="highlight">交 report</span> 。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-1.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 今日做完系统年检，下个礼拜要 <span class="highlight">交 report</span> 。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 今天完成了系统年检，下周要提交报告。</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>2. 入 data (录入数据)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>2. 入 data</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-2-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-2-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 呢两日净系坐喺度 <span class="highlight">入 data</span>，做到眼都花。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-2.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 呢两日净系坐喺度 <span class="highlight">入 data</span>，做到眼都花。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 这两天光是坐在这里录入数据，弄得眼都花了。</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>3. 签 contract (签合同)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>3. 签 contract</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-3-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-3-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 个客终于肯 <span class="highlight">签 contract</span> 喇，今个月够数啦！
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-3.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 个客终于肯 <span class="highlight">签 contract</span> 喇，今个月够数啦！</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 客户终于肯签合同了，这个月业绩达标啦！</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>4. 覆 message (回复信息)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>4. 覆 message </strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-4-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-4-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 我开紧会，转头先 <span class="highlight">覆 message</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-4.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 我开紧会，转头先 <span class="highlight">覆 message</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 我正在开会，晚点再回复信息。</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>5. 填 form (填写表格)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>5. 填 form</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-5-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','2-5-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 申请报销要先 <span class="highlight">填 form</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_2-5.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 申请报销要先 <span class="highlight">填 form</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 申请报销要先填写表格。</div>
                                 </div>
                             </div>
@@ -463,52 +595,77 @@
                 <div class="example-box" style="background-color: transparent; padding: 0;">
                     <ul class="bullet-list">
                          <li>
-                            <div><strong>1. book 房 (预订会议室)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>1. book 房</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-1-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-1-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 听日下昼开会，记得 <span class="highlight">book 房</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-1.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 听日下昼开会，记得 <span class="highlight">book 房</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 明天下午开会，记紧预订会议室。</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>2. claim 钱 (报销款项)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>2. claim 钱</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-2-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-2-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 出差搭的士啲收据记得留低 <span class="highlight">claim 钱</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-2.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 出差搭的士啲收据记得留低 <span class="highlight">claim 钱</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 出差打车的收据记得留下来报销。</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>3. check 数 (核对账目/数据)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>3. check 数</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-3-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-3-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 会计部月底要 <span class="highlight">check 数</span>，大家交齐单未？
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-3.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 会计部月底要 <span class="highlight">check 数</span>，大家交齐单未？</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 财务部月底要核对账目，大家交齐票据了吗？</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>4. set 场 (布置场地)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>4. set 场</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-4-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-4-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 听日有发布会，今晚大家要留低 <span class="highlight">set 场</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-4.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 听日有发布会，今晚大家要留低 <span class="highlight">set 场</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 明天有发布会，今晚大家要留下来布置场地。</div>
                                 </div>
                             </div>
                         </li>
                 
                         <li>
-                            <div><strong>5. update 资料 (更新资料)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>5. update 资料</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-5-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','3-5-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 客户转咗电话，记得帮佢 <span class="highlight">update 资料</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_3-5.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 客户转咗电话，记得帮佢 <span class="highlight">update 资料</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 客户换了电话，记得帮他更新资料。</div>
                                 </div>
                             </div>
@@ -524,51 +681,76 @@
                 <div class="example-box" style="background-color: transparent; padding: 0;">
                     <ul class="bullet-list">
                          <li>
-                            <div><strong>1. 好 nice</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>1. 好 nice</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-1-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-1-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 佢个人 <span class="highlight">好 nice</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-1.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 佢个人 <span class="highlight">好 nice</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 他这个人很友善。</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>2. 好 cute</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>2. 好 cute</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-2-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-2-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 只猫 <span class="highlight">好 cute</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-2.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 只猫 <span class="highlight">好 cute</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 这只猫很可爱。</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>3. 好 pro (professional)</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>3. 好 pro</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-3-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-3-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 佢做嘢 <span class="highlight">好 pro</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-3.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 佢做嘢 <span class="highlight">好 pro</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 他做事很专业。</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>4. 好 urgent</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>4. 好 urgent</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-4-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-4-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 件事 <span class="highlight">好 urgent</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-4.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 件事 <span class="highlight">好 urgent</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 这件事很紧急。</div>
                                 </div>
                             </div>
                         </li>
                         <li>
-                            <div><strong>5. 好 relax</strong></div>
+                            <div class="item-row">
+                                <div class="item-row-left"><strong>5. 好 relax</strong></div>
+                                <div class="item-row-right">
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-5-w')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放词组</button>
+                                    <button class="play-btn" onclick="playAudio(this,'pattern_english','4-5-s')"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> 播放例句</button>
+                                </div>
+                            </div>
                             <div class="sub-examples">
                                 <div class="sub-example-pair">
-                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 感觉 <span class="highlight">好 relax</span>。
-                                    <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_4-5.mp3" title="播放语音">🔊</button></div>
+                                    <div class="yue-sentence"><span class="tag tag-yue">粤</span> 感觉 <span class="highlight">好 relax</span>。</div>
                                     <div class="man-translation"><span class="tag tag-man">普</span> 感觉很放松。</div>
                                 </div>
                             </div>
@@ -580,135 +762,7 @@
         </main>
     </div>
 
-    <script>
-        // 包含 7 个体貌词，每个体貌词 3 个例子，涵盖指定的英文动词
-        const grammarData = [
-            // 紧
-            { particle: "紧", verb: "send", yue: "份文件 send 紧 出去，网速有啲慢。", man: "文件正在发送出去，网速有点慢。", particleDesc: "进行体：表示动作正在进行中", mp3: "1" },
-            { particle: "紧", verb: "update", yue: "个系统 update 紧，暂时用唔到。", man: "那个系统正在更新中，暂时用不了。", particleDesc: "进行体：表示动作正在进行中", mp3: "2" },
-            { particle: "紧", verb: "keep", yue: "我 Keep 紧 fit，今日中午想食沙律。", man: "我正在瘦身，今天中午想吃沙律。", particleDesc: "进行体：表示动作正在进行中", mp3: "3" },
-            
-            // 咗
-            { particle: "咗", verb: "book", yue: "我已经 book 咗 下个礼拜嘅机票。", man: "我已经预订了下个星期的机票。", particleDesc: "完成体：表示动作已经发生或完成", mp3: "4" },
-            { particle: "咗", verb: "send", yue: "份 report 寻晚已经 Send 咗 畀老板。", man: "那份报告昨晚已经发给老板了。", particleDesc: "完成体：表示动作已经发生或完成", mp3: "5" },
-            { particle: "咗", verb: "confirm", yue: "啱啱同客 confirm 咗 开会时间。", man: "刚刚和客户确认了开会时间。", particleDesc: "完成体：表示动作已经发生或完成", mp3: "6" },
-            
-            // 晒
-            { particle: "晒", verb: "send", yue: "啲邀请信我已经 send 晒 出去喇。", man: "那些邀请信我已经全部发送出去了。", particleDesc: "全部体：表示动作全部完成，毫无保留", mp3: "19" },
-            { particle: "晒", verb: "check", yue: "仓入面啲货我头先 check 晒，数量啱。", man: "仓库里面的货我刚才全部检查完了，数量对的。", particleDesc: "全部体：表示动作全部完成，毫无保留", mp3: "20" },
-            { particle: "晒", verb: "confirm", yue: "所有行程都已经 confirm 晒，听日准时出发。", man: "所有行程都已经全部确认好了，明天准时出发。", particleDesc: "全部体：表示动作全部完成，毫无保留", mp3: "21" },
-
-            // 过
-            { particle: "过", verb: "check", yue: "呢条数我寻日 check 过，应该冇错。", man: "这笔账我昨天核对过，应该没错。", particleDesc: "经历体：表示曾经经历过某事", mp3: "10" },
-            { particle: "过", verb: "confirm", yue: "我之前同佢 confirm 过，佢话唔得闲。", man: "我之前和他确认过，他说没空。", particleDesc: "经历体：表示曾经经历过某事", mp3: "11" },
-            { particle: "过", verb: "send", yue: "我记得上个月 send 过 呢份资料畀你㗎。", man: "我记得上个月发过这份资料给你的。", particleDesc: "经历体：表示曾经经历过某事", mp3: "12" },
-
-            // 住
-            { particle: "住", verb: "keep", yue: "大家 keep 住 呢个进度，下个礼拜就搞掂。", man: "大家保持住这个进度，下个星期就搞定了。", particleDesc: "持续体：表示动作或状态的持续保持", mp3: "16" },
-            { particle: "住", verb: "hold", yue: "个客话要谂谂先，张单暂时 hold 住 先。", man: "客户说要先考虑一下，这个订单暂时先保留着。", particleDesc: "持续体：表示动作或状态的持续保持", mp3: "17" },
-            { particle: "住", verb: "book", yue: "我哋 book 住 两间房先，睇下到时有几多人去。", man: "我们先预订着两间房，看看届时有多少人去。", particleDesc: "持续体：表示动作或状态的持续保持", mp3: "18" },
-
-            // 定
-            { particle: "定", verb: "book", yue: "听晚食饭我哋 book 定 台先啦。", man: "明晚吃饭我们先提前预订好桌子吧。", particleDesc: "预备体：表示提前做好准备以防万一", mp3: "7" },
-            { particle: "定", verb: "hold", yue: "麻烦你帮我 hold 定 呢件货，我转头过嚟畀钱。", man: "麻烦你帮我提前保留这件货，我回头过来付钱。", particleDesc: "预备体：表示提前做好准备以防万一", mp3: "8" },
-            { particle: "定", verb: "update", yue: "我 update 定 个软件，费事听日开会死机。", man: "我提前更新好软件，免得明天开会死机。", particleDesc: "预备体：表示提前做好准备以防万一", mp3: "9" },
-            
-        ];
-
-        // 高亮处理函数：将句子中的 "动词 + 体貌词" 加粗变色
-        function highlightSentence(sentence, verb, particle) {
-            const regex = new RegExp(`(${verb}\\s*${particle})`, 'gi');
-            return sentence.replace(regex, '<span class="highlight">$1</span>');
-        }
-
-        // 渲染列表
-        function renderData(groupBy) {
-            const listContainer = document.getElementById('dynamic-list');
-            listContainer.innerHTML = ''; // 清空当前内容
-
-            // 更新按钮状态
-            document.getElementById('btn-particle').className = groupBy === 'particle' ? 'toggle-btn active' : 'toggle-btn';
-            document.getElementById('btn-verb').className = groupBy === 'verb' ? 'toggle-btn active' : 'toggle-btn';
-
-            // 数据分组
-            const groupedData = {};
-            
-            grammarData.forEach(item => {
-                const key = groupBy === 'particle' ? item.particle : item.verb;
-                if (!groupedData[key]) {
-                    groupedData[key] = {
-                        title: groupBy === 'particle' ? `“${item.particle}” (${item.particleDesc})` : `动词: ${item.verb}`,
-                        items: []
-                    };
-                }
-                groupedData[key].items.push(item);
-            });
-
-            // 生成 HTML
-            let counter = 1;
-            for (const key in groupedData) {
-                const group = groupedData[key];
-                
-                let subExamplesHtml = '';
-                group.items.forEach((item, index) => {
-                    const highlightedYue = highlightSentence(item.yue, item.verb, item.particle);
-                    subExamplesHtml += `
-                        <div class="sub-example-pair">
-                            <div class="yue-sentence"><span class="tag tag-yue">例${index + 1}</span> ${highlightedYue}
-                            <button class="play-btn" data-src="https://cantogo.github.io/voice/pattern_english_1-${item.mp3}.mp3" title="播放语音">🔊</button></div>
-                            <div class="man-translation"><span class="tag tag-man">普</span> ${item.man}</div>
-                        </div>
-                    `;
-                });
-
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <div><strong>${counter}. ${group.title}</strong></div>
-                    <div class="sub-examples">
-                        ${subExamplesHtml}
-                    </div>
-                `;
-                listContainer.appendChild(li);
-                counter++;
-            }
-        }
-
-        // 页面加载时默认按体貌词渲染
-        window.onload = () => {
-            renderData('particle');
-        };
-    </script>
-
-    <script>
-        // 音频播放控制逻辑
-        let currentAudio = null;
-
-        document.querySelectorAll('.play-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const audioSrc = this.getAttribute('data-src');
-                
-                if (!audioSrc || audioSrc === '') {
-                    console.error("未设置音频路径");
-                    return;
-                }
-
-                // 如果有正在播放的音频，先停止它
-                if (currentAudio) {
-                    currentAudio.pause();
-                    currentAudio.currentTime = 0;
-                }
-
-                // 建立新的音频对象并播放
-                currentAudio = new Audio(audioSrc);
-                
-                // 播放并处理可能的错误 (例如文件不存在)
-                currentAudio.play().catch(error => {
-                    console.error("音频播放失败:", error);
-                    // 这里仅用 console.error 提示，避免在沙盒环境中弹出警告窗口
-                });
-            });
-        });
-    </script>
+<script src="js/playAudio.js" defer></script>
 
 <script src="js/navBar.js" defer></script>
 
