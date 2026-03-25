@@ -751,7 +751,7 @@
         }, 50);
         
         setTimeout(() => {
-        navbar.style.top = `-${navbarHeight}px`;
+        header.style.top = `-${headerHeight}px`;
         }, 300);
     }
 
@@ -830,8 +830,48 @@
     // 初始化（默认按体貌词分类）
     switchView('marker');
 
-</script>
+    //Hidden Header Navigation Bar when scroling down
+        let lastScrollTop = 0;
+        const header = document.getElementById('navbar');
+        const delta = 30; // The 30px threshold
+       
+    // Get the exact height of the header dynamically
+        const headerHeight = header.offsetHeight;
 
-<script src="js/navBar.js" defer></script>
+        window.addEventListener('scroll', () => {
+            // Get current scroll position
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+            // 1. Prevent negative scrolling (iOS bounce effect at the top)
+            if (currentScroll <= 0) {
+                header.style.top = '0'; // Always show at the very top
+                lastScrollTop = 0;      // Reset tracking
+                return;
+            }
+
+            // 2. Prevent bounce effect at the bottom of the page
+            // If the scroll position + window height is greater than or equal to the document height
+            if (currentScroll + window.innerHeight >= document.documentElement.scrollHeight) {
+                return; // Do nothing, ignore the bounce
+            }
+
+            // 3. Make sure they scroll more than the delta threshold
+            if (Math.abs(lastScrollTop - currentScroll) <= delta) {
+                return;
+            }
+
+            if (currentScroll > lastScrollTop && currentScroll > headerHeight) {
+                // Scrolling Down: Hide the header using negative top
+                header.style.top = `-${headerHeight}px`;
+            } else {
+                // Scrolling Up: Show the header
+                header.style.top = '0';
+            }
+
+            // Update last scroll position
+            lastScrollTop = currentScroll;
+        });
+
+</script>
 
 </body></html>
