@@ -1,7 +1,7 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>粤语发音特点</title>
+    <title>粤语独特发音</title>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -135,37 +135,15 @@
            4. Components
            ========================================= */
         /* Header */
-        .header {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            background-color: var(--bg-surface);
-            padding: 2rem;
-            border-radius: var(--radius-xl);
-            border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-sm);
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 1.0rem;
+            padding-bottom: 0.5rem;
+            max-width: 1024px;
+            margin: 5px auto 10px auto;
         }
-        @media (min-width: 768px) {
-            .header { flex-direction: row; align-items: center; }
-        }
-        .header-icon {
-            background-color: #fef3c7;
-            color: #d97706;
-            width: 4rem;
-            height: 4rem;
-            border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-        @media (prefers-color-scheme: dark) {
-            .header-icon { background-color: rgba(180, 83, 9, 0.3); color: #fbbf24; }
-        }
-        .header h1 { font-size: 1.75rem; margin-bottom: 0.5rem; }
-        .header p { color: var(--text-secondary); }
 
         /* Navigation Tabs */
         .nav-tabs {
@@ -225,6 +203,7 @@
             margin-bottom: 2rem;
             border: 1px solid;
         }
+        .info-banner h2 { font-size: 1.25rem; }
         .info-banner h3 { font-size: 1.125rem; margin-bottom: 0.5rem; }
         .info-banner p { font-size: 0.875rem; opacity: 0.9; }
         
@@ -314,17 +293,6 @@
         @media (min-width: 768px) { .comparison-row { gap: 1rem; } }
         .compare-icon { display: flex; justify-content: center; color: var(--text-muted); }
 
-        /* Footer */
-        .footer {
-            margin-top: 3rem;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
 
         /* =========================================
            5. Animations
@@ -357,7 +325,7 @@
 
         #navbar .title {
             color: var(--text-main);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             margin-left: 0;
         }
@@ -368,7 +336,7 @@
 
         .header-content {
             max-width: 1200px;
-            margin: 20px 30px;
+            margin: 0 auto;
             padding: 0 0.5rem;
             display: flex;
             flex-direction: column;
@@ -407,44 +375,42 @@
             width: 43px;
             height: 43px;
             fill: #0ea5e9;
-        }
-
+        }     
     </style>
 </head>
 <body>
 
     <div class="container">
         
-        <!-- Header -->
-    <header id="navbar">
+<!-- Header -->
+<header id="navbar">
     <div class="header-content">
         <!-- Top Bar containing Title and Home Icon -->
         <div class="top-bar">
-            <div class="title">&#9314 粤语发音特点</div>
+            <div class="title">&#9314 粤语独特发音</div>
                 <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
                     </svg>
                 </a>
         </div>
-    </div>
-    </header>
-
         <!-- Navigation Tabs -->
+        <div>
         <nav class="nav-tabs">
             <button onclick="switchTab('entering', 'active-rose')" id="btn-entering" class="tab-btn active-rose">
-                <i class="fa-solid fa-stop"></i> 
                 <span>入声字 (p/t/k)</span>
             </button>
             <button onclick="switchTab('closed', 'active-teal')" id="btn-closed" class="tab-btn">
-                <i class="fa-solid fa-comment-dots"></i> 
                 <span>闭口音 (m)</span>
             </button>
             <button onclick="switchTab('vowels', 'active-indigo')" id="btn-vowels" class="tab-btn">
-                <i class="fa-solid fa-arrows-left-right"></i> 
                 <span>长短元音 (aa/a)</span>
             </button>
         </nav>
+        </div>
+    </div>
+
+</header>
 
         <!-- Main Content -->
         <main class="main-content">
@@ -452,10 +418,10 @@
             <!-- 1. 入声字模块 -->
             <div id="tab-entering" class="tab-content active">
                 <div class="info-banner info-rose">
-                    <i class="fa-solid fa-lightbulb" style="margin-top: 4px;"></i>
+                    <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
-                        <h3>物理法则：气流截断（唯闭不爆）</h3>
-                        <p>普通话的发音通常让气流自然流出。而粤语的入声字要求在发音的最后一刻，使用发音器官（嘴唇或舌头）像阀门一样**瞬间关闭**，将气流憋在体内，不发出爆破音。</p>
+                        <h2>入声字 (p/t/k)</h2><br><h3>物理法则：气流截断（唯闭不爆）</h3>
+                        <p>普通话的发音通常让气流自然流出。而粤语的入声字要求在发音的最后一刻，使用嘴唇或舌头像阀门一样**瞬间关闭**，将气流憋在体内，不发出爆破音。</p>
                     </div>
                 </div>
 
@@ -464,31 +430,45 @@
                     <div class="category-card card-rose">
                         <div class="card-header">
                             <div class="card-title">-p</div>
-                            <i class="fa-solid fa-lips" style="color: var(--rose-text); opacity: 0.5; font-size: 1.25rem;"></i>
                         </div>
                         <div class="card-subtitle">阀门位置：双唇</div>
                         <p class="card-desc">发音结束时，上下嘴唇迅速合拢，将气流封锁在口腔前部。</p>
                         
-                        <button onclick="playAudio('十', this)" class="word-btn">
+                        <button onclick="playAudio('1', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">十</span>
                             </div>
                             <span class="tag tag-rose">sap6</span>
                         </button>
-                        <button onclick="playAudio('急', this)" class="word-btn">
+                        <button onclick="playAudio('2', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">急</span>
                             </div>
                             <span class="tag tag-rose">gap1</span>
                         </button>
-                        <button onclick="playAudio('盒', this)" class="word-btn">
+                        <button onclick="playAudio('3', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">盒</span>
                             </div>
                             <span class="tag tag-rose">hap6</span>
+                        </button>
+                        <!-- 新增例子 -->
+                        <button onclick="playAudio('4', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">湿</span>
+                            </div>
+                            <span class="tag tag-rose">sap1</span>
+                        </button>
+                        <button onclick="playAudio('5', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">鸭</span>
+                            </div>
+                            <span class="tag tag-rose">aap3</span>
                         </button>
                     </div>
 
@@ -496,7 +476,6 @@
                     <div class="category-card card-rose">
                         <div class="card-header">
                             <div class="card-title">-t</div>
-                            <i class="fa-solid fa-tooth" style="color: var(--rose-text); opacity: 0.5; font-size: 1.25rem;"></i>
                         </div>
                         <div class="card-subtitle">阀门位置：舌尖与齿龈</div>
                         <p class="card-desc">发音结束时，舌尖迅速抬起，顶住上排门牙后方的牙龈，封锁气流。</p>
@@ -522,13 +501,27 @@
                             </div>
                             <span class="tag tag-rose">tit3</span>
                         </button>
+                        <!-- 新增例子 -->
+                        <button onclick="playAudio('笔', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">笔</span>
+                            </div>
+                            <span class="tag tag-rose">bat1</span>
+                        </button>
+                        <button onclick="playAudio('结', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">结</span>
+                            </div>
+                            <span class="tag tag-rose">git3</span>
+                        </button>
                     </div>
 
                     <!-- -k -->
                     <div class="category-card card-rose">
                         <div class="card-header">
                             <div class="card-title">-k</div>
-                            <i class="fa-solid fa-head-side-cough" style="color: var(--rose-text); opacity: 0.5; font-size: 1.25rem;"></i>
                         </div>
                         <div class="card-subtitle">阀门位置：舌根与软腭</div>
                         <p class="card-desc">发音结束时，舌头后部（舌根）向上抬起，卡住喉咙深处，封锁气流。</p>
@@ -554,6 +547,21 @@
                             </div>
                             <span class="tag tag-rose">gwok3</span>
                         </button>
+                        <!-- 新增例子 -->
+                        <button onclick="playAudio('黑', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">黑</span>
+                            </div>
+                            <span class="tag tag-rose">hak1</span>
+                        </button>
+                        <button onclick="playAudio('木', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">木</span>
+                            </div>
+                            <span class="tag tag-rose">muk6</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -561,9 +569,9 @@
             <!-- 2. 闭口音模块 -->
             <div id="tab-closed" class="tab-content">
                 <div class="info-banner info-teal">
-                    <i class="fa-solid fa-scale-balanced" style="margin-top: 4px;"></i>
+                    <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
-                        <h3>状态对比：闭合 (-m) 与 微张 (-n)</h3>
+                        <h2>闭口音 (m)</h2><br><h3>状态对比：闭合 (-m) 与 微张 (-n)</h3>
                         <p>普通话中不存在以 -m 结尾的字。在粤语中，遇到拼音以 m 结尾的字，必须执行一个明确的物理动作：**上下嘴唇完全贴合**，让剩余的声音通过鼻腔产生共鸣。</p>
                     </div>
                 </div>
@@ -595,6 +603,17 @@
                                 <span class="word-text">贪</span>
                                 <span class="tag tag-teal">taam1</span>
                             </button>
+                            <!-- 新增例子 -->
+                            <button onclick="playAudio('金', this)" class="word-btn word-btn-grid">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
+                                <span class="word-text">金</span>
+                                <span class="tag tag-teal">gam1</span>
+                            </button>
+                            <button onclick="playAudio('南', this)" class="word-btn word-btn-grid">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
+                                <span class="word-text">南</span>
+                                <span class="tag tag-teal">naam4</span>
+                            </button>
                         </div>
                     </div>
                     
@@ -624,6 +643,17 @@
                                 <span class="word-text">叹</span>
                                 <span class="tag tag-stone">taan3</span>
                             </button>
+                            <!-- 新增例子 -->
+                            <button onclick="playAudio('根', this)" class="word-btn word-btn-grid">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
+                                <span class="word-text">根</span>
+                                <span class="tag tag-stone">gan1</span>
+                            </button>
+                            <button onclick="playAudio('难', this)" class="word-btn word-btn-grid">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
+                                <span class="word-text">难</span>
+                                <span class="tag tag-stone">naan4</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -632,9 +662,9 @@
             <!-- 3. 长短元音模块 -->
             <div id="tab-vowels" class="tab-content">
                 <div class="info-banner info-indigo">
-                    <i class="fa-solid fa-ruler-horizontal" style="margin-top: 4px;"></i>
+                    <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
-                        <h3>空间与时间的量化规律</h3>
+                        <h2>长短元音 (aa/a)</h2><br><h3>空间与时间的量化规律</h3>
                         <p>长元音 (aa) 和短元音 (a) 的区分是严谨的。它们在两个维度上存在差异：<br>
                         1. **空间维度**：口腔张开的幅度（aa 张得大，a 张得小）。<br>
                         2. **时间维度**：发音持续的时长（aa 声音拖长，a 声音短促）。</p>
@@ -705,16 +735,49 @@
                             <span class="tag tag-stone">cai4</span>
                         </button>
                     </div>
+
+                    <!-- Comparison 4 (新增) -->
+                    <div class="comparison-row">
+                        <button onclick="playAudio('派', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
+                            <div class="word-btn-left">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
+                                <span class="word-text">派</span>
+                            </div>
+                            <span class="tag tag-indigo">paai3</span>
+                        </button>
+                        <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                        <button onclick="playAudio('批', this)" class="word-btn" style="margin: 0;">
+                            <div class="word-btn-left">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
+                                <span class="word-text" style="color: var(--text-secondary);">批</span>
+                            </div>
+                            <span class="tag tag-stone">pai1</span>
+                        </button>
+                    </div>
+
+                    <!-- Comparison 5 (新增) -->
+                    <div class="comparison-row">
+                        <button onclick="playAudio('乖', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
+                            <div class="word-btn-left">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
+                                <span class="word-text">乖</span>
+                            </div>
+                            <span class="tag tag-indigo">gwaai1</span>
+                        </button>
+                        <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                        <button onclick="playAudio('龟', this)" class="word-btn" style="margin: 0;">
+                            <div class="word-btn-left">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
+                                <span class="word-text" style="color: var(--text-secondary);">龟</span>
+                            </div>
+                            <span class="tag tag-stone">gwai1</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
         </main>
         
-        <footer class="footer">
-            <i class="fa-solid fa-leaf"></i>
-            <p>按照物理规则发音，一切都有迹可循。</p>
-        </footer>
-
     </div>
 
     <script>
@@ -739,35 +802,47 @@
             targetBtn.classList.add(activeClass);
         }
 
-        // --- 语音合成播放逻辑 ---
-        function playAudio(text, btnElement) {
-            if (!window.speechSynthesis) {
-                alert("您的浏览器不支持语音合成，请尝试使用 Chrome 或 Safari 浏览器。");
-                return;
+        // --- 預先錄製 MP3 播放邏輯 ---
+        // 儲存當前正在播放的音頻物件，以便在點擊新按鈕時停止舊音頻
+        let currentAudio = null;
+        let currentIcon = null;
+
+        function playAudio(jyutping, btnElement) {
+            // 1. 停止目前正在播放的音頻（如果有）
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                if (currentIcon) currentIcon.classList.remove('playing-pulse');
             }
 
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'zh-HK';
-            utterance.rate = 0.8; 
+            // 2. 構建 MP3 檔案路徑 (請確保同目錄下有 audio 資料夾及對應的 mp3)
+            const audioUrl = "https://cantogo.github.io/voice/basic_" + jyutping + ".mp3";
 
+            const audio = new Audio(audioUrl);
+            
             const icon = btnElement.querySelector('.fa-volume-high');
             
-            utterance.onstart = () => {
-                if(icon) icon.classList.add('playing-pulse');
-            };
-
-            utterance.onend = () => {
-                if(icon) icon.classList.remove('playing-pulse');
-            };
+            // 3. 播放開始時加入動畫
+            if (icon) icon.classList.add('playing-pulse');
             
-            utterance.onerror = (e) => {
-                console.log("语音播放出错:", e);
-                if(icon) icon.classList.remove('playing-pulse');
-            };
+            // 4. 嘗試播放
+            audio.play().then(() => {
+                currentAudio = audio;
+                currentIcon = icon;
+            }).catch(error => {
+                console.error("無法播放音頻:", error);
+                alert(`無法播放音頻檔案`);
+                if (icon) icon.classList.remove('playing-pulse');
+            });
 
-            window.speechSynthesis.speak(utterance);
+            // 5. 播放結束時移除動畫
+            audio.onended = () => {
+                if (icon) icon.classList.remove('playing-pulse');
+                currentAudio = null;
+                currentIcon = null;
+            };
         }
+                
     </script>
 
 <script src="js/navBar.js" defer></script>
