@@ -247,7 +247,7 @@
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
         .card-title { font-size: 1.875rem; font-weight: bold; }
         .card-subtitle { font-size: 0.875rem; font-weight: bold; margin-bottom: 0.5rem; }
-        .card-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; min-height: 3rem; }
+        .card-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; min-height: 3rem; }
         
         /* Specific Card Colors */
         .card-rose .card-title { color: var(--rose-text); }
@@ -339,8 +339,8 @@
         /* 雙字組合專用樣式 */
         .combo-btn { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1rem; }
         .combo-header { display: flex; justify-content: space-between; width: 100%; align-items: center; }
-        .combo-details { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; }
-        .combo-details strong { color: var(--text-primary); }
+        .combo-details { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; text-align: left; }
+        .combo-details strong { color: var(--text-primary); font-size: 1.2rem; }
         .combo-meaning { font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem; display: block; }
 
         /* Header CSS */
@@ -601,7 +601,7 @@
                     <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
                         <h2>闭口音 (m)</h2><br><h3>发音要诀：双唇紧闭</h3>
-                        <p>普通话中不存在以 -m 结尾的字。在粤语中，遇到拼音以 m 结尾的字，必须执行一个明确的动作：「上下嘴唇完全贴合」，让剩余的声音通过鼻腔产生共鸣。</p>
+                        <p>普通话中不存在以 -m 结尾的字。在粤语中，拼音以 -m 结尾的字，发音时「上下嘴唇完全贴合」，让剩余的声音通过鼻腔产生共鸣。</p>
                     </div>
                 </div>
 
@@ -623,8 +623,8 @@
                             </button>
                             <button onclick="playAudio('2-3', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">金</span>
-                                <span class="tag tag-teal">gam1</span>
+                                <span class="word-text">感</span>
+                                <span class="tag tag-teal">gam2</span>
                             </button>
                             <button onclick="playAudio('2-4', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
@@ -636,6 +636,11 @@
                                 <span class="word-text">验</span>
                                 <span class="tag tag-teal">jim6</span>
                             </button>
+                            <button onclick="playAudio('2-6', this)" class="word-btn word-btn-grid">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
+                                <span class="word-text">减</span>
+                                <span class="tag tag-teal">gaam2</span>
+                            </button>
                         </div>
                     </div>
             </div>
@@ -646,7 +651,7 @@
                     <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
                         <h2>交叉組合 (p/t/k/m)</h2><br><h3>发音要诀：口腔肌肉的灵活切换</h3>
-                        <p>入声字 (p/t/k) 和闭口音 (m) 交叉组合发音时，必须确保第一个字的尾音动作确实做到，然后瞬间切换到第二个字的发音位置。</p>
+                        <p>入声字 (p/t/k) 和闭口音 (m) 交叉组合发音时，要做到第一个字的尾音动作，然后瞬间切换到第二个字的发音位置。</p>
                     </div>
                 </div>
 
@@ -654,9 +659,12 @@
                     <!-- 第一组：以 -p 开头 -->
                     <div class="category-card card-amber">
                         <h4 class="card-title">以 -p 开头 + p/t/k/m</h4>
-                        <p class="card-desc">第一个字双唇快速夹紧，随即放开发第二个字。</p>
+                        <p class="card-desc">第一个字双唇快速夹紧，然后放开，再做第二个字的尾音动作。</p>
                         
                         <button onclick="playAudio('3-1', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-p + -p</strong><br>双唇紧闭顿挫 ➔ 双唇紧闭顿挫
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -664,12 +672,12 @@
                                 </div>
                                 <span class="tag tag-amber">zaap6 hap6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-p + -p</strong>：双唇紧闭顿挫 ➔ 双唇紧闭顿挫
-                            </div>
                         </button>      
 
                         <button onclick="playAudio('3-2', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-p + -t</strong><br>双唇紧闭顿挫 ➔ 舌尖顶上牙龈
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -677,12 +685,12 @@
                                 </div>
                                 <span class="tag tag-amber">zap1 bat1</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-p + -t</strong>：双唇紧闭顿挫 ➔ 舌尖顶上颚
-                            </div>
                         </button>
 
                         <button onclick="playAudio('3-3', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-p + -k</strong><br>双唇紧闭顿挫 ➔ 舌根封喉
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -690,12 +698,12 @@
                                 </div>
                                 <span class="tag tag-amber">hap6 zok3</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-p + -k</strong>：双唇紧闭顿挫 ➔ 舌根封喉
-                            </div>
                         </button>
 
                         <button onclick="playAudio('3-4', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-p + -m</strong><br>双唇紧闭顿挫 ➔ 双唇紧闭发鼻音
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -703,18 +711,18 @@
                                 </div>
                                 <span class="tag tag-amber">jap6 cam1</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-p + -m</strong>：双唇紧闭顿挫 ➔ 双唇紧闭发鼻音
-                            </div>
                         </button>
                     </div>
 
                     <!-- 第二组：以 -t 开头 -->
                     <div class="category-card card-amber">
                         <h4 class="card-title">以 -t 开头 +p/t/k/m</h4>
-                        <p class="card-desc">第一个字舌尖弹起顶住上牙龈，随即放开发第二个字。</p>
+                        <p class="card-desc">第一个字舌尖弹起顶住上牙龈，然后放开，再做第二个字的尾音动作。</p>
                         
                         <button onclick="playAudio('3-5', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-t + -p</strong><br>舌尖顶上牙龈 ➔ 双唇紧闭顿挫
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -722,12 +730,12 @@
                                 </div>
                                 <span class="tag tag-amber">cit3 lap6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-t + -p</strong>：舌尖顶上颚 ➔ 双唇紧闭顿挫
-                            </div>
                         </button>
                         
                         <button onclick="playAudio('3-6', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-t + -t</strong><br>舌尖顶上牙龈 ➔ 舌尖顶上牙龈
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -735,12 +743,12 @@
                                 </div>
                                 <span class="tag tag-amber">faat3 leot6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-t + -t</strong>：舌尖顶上颚 ➔ 舌尖顶上颚
-                            </div>
                         </button>
 
                         <button onclick="playAudio('3-7', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-t + -k</strong><br>舌尖顶上牙龈 ➔ 舌根封喉
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -748,12 +756,12 @@
                                 </div>
                                 <span class="tag tag-amber">git3 guk6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-t + -k</strong>：舌尖顶上颚 ➔ 舌根封喉
-                            </div>
                         </button>
 
                         <button onclick="playAudio('3-8', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-t + -m</strong><br>舌尖顶上牙龈 ➔ 双唇紧闭发鼻音
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -761,18 +769,18 @@
                                 </div>
                                 <span class="tag tag-amber">faat3 jam1</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-t + -m</strong>：舌尖顶上颚 ➔ 双唇紧闭发鼻音
-                            </div>
                         </button>
                     </div>
 
                     <!-- 第三组：以 -k 开头 -->
                     <div class="category-card card-amber">
                         <h4 class="card-title">以 -k 开头 + p/t/k/m</h4>
-                        <p class="card-desc">第一个字喉咙深处有被卡住的感觉，随即放开发第二个字。</p>
+                        <p class="card-desc">第一个字喉咙深处有被卡住的感觉，然后放开，再做第二个字的尾音动作。</p>
                         
                         <button onclick="playAudio('3-9', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-k + -p</strong><br>舌根封喉 ➔ 双唇紧闭顿挫
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -780,12 +788,12 @@
                                 </div>
                                 <span class="tag tag-amber">duk6 lap6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-k + -p</strong>：舌根封喉 ➔ 双唇紧闭顿挫
-                            </div>
                         </button>
                         
                         <button onclick="playAudio('3-10', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-k + -t</strong><br>舌根封喉 ➔ 舌尖顶上牙龈
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -793,12 +801,12 @@
                                 </div>
                                 <span class="tag tag-amber">gik1 lit6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-k + -t</strong>：舌根封喉 ➔ 舌尖顶上颚
-                            </div>
                         </button>
 
                         <button onclick="playAudio('3-11', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-k + -k</strong><br>舌根封喉 ➔ 舌根封喉
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -806,12 +814,12 @@
                                 </div>
                                 <span class="tag tag-amber">zik1 gik6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-k + -k</strong>：舌根封喉 ➔ 舌根封喉
-                            </div>
                         </button>
 
                         <button onclick="playAudio('3-12', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-k + -m</strong><br>舌根封喉 ➔ 双唇紧闭发鼻音
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -819,18 +827,18 @@
                                 </div>
                                 <span class="tag tag-amber">zaak3 jam6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-k + -m</strong>：舌根封喉 ➔ 双唇紧闭发鼻音
-                            </div>
                         </button>
                     </div>
 
                     <!-- 第四组：以 -m 开头 -->
                     <div class="category-card card-amber">
                         <h4 class="card-title">以 -m 开头 + p/t/k/m</h4>
-                        <p class="card-desc">第一个字双唇合拢并带有鼻腔共鸣，随即放开发第二个字。</p>
+                        <p class="card-desc">第一个字双唇合拢并带有鼻腔共鸣，然后放开，再做第二个字的尾音动作。</p>
                       
                         <button onclick="playAudio('3-13', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-m + -p</strong><br>双唇紧闭发鼻音 ➔ 双唇紧闭顿挫
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -838,12 +846,12 @@
                                 </div>
                                 <span class="tag tag-amber">cim4 jap6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-m + -p</strong>：双唇紧闭发鼻音 ➔ 双唇紧闭顿挫
-                            </div>
                         </button>
 
                         <button onclick="playAudio('3-14', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-m + -t</strong><br>双唇紧闭发鼻音 ➔ 舌尖顶上牙龈
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -851,12 +859,12 @@
                                 </div>
                                 <span class="tag tag-amber">tim4 mat6</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-m + -t</strong>：双唇紧闭发鼻音 ➔ 舌尖顶上颚
-                            </div>
                         </button>
 
                         <button onclick="playAudio('3-15', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-m + -k</strong><br>双唇紧闭发鼻音 ➔ 舌根封喉
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -864,21 +872,18 @@
                                 </div>
                                 <span class="tag tag-amber">gam2 gok3</span>
                             </div>
-                            <div class="combo-details">
-                                <strong>-m + -k</strong>：双唇紧闭发鼻音 ➔ 舌根封喉
-                            </div>
                         </button>
 
                         <button onclick="playAudio('3-16', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-m + -m</strong><br>双唇紧闭发鼻音 ➔ 双唇紧闭发鼻音
+                            </div>
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                     <span class="word-text">点心</span>
                                 </div>
                                 <span class="tag tag-amber">dim2 sam1</span>
-                            </div>
-                            <div class="combo-details">
-                                <strong>-m + -m</strong>：双唇紧闭发鼻音 ➔ 双唇紧闭发鼻音
                             </div>
                         </button>                        
 
