@@ -41,6 +41,11 @@
             --indigo-text: #4338ca;
             --indigo-hover: #e0e7ff;
 
+            --amber-bg: #fffbeb;
+            --amber-border: #fde68a;
+            --amber-text: #d97706;
+            --amber-hover: #fef3c7;
+
             /* Shared */
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --radius-md: 0.5rem;
@@ -81,6 +86,11 @@
                 --indigo-border: rgba(67, 56, 202, 0.5);
                 --indigo-text: #a5b4fc;
                 --indigo-hover: rgba(67, 56, 202, 0.4);
+
+                --amber-bg: rgba(217, 119, 6, 0.2);
+                --amber-border: rgba(217, 119, 6, 0.5);
+                --amber-text: #fcd34d;
+                --amber-hover: rgba(217, 119, 6, 0.4);
             }
         }
 
@@ -186,6 +196,11 @@
             box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--indigo-border);
         }
 
+        .tab-btn.active-amber {
+            background-color: var(--amber-bg); color: var(--amber-text);
+            box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--amber-border);
+        }
+
         /* Main Content Area */
         .main-content {
             background-color: var(--bg-surface);
@@ -217,6 +232,7 @@
         .info-rose { background-color: var(--rose-bg); border-color: var(--rose-border); color: var(--rose-text); }
         .info-teal { background-color: var(--teal-bg); border-color: var(--teal-border); color: var(--teal-text); }
         .info-indigo { background-color: var(--indigo-bg); border-color: var(--indigo-border); color: var(--indigo-text); }
+        .info-amber { background-color: var(--amber-bg); border-color: var(--amber-border); color: var(--amber-text); }
 
         /* Category Cards */
         .category-card {
@@ -231,14 +247,16 @@
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
         .card-title { font-size: 1.875rem; font-weight: bold; }
         .card-subtitle { font-size: 0.875rem; font-weight: bold; margin-bottom: 0.5rem; }
-        .card-desc { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 1.5rem; min-height: 3rem; }
+        .card-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.5rem; min-height: 3rem; }
         
         /* Specific Card Colors */
         .card-rose .card-title { color: var(--rose-text); }
         .card-rose:hover { background-color: var(--rose-hover); }
         .card-teal { border-width: 2px; border-color: var(--teal-border); background-color: var(--teal-bg); }
         .card-teal .card-title { color: var(--teal-text); }
-
+        .card-amber { border-width: 2px; border-color: var(--amber-border); background-color: var(--amber-bg); }
+        .card-amber .card-title { color: var(--amber-text); font-size: 1.25rem; }
+        
         /* Word Play Buttons */
         .word-btn {
             display: flex;
@@ -274,6 +292,7 @@
         .tag-rose { background-color: var(--rose-bg); color: var(--rose-text); }
         .tag-teal { background-color: var(--teal-bg); color: var(--teal-text); }
         .tag-indigo { background-color: var(--indigo-bg); color: var(--indigo-text); }
+        .tag-amber { background-color: var(--amber-bg); color: var(--amber-text); }
         .tag-stone { background-color: var(--bg-surface-alt); color: var(--text-secondary); }
 
         /* Grid specific buttons (Closed Tab) */
@@ -316,6 +335,13 @@
             0%, 100% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.2); opacity: 0.8; }
         }
+
+        /* 雙字組合專用樣式 */
+        .combo-btn { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1rem; }
+        .combo-header { display: flex; justify-content: space-between; width: 100%; align-items: center; }
+        .combo-details { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; }
+        .combo-details strong { color: var(--text-primary); }
+        .combo-meaning { font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem; display: block; }
 
         /* Header CSS */
         #navbar {
@@ -404,14 +430,14 @@
         <!-- Navigation Tabs -->
         <div>
         <nav class="nav-tabs">
-            <button onclick="switchTab('entering', 'active-rose')" id="btn-entering" class="tab-btn active-rose">
+            <button onclick="switchTab('entering', 'active-indigo')" id="btn-entering" class="tab-btn active-indigo">
                 <span>入声字 (p/t/k)</span>
             </button>
             <button onclick="switchTab('closed', 'active-teal')" id="btn-closed" class="tab-btn">
                 <span>闭口音 (m)</span>
             </button>
-            <button onclick="switchTab('vowels', 'active-indigo')" id="btn-vowels" class="tab-btn">
-                <span>长短元音 (aa/a)</span>
+            <button onclick="switchTab('mixed', 'active-amber')" id="btn-mixed" class="tab-btn">
+                <span>交叉組合 (p/t/k/m)</span>
             </button>
         </nav>
         </div>
@@ -424,17 +450,17 @@
             
             <!-- 1. 入声字模块 -->
             <div id="tab-entering" class="tab-content active">
-                <div class="info-banner info-rose">
+                <div class="info-banner info-indigo">
                     <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
-                        <h2>入声字 (p/t/k)</h2><br><h3>物理法则：气流截断（唯闭不爆）</h3>
-                        <p>普通话的发音通常让气流自然流出。而粤语的入声字要求在发音的最后一刻，使用嘴唇或舌头像阀门一样**瞬间关闭**，将气流憋在体内，不发出爆破音。</p>
+                        <h2>入声字 (p/t/k)</h2><br><h3>发音要诀：气流截断（唯闭不爆）</h3>
+                        <p>普通话的发音通常让气流自然流出。而粤语的入声字要求在发音的最后一刻，使用嘴唇或舌头像阀门一样「瞬间关闭」，将气流憋在体内，不发出爆破音。</p>
                     </div>
                 </div>
 
                 <div class="grid-3">
                     <!-- -p -->
-                    <div class="category-card card-rose">
+                    <div class="category-card card-indigo">
                         <div class="card-header">
                             <div class="card-title">-p</div>
                         </div>
@@ -446,41 +472,40 @@
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">十</span>
                             </div>
-                            <span class="tag tag-rose">sap6</span>
-                        </button>
+                            <span class="tag tag-indigo">sap6</span>
+                        </button>                        
                         <button onclick="playAudio('1-2', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">急</span>
                             </div>
-                            <span class="tag tag-rose">gap1</span>
+                            <span class="tag tag-indigo">zip3</span>
                         </button>
                         <button onclick="playAudio('1-3', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">合</span>
                             </div>
-                            <span class="tag tag-rose">hap6</span>
+                            <span class="tag tag-indigo">hap6</span>
                         </button>
-                        <!-- 新增例子 -->
                         <button onclick="playAudio('1-4', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">湿</span>
+                                <span class="word-text">入</span>
                             </div>
-                            <span class="tag tag-rose">sap1</span>
+                            <span class="tag tag-indigo">jap6</span>
                         </button>
                         <button onclick="playAudio('1-5', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">鸭</span>
+                                <span class="word-text">接</span>
                             </div>
-                            <span class="tag tag-rose">aap3</span>
+                            <span class="tag tag-indigo">zip3</span>
                         </button>
                     </div>
 
                     <!-- -t -->
-                    <div class="category-card card-rose">
+                    <div class="category-card card-indigo">
                         <div class="card-header">
                             <div class="card-title">-t</div>
                         </div>
@@ -492,41 +517,39 @@
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">七</span>
                             </div>
-                            <span class="tag tag-rose">cat1</span>
+                            <span class="tag tag-indigo">cat1</span>
                         </button>
                         <button onclick="playAudio('1-7', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">八</span>
-                            </div>
-                            <span class="tag tag-rose">baat3</span>
-                        </button>
-                        <button onclick="playAudio('1-8', this)" class="word-btn">
-                            <div class="word-btn-left">
-                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">铁</span>
-                            </div>
-                            <span class="tag tag-rose">tit3</span>
-                        </button>
-                        <!-- 新增例子 -->
-                        <button onclick="playAudio('1-9', this)" class="word-btn">
-                            <div class="word-btn-left">
-                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">笔</span>
                             </div>
-                            <span class="tag tag-rose">bat1</span>
-                        </button>
-                        <button onclick="playAudio('1-10', this)" class="word-btn">
+                            <span class="tag tag-indigo">bat1</span>
+                        <button onclick="playAudio('1-8', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">结</span>
                             </div>
-                            <span class="tag tag-rose">git3</span>
+                            <span class="tag tag-indigo">git3</span>
+                        </button>
+                        <button onclick="playAudio('1-9', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">质</span>
+                            </div>
+                            <span class="tag tag-indigo">zat1</span>
+                        </button>
+                        <button onclick="playAudio('1-10', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">律</span>
+                            </div>
+                            <span class="tag tag-indigo">leot6</span>
                         </button>
                     </div>
 
                     <!-- -k -->
-                    <div class="category-card card-rose">
+                    <div class="category-card card-indigo">
                         <div class="card-header">
                             <div class="card-title">-k</div>
                         </div>
@@ -536,38 +559,37 @@
                         <button onclick="playAudio('1-11', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">白</span>
+                                <span class="word-text">六</span>
                             </div>
-                            <span class="tag tag-rose">baak6</span>
+                            <span class="tag tag-indigo">luk6</span>
                         </button>
                         <button onclick="playAudio('1-12', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">六</span>
+                                <span class="word-text">白</span>
                             </div>
-                            <span class="tag tag-rose">luk6</span>
+                            <span class="tag tag-indigo">baak6</span>
                         </button>
                         <button onclick="playAudio('1-13', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">国</span>
+                                <span class="word-text">作</span>
                             </div>
-                            <span class="tag tag-rose">gwok3</span>
+                            <span class="tag tag-indigo">zok3</span>
                         </button>
-                        <!-- 新增例子 -->
                         <button onclick="playAudio('1-14', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">黑</span>
+                                <span class="word-text">的</span>
                             </div>
-                            <span class="tag tag-rose">hak1</span>
-                        </button>
+                            <span class="tag tag-indigo">dik1</span>
+                        </button>     
                         <button onclick="playAudio('1-15', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
                                 <span class="word-text">木</span>
                             </div>
-                            <span class="tag tag-rose">muk6</span>
+                            <span class="tag tag-indigo">muk6</span>
                         </button>
                     </div>
                 </div>
@@ -578,211 +600,292 @@
                 <div class="info-banner info-teal">
                     <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
-                        <h2>闭口音 (m)</h2><br><h3>状态对比：闭合 (-m) 与 微张 (-n)</h3>
-                        <p>普通话中不存在以 -m 结尾的字。在粤语中，遇到拼音以 m 结尾的字，必须执行一个明确的物理动作：**上下嘴唇完全贴合**，让剩余的声音通过鼻腔产生共鸣。</p>
+                        <h2>闭口音 (m)</h2><br><h3>发音要诀：双唇紧闭</h3>
+                        <p>普通话中不存在以 -m 结尾的字。在粤语中，遇到拼音以 m 结尾的字，必须执行一个明确的动作：「上下嘴唇完全贴合」，让剩余的声音通过鼻腔产生共鸣。</p>
                     </div>
                 </div>
 
-                <div class="grid-2">
                     <!-- -m -->
                     <div class="category-card card-teal">
                         <h4 class="card-title" style="font-size: 1.25rem; margin-bottom: 0.5rem;">闭口音 (-m)</h4>
-                        <p class="card-desc" style="color: var(--teal-text); opacity: 0.8;">动作指令：嘴唇紧闭，鼻腔哼鸣。</p>
+                        <p class="card-desc" style="color: var(--teal-text); opacity: 0.8;">嘴唇紧闭，鼻腔哼鸣。</p>
                         
                         <div class="grid-cols-2">
                             <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">心</span>
-                                <span class="tag tag-teal">sam1</span>
-                            </button>
-                            <button onclick="playAudio('2-2', this)" class="word-btn word-btn-grid">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">三</span>
                                 <span class="tag tag-teal">saam1</span>
                             </button>
+                            <button onclick="playAudio('2-2', this)" class="word-btn word-btn-grid">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
+                                <span class="word-text">心</span>
+                                <span class="tag tag-teal">sam1</span>
+                            </button>
                             <button onclick="playAudio('2-3', this)" class="word-btn word-btn-grid">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">针</span>
-                                <span class="tag tag-teal">zam1</span>
-                            </button>
-                            <button onclick="playAudio('2-4', this)" class="word-btn word-btn-grid">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">贪</span>
-                                <span class="tag tag-teal">taam1</span>
-                            </button>
-                            <!-- 新增例子 -->
-                            <button onclick="playAudio('2-5', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">金</span>
                                 <span class="tag tag-teal">gam1</span>
                             </button>
-                            <button onclick="playAudio('2-6', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('2-4', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">南</span>
                                 <span class="tag tag-teal">naam4</span>
                             </button>
-                        </div>
-                    </div>
-                    
-                    <!-- -n -->
-                    <div class="category-card">
-                        <h4 class="card-title" style="font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary);">开口音 (-n) [对照组]</h4>
-                        <p class="card-desc">动作指令：嘴唇微张，舌尖顶上颚。</p>
-                        
-                        <div class="grid-cols-2">
-                            <button onclick="playAudio('2-7', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('2-5', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">新</span>
-                                <span class="tag tag-stone">san1</span>
-                            </button>
-                            <button onclick="playAudio('2-8', this)" class="word-btn word-btn-grid">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">山</span>
-                                <span class="tag tag-stone">saan1</span>
-                            </button>
-                            <button onclick="playAudio('2-9', this)" class="word-btn word-btn-grid">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">真</span>
-                                <span class="tag tag-stone">zan1</span>
-                            </button>
-                            <button onclick="playAudio('2-10', this)" class="word-btn word-btn-grid">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">叹</span>
-                                <span class="tag tag-stone">taan3</span>
-                            </button>
-                            <!-- 新增例子 -->
-                            <button onclick="playAudio('2-11', this)" class="word-btn word-btn-grid">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">根</span>
-                                <span class="tag tag-stone">gan1</span>
-                            </button>
-                            <button onclick="playAudio('2-12', this)" class="word-btn word-btn-grid">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
-                                <span class="word-text">难</span>
-                                <span class="tag tag-stone">naan4</span>
+                                <span class="word-text">验</span>
+                                <span class="tag tag-teal">jim6</span>
                             </button>
                         </div>
                     </div>
-                </div>
             </div>
 
-            <!-- 3. 长短元音模块 -->
-            <div id="tab-vowels" class="tab-content">
-                <div class="info-banner info-indigo">
+            <!-- 4. 交叉组合模块 -->
+            <div id="tab-mixed" class="tab-content">
+                <div class="info-banner info-amber">
                     <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
-                        <h2>长短元音 (aa/a)</h2><br><h3>空间与时间的量化规律</h3>
-                        <p>长元音 (aa) 和短元音 (a) 的区分是严谨的。它们在两个维度上存在差异：<br>
-                        1. **空间维度**：口腔张开的幅度（aa 张得大，a 张得小）。<br>
-                        2. **时间维度**：发音持续的时长（aa 声音拖长，a 声音短促）。</p>
+                        <h2>交叉組合 (p/t/k/m)</h2><br><h3>发音要诀：口腔肌肉的灵活切换</h3>
+                        <p>入声字 (p/t/k) 和闭口音 (m) 交叉组合发音时，必须确保第一个字的尾音动作确实做到，然后瞬间切换到第二个字的发音位置。</p>
                     </div>
                 </div>
 
-                <div>
-                    <!-- Header Row -->
-                    <div class="comparison-row" style="background: transparent; border: none; padding-bottom: 0;">
-                        <div style="color: var(--indigo-text); font-weight: bold; text-align: center;">长元音 (aa)</div>
-                        <div style="text-align: center; font-size: 0.875rem; color: var(--text-muted);">对比</div>
-                        <div style="color: var(--text-secondary); font-weight: bold; text-align: center;">短元音 (a)</div>
-                    </div>
+                <div class="grid-2">
+                    <!-- 第一组：以 -p 开头 -->
+                    <div class="category-card card-amber">
+                        <h4 class="card-title">以 -p 开头 + p/t/k/m</h4>
+                        <p class="card-desc">第一个字双唇快速夹紧，随即放开发第二个字。</p>
+                        
+                        <button onclick="playAudio('3-1', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">集合</span>
+                                </div>
+                                <span class="tag tag-amber">zaap6 hap6</span>
+                            </div>
+                            <div class="combo-details">
+                                <strong>-p + -p</strong>：双唇紧闭顿挫 ➔ 双唇紧闭顿挫
+                            </div>
+                        </button>      
 
-                    <!-- Comparison 1 -->
-                    <div class="comparison-row">
-                        <button onclick="playAudio('3-1', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text">街</span>
+                        <button onclick="playAudio('3-2', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">执笔</span>
+                                </div>
+                                <span class="tag tag-amber">zap1 bat1</span>
                             </div>
-                            <span class="tag tag-indigo">gaai1</span>
-                        </button>
-                        <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-2', this)" class="word-btn" style="margin: 0;">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text" style="color: var(--text-secondary);">鸡</span>
+                            <div class="combo-details">
+                                <strong>-p + -t</strong>：双唇紧闭顿挫 ➔ 舌尖顶上颚
                             </div>
-                            <span class="tag tag-stone">gai1</span>
                         </button>
-                    </div>
 
-                    <!-- Comparison 2 -->
-                    <div class="comparison-row">
-                        <button onclick="playAudio('3-3', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text">买</span>
+                        <button onclick="playAudio('3-3', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">合作</span>
+                                </div>
+                                <span class="tag tag-amber">hap6 zok3</span>
                             </div>
-                            <span class="tag tag-indigo">maai5</span>
-                        </button>
-                        <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-4', this)" class="word-btn" style="margin: 0;">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text" style="color: var(--text-secondary);">米</span>
+                            <div class="combo-details">
+                                <strong>-p + -k</strong>：双唇紧闭顿挫 ➔ 舌根封喉
                             </div>
-                            <span class="tag tag-stone">mai5</span>
                         </button>
-                    </div>
 
-                    <!-- Comparison 3 -->
-                    <div class="comparison-row">
-                        <button onclick="playAudio('3-5', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text">柴</span>
+                        <button onclick="playAudio('3-4', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">入侵</span>
+                                </div>
+                                <span class="tag tag-amber">jap6 cam1</span>
                             </div>
-                            <span class="tag tag-indigo">caai4</span>
-                        </button>
-                        <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-6', this)" class="word-btn" style="margin: 0;">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text" style="color: var(--text-secondary);">齐</span>
+                            <div class="combo-details">
+                                <strong>-p + -m</strong>：双唇紧闭顿挫 ➔ 双唇紧闭发鼻音
                             </div>
-                            <span class="tag tag-stone">cai4</span>
                         </button>
                     </div>
 
-                    <!-- Comparison 4 (新增) -->
-                    <div class="comparison-row">
-                        <button onclick="playAudio('3-7', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text">派</span>
+                    <!-- 第二组：以 -t 开头 -->
+                    <div class="category-card card-amber">
+                        <h4 class="card-title">以 -t 开头 +p/t/k/m</h4>
+                        <p class="card-desc">第一个字舌尖弹起顶住上牙龈，随即放开发第二个字。</p>
+                        
+
+                        <button onclick="playAudio('3-5', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">法律</span>
+                                </div>
+                                <span class="tag tag-amber">faat3 leot6</span>
                             </div>
-                            <span class="tag tag-indigo">paai3</span>
+                            <div class="combo-details">
+                                <strong>-t + -t</strong>：舌尖顶上颚 ➔ 舌尖顶上颚
+                            </div>
                         </button>
-                        <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-8', this)" class="word-btn" style="margin: 0;">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text" style="color: var(--text-secondary);">批</span>
+
+                        <button onclick="playAudio('3-6', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">设立</span>
+                                </div>
+                                <span class="tag tag-amber">cit3 lap6</span>
                             </div>
-                            <span class="tag tag-stone">pai1</span>
+                            <div class="combo-details">
+                                <strong>-t + -p</strong>：舌尖顶上颚 ➔ 双唇紧闭顿挫
+                            </div>
+                        </button>
+                        
+                        <button onclick="playAudio('3-7', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">结局</span>
+                                </div>
+                                <span class="tag tag-amber">git3 guk6</span>
+                            </div>
+                            <div class="combo-details">
+                                <strong>-t + -k</strong>：舌尖顶上颚 ➔ 舌根封喉
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-8', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">发音</span>
+                                </div>
+                                <span class="tag tag-amber">faat3 jam1</span>
+                            </div>
+                            <div class="combo-details">
+                                <strong>-t + -m</strong>：舌尖顶上颚 ➔ 双唇紧闭发鼻音
+                            </div>
                         </button>
                     </div>
 
-                    <!-- Comparison 5 (新增) -->
-                    <div class="comparison-row">
-                        <button onclick="playAudio('3-9', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text">乖</span>
+                    <!-- 第三组：以 -k 开头 -->
+                    <div class="category-card card-amber">
+                        <h4 class="card-title">以 -k 开头 + p/t/k/m</h4>
+                        <p class="card-desc">第一个字喉咙深处有被卡住的感觉，随即放开发第二个字。</p>
+                        
+                        <button onclick="playAudio('3-9', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">积极</span>
+                                </div>
+                                <span class="tag tag-amber">zik1 gik6</span>
                             </div>
-                            <span class="tag tag-indigo">gwaai1</span>
+                            <div class="combo-details">
+                                <strong>-k + -k</strong>：舌根封喉 ➔ 舌根封喉
+                            </div>
                         </button>
-                        <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-10', this)" class="word-btn" style="margin: 0;">
-                            <div class="word-btn-left">
-                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
-                                <span class="word-text" style="color: var(--text-secondary);">龟</span>
+
+                        <button onclick="playAudio('3-10', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">独立</span>
+                                </div>
+                                <span class="tag tag-amber">duk6 lap6</span>
                             </div>
-                            <span class="tag tag-stone">gwai1</span>
+                            <div class="combo-details">
+                                <strong>-k + -p</strong>：舌根封喉 ➔ 双唇紧闭顿挫
+                            </div>
+                        </button>
+                        
+                        <button onclick="playAudio('3-11', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">激烈</span>
+                                </div>
+                                <span class="tag tag-amber">gik1 lit6</span>
+                            </div>
+                            <div class="combo-details">
+                                <strong>-k + -t</strong>：舌根封喉 ➔ 舌尖顶上颚
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-12', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">责任</span>
+                                </div>
+                                <span class="tag tag-amber">zaak3 jam6</span>
+                            </div>
+                            <div class="combo-details">
+                                <strong>-k + -m</strong>：舌根封喉 ➔ 双唇紧闭发鼻音
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- 第四组：以 -m 开头 -->
+                    <div class="category-card card-amber">
+                        <h4 class="card-title">以 -m 开头 + p/t/k/m</h4>
+                        <p class="card-desc">第一个字双唇合拢并带有鼻腔共鸣，随即放开发第二个字。</p>
+                        
+                        <button onclick="playAudio('3-13', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">点心</span>
+                                </div>
+                                <span class="tag tag-amber">dim2 sam1</span>
+                            </div>
+                            <div class="combo-details">
+                                <strong>-m + -m</strong>：双唇紧闭发鼻音 ➔ 双唇紧闭发鼻音
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-14', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">潜入</span>
+                                </div>
+                                <span class="tag tag-amber">cim4 jap6</span>
+                            </div>
+                            <div class="combo-details">
+                                <strong>-m + -p</strong>：双唇紧闭发鼻音 ➔ 双唇紧闭顿挫
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-15', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">甜蜜</span>
+                                </div>
+                                <span class="tag tag-amber">tim4 mat6</span>
+                            </div>
+                            <div class="combo-details">
+                                <strong>-m + -t</strong>：双唇紧闭发鼻音 ➔ 舌尖顶上颚
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-16', this)" class="word-btn amber-btn combo-btn">
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">感觉</span>
+                                </div>
+                                <span class="tag tag-amber">gam2 gok3</span>
+                            </div>
+                            <div class="combo-details">
+                                <strong>-m + -k</strong>：双唇紧闭发鼻音 ➔ 舌根封喉
+                            </div>
                         </button>
                     </div>
                 </div>
             </div>
-
+            
         </main>
         
     </div>
