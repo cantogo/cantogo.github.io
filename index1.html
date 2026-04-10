@@ -1,0 +1,782 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta charset="UTF-8">
+  <title>轻轻松松、怏怏乐乐学粤语</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* 全站基本样式 */
+    * {
+      box-sizing: border-box;
+    }
+    html {
+      font-size: 105%;
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+        "PingFang SC", "Microsoft YaHei", sans-serif;
+      line-height: 1.6;
+      color: #222;
+      background: #f9fafb;
+    }
+    a {
+      color: #0f766e;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* 顶部导航 */
+    header {
+      background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+      color: #fff;
+      padding: 0.75rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+    .header-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .site-title {
+      font-size: 1.215rem;
+      font-weight: 700;
+    }
+    .site-subtitle {
+      font-size: 0.81rem;
+      opacity: 0.9;
+    }
+
+    /* 顶部简单导航（跳转到大章节） */
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+    nav a {
+      padding: 0.2rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #e0f2f1;
+      white-space: nowrap;
+    }
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.25);
+      text-decoration: none;
+    }
+
+    /* 目录按钮（移动端可见） */
+    .toc-toggle-btn {
+      display: none;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 0.85rem;
+      padding: 0.3rem 0.75rem;
+      cursor: pointer;
+    }
+    .toc-toggle-btn span {
+      margin-left: 0.3rem;
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    /* 布局：左侧目录 + 右侧正文 */
+    .page-container {
+      max-width: 1080px;
+      margin: 1rem auto 2.5rem;
+      padding: 0 1rem;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    /* 课程简介 */
+    .intro-card {
+      grid-column: 1 / -1;
+      background: #ecfdf5;
+      border-radius: 0.75rem;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid #a7f3d0;
+      margin-bottom: 0.5rem;
+    }
+    .intro-card h1 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.6rem;
+      color: #065f46;
+    }
+    .intro-text {
+      margin: 0.25rem 0;
+      font-size: 0.98rem;
+      font-weight: 550;
+      color: #047857;
+    }
+
+    /* 左侧：可折叠目录 */
+    .toc-container {
+      position: sticky;
+      top: 4.5rem; /* 与 header 高度配合 */
+      align-self: flex-start;
+      background: #ffffff;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+      padding: 1.8rem 0.8rem;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    }
+    .toc-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .toc-title span {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+    .toc {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+    .toc-section {
+      border-radius: 0.5rem;
+      margin-bottom: 0.2rem;
+      background: #f9fafb;
+      overflow: hidden;
+    }
+    .toc-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 0.1rem 0.5rem;
+    }
+    .toc-section-header span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .toc-section-header strong {
+      font-size: 0.9rem;
+      font-size: 97%;
+    }
+    .toc-chevron {
+      font-size: 0.75rem;
+      color: #6b7280;
+      transition: transform 0.18s ease;
+    }
+    .toc-section-header:hover {
+      background: #eff6ff;
+    }
+    .toc-sublist {
+      list-style: none;
+      padding: 0 0.6rem 0 1.1rem;
+      margin: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.22s ease;
+      font-size: 97%;
+    }
+    .toc-sublist a {
+      display: block;
+      padding: 0.12rem 0;
+      color: #374151;
+    }
+    .toc-sublist a:hover {
+      color: #0f766e;
+      text-decoration: none;
+    }
+    .toc-section.open .toc-sublist {
+      max-height: 300px; /* 足够容纳几行子项 */
+    }
+    .toc-section.open .toc-chevron {
+      transform: rotate(90deg);
+    }
+
+    /* 右侧：正文内容 */
+    main {
+      width: 100%;
+    }
+    h2 {
+      font-size: 1.235rem;
+      margin-top: 1.6rem;
+      margin-bottom: 0.75rem;
+      border-left: 4px solid #0f766e;
+      padding-left: 0.6rem;
+      color: #064e3b;
+    }
+    h3 {
+      font-size: 1.09rem;
+      margin-top: 1.2rem;
+      margin-bottom: 0.4rem;
+      color: #0f766e;
+    }
+    h4 {
+      font-size: 0.975rem;
+      margin: 0.75rem 0 0.25rem;
+      color: #111827;
+    }
+    p {
+      margin: 0.25rem 0 0.5rem;
+      font-size: 0.975rem;
+    }
+    ul {
+      padding-left: 1.2rem;
+      margin: 0.25rem 0 0.8rem;
+      font-size: 0.935rem;
+    }
+    li {
+      margin: 0.15rem 0;
+    }
+
+    /* 信息小标签 */
+    .tag {
+      display: inline-block;
+      padding: 0.1rem 0.2rem;
+      font-size: 0.975rem;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0369a1;
+      margin-left: 0.25rem;
+    }
+    .tag-green {
+      display: inline-block;
+      padding: 0.1rem 0.2rem;
+      font-size: 0.975rem;
+      border-radius: 999px;
+      background: #dcfce7;
+      color: #166534;
+      margin-left: 0.25rem;
+    }
+
+    /* 区块容器 */
+    .section-block {
+      background: #ffffff;
+      border-radius: 0.75rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    /* 参考链接 */
+    .ref-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.3rem 0 0.5rem;
+      font-size: 0.95rem;
+    }
+    .ref-list li {
+      margin: 0.2rem 0 0.5rem;
+    }
+    .ref-title {
+      font-weight: 600;
+      margin-right: 0.25rem;
+    }
+    .ref-url {
+      word-break: break-all;
+      display: block;
+      margin-top: 0.1rem;
+    }
+
+    /* RWD：小屏幕以下把目录变成“弹出式” */
+    @media (max-width: 840px) {
+      .page-container {
+        display: block;
+        padding: 0 0.75rem 2.5rem;
+      }
+      .intro-card {
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
+      }
+      .toc-container {
+        position: fixed;
+        left: 0.75rem;
+        right: 0.75rem;
+        top: 3.3rem;
+        z-index: 25;
+        transform: translateY(-140%);
+        transition: transform 0.22s ease, opacity 0.22s ease;
+        opacity: 0;
+      }
+      .toc-container.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .toc-toggle-btn {
+        display: inline-flex;
+        align-items: center;
+      }
+      nav {
+        display: none; /* 小屏幕时隐藏顶部导航，只用目录按钮 */
+      }
+      main {
+        margin-top: 0.75rem;
+      }
+    }
+
+        /* Updated content */
+        .new-drop-badge {
+            align-items: center;
+            padding: 5px 5px;            
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 16px;
+            cursor: default;
+            user-select: none;
+            
+            /* 動畫設定 */
+            /* 0.8秒完成一次循環，infinite 無限播放 */
+            /* steps(1) 是關鍵：它讓動畫不是平滑過渡，而是瞬間跳變 */
+            animation: bpm-switch 1.5s steps(1) infinite;
+        }
+
+        /* Updated content flashing */
+        @keyframes bpm-switch {
+            0%, 100% {
+                /* 狀態 A: 亮底深字 (Off beat) */
+                background-color: #ccfbf1; /* Teal-100 */
+                color: #0f766e;            /* Teal-700 */
+                transform: scale(1);
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            }
+            50% {
+                /* 狀態 B: 深底白字 (On beat) */
+                /*background-color: #14b8a6; /* Teal-500 */
+                background-color: #84c9c1; /* Teal-500 */
+                color: #ffffff;            /* White */
+                transform: scale(1.05);    /* 稍微放大 */
+                box-shadow: 0 4px 6px rgba(20, 184, 166, 0.4);
+            }
+        }    
+  </style>
+</head>
+<body>
+  <!-- 顶部导航 -->
+  <header>
+    <div class="header-inner">
+      <div>
+        <div class="site-title">轻轻松松、怏怏乐乐学粤语</div>
+              <!-- 桌面版：大章节导航；移动端：用按钮打开目录 -->
+        <div class="site-subtitle">按您的节奏，在粤语世界安心做自己 :)</div>
+      </div>
+      <button class="toc-toggle-btn" id="tocToggleBtn">
+        目录
+        <span id="tocToggleIcon">▼</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 页面主容器：目录 + 正文 -->
+  <div class="page-container">
+    <!-- 课程简介 -->
+    <section class="intro-card">
+      <p class="intro-text">
+
+        学习粤语就像有趣的声音实验，不用急，按自己舒服的节奏，探索新的声音 :) <br> 也不用太担心音准，带点生涩口音的粤语听起来显得更真实可爱 :)
+      </p>
+    </section>
+
+    <!-- 左侧：可折叠目录 -->
+    <aside class="toc-container" id="tocContainer">
+      <div class="toc-title">
+        <div>学习目录</div>
+        <span>点击展开 / 收起</span>
+      </div>
+      <ul class="toc">
+        <!-- 1 -->
+        <li class="toc-section open">
+          <div class="toc-section-header">
+            <span>
+              <strong>1. 声调与发音</strong>
+            </span>
+            <span class="toc-chevron">▶</span>
+          </div>
+          <ul class="toc-sublist">
+            <li><a href="#tones-1-1">1.1 粤语拼音</a></li>
+            <li><a href="#tones-1-2">1.2 九声六调</a></li>
+            <li><a href="#tones-1-3">1.3 独特发音</a></li>
+          </ul>
+        </li>
+
+        <!-- 2 -->
+        <li class="toc-section open">
+          <div class="toc-section-header">
+            <span>
+              <strong>2. 词汇与短句</strong>
+            </span>
+            <span class="toc-chevron">▶</span>
+          </div>
+          <ul class="toc-sublist">
+            <li><a href="#vocab-2-1">2.1 口语 vs 书面语</a></li>
+            <li><a href="#vocab-2-2">2.2 俗语 / 俚语</a></li>
+            <li><a href="#vocab-2-3">2.3 语法规律</a></li>
+          </ul>
+        </li>
+
+        <!-- 3 -->
+        <li class="toc-section open">
+          <div class="toc-section-header">
+            <span>
+              <strong>3. 趣味学习</strong>
+            </span>
+            <span class="toc-chevron">▶</span>
+          </div>
+          <ul class="toc-sublist">
+            <li><a href="#fun-3-1">3.1 绕口令</a></li>
+            <li><a href="#fun-3-2">3.2 笑话</a></li>
+          </ul>
+        </li>
+
+        <!-- 4 -->
+        <li class="toc-section open">
+          <div class="toc-section-header">
+            <span>
+              <strong>4. 听力与模仿</strong>
+            </span>
+            <span class="toc-chevron">▶</span>
+          </div>
+          <ul class="toc-sublist">
+            <li><a href="#listening-4-1">4.1 观看粤语剧集和电影</a></li>
+            <li><a href="#listening-4-2">4.2 听粤语歌和电台节目</a></li>
+          </ul>
+        </li>
+
+        <!-- 5 -->
+        <li class="toc-section open">
+          <div class="toc-section-header">
+            <span>
+              <strong>5. 对话实践</strong>
+            </span>
+            <span class="toc-chevron">▶</span>
+          </div>
+          <ul class="toc-sublist">
+            <li><a href="#dialogue-5-1">5.1 常用场景对话</a></li>
+            <li><a href="#dialogue-5-2">5.2 找粤语对话伙伴练习</a></li>
+          </ul>
+        </li>
+
+        <!-- 6 & 7 -->
+        <li class="toc-section open">
+          <div class="toc-section-header">
+            <span>
+              <strong>6–7. 粤音字典与参考资料</strong>
+            </span>
+            <span class="toc-chevron">▶</span>
+          </div>
+          <ul class="toc-sublist">
+            <li><a href="#resources-6">6. 粤音字典</a></li>
+            <li><a href="#resources-7">7. 参考资料</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- 右侧：正文 -->
+    <main>
+      <!-- 1. 声调与发音 -->
+      <section id="tones">
+        <h2>1. 声调与发音</h2>
+
+        <div class="section-block" id="tones-1-1">
+          <h3>1.1 粤语拼音</h3>
+          <p>
+            认识粤语的
+            <span class="tag">
+              <a href="https://www.ilc.cuhk.edu.hk/workshop/Chinese/Cantonese/Romanization/ch2_initials/2_learn.aspx" target="_blank" rel="noopener">声母 [#1]
+              </a>
+            </span>
+            与
+            <span class="tag">
+              <a href="https://www.ilc.cuhk.edu.hk/workshop/Chinese/Cantonese/Romanization/ch3_finals/2_learn.aspx" target="_blank" rel="noopener">韵母 [#1]
+              </a>
+            </span>
+           ，是打好发音基础的第一步。
+          </p>
+        </div>
+
+        <div class="section-block" id="tones-1-2">
+          <h3>1.2 九声六调</h3>
+          <p>
+            先简单认识
+           <span class="tag-green">
+            <a href="https://cantogo.github.io/tone_intro.html" target="_self">&#9312 粤语九声六调
+              </a>
+            </span>
+            ，再慢慢熟悉
+            <span class="tag-green">
+              <a href="https://cantogo.github.io/tone_voice.html" target="_self">&#9313 九声六调发音
+              </a>
+            </span>
+            的高低升降变化。
+          </p>
+        </div>
+
+        <div class="section-block" id="tones-1-3">
+          <h3>1.3 独特发音 &nbsp<span class="new-drop-badge">[New😊]</span></h3>
+          <p>
+            粤语有许多普通话没有的发音方法，入声韵尾 (-p, -t, -k) 和闭唇鼻音韵尾（-m) 是其中主要的
+           <span class="tag-green">
+            <a href="https://cantogo.github.io/tone_method.html" target="_self">&#9314 粤语独特发音
+              </a>
+            </span>
+            。
+          </p>
+        </div>
+
+      </section>
+
+      <!-- 2. 词汇与短句 -->
+      <section id="vocab">
+        <h2>2. 词汇与语法</h2>
+
+        <div class="section-block" id="vocab-2-1">
+          <h3>2.1 口语 vs 书面语</h3>
+          <p>
+            先熟悉一些
+            <span class="tag-green">
+              <a href="https://cantogo.github.io/basic.html" target="_self">&#9315 粤语常用字
+              </a>
+            </span>
+            ，再掌握一些
+            <span class="tag-green">
+              <a href="https://cantogo.github.io/compare.html" target="_self">&#9316 粤语口语 vs 书面语
+              </a>
+            </span>
+            ，就可以比较粤语“说”和“写”的差异。
+          </p>
+        </div>
+
+        <div class="section-block" id="vocab-2-2">
+          <h3>2.2 俗语／俚语</h3>
+          <p>
+            粤语的魅力很大部分来自好玩的
+           <span class="tag-green">
+              <a href="https://cantogo.github.io/proverb.html" target="_self">&#9317 粤语俗语／俚语
+              </a>
+            </span>
+            。
+          </p>
+        </div>
+
+        <div class="section-block" id="vocab-2-3">
+          <h3>2.3 语法规律</h3>
+          <p>
+            粤语语法规律的独特之处在于特殊的
+           <span class="tag-green">
+              <a href="https://cantogo.github.io/pattern_order.html" target="_self">&#9318 粤语词序变化
+              </a>
+            </span>
+            ，以及利用更丰富的动词后缀
+           <span class="tag-green">
+              <a href="https://cantogo.github.io/pattern_aspect.html" target="_self">&#9319 粤语体貌词
+              </a>
+            </span>
+            来精准描述动作的状态与进程。
+          </p>
+        </div>
+
+      </section>
+
+      <!-- 3. 趣味学习 -->
+      <section id="fun">
+        <h2>3. 趣味学习</h2>
+
+        <div class="section-block" id="fun-3-1">
+          <h3>3.1 绕口令</h3>
+          <p>
+            通过有趣的
+            <span class="tag-green">
+              <a href="https://cantogo.github.io/twister.html" target="_self">&#9320 粤语绕口令
+              </a>
+            </span>
+            ，可以学习语速节奏，熟悉声调的细微差别。
+          </p>
+        </div>
+
+        <div class="section-block" id="fun-3-2">
+          <h3>3.2 笑话</h3>
+          <p>
+            尝试用
+            <span class="tag-green">
+              <a href="https://cantogo.github.io/joke.html" target="_self">&#9321 粤语讲笑话
+              </a>
+            </span>            
+            ，是检验听力与表达能力的好方法，也能增加学习乐趣。
+          </p>
+        </div>
+      </section>
+
+      <!-- 4. 听力与模仿 -->
+      <section id="listening">
+        <h2>4. 听力与模仿</h2>
+
+        <div class="section-block" id="listening-4-1">
+          <h3>4.1 观看粤语剧集和电影</h3>
+          <p>
+            通过电影与剧集，加强耳朵对粤语节奏和语调的敏感度，顺便吸收日常用语。
+          </p>
+
+          <h4>电影推荐：周星驰作品</h4>
+          <p>
+            周星驰电影的台词节奏感强，语调夸张、高低音落差大，非常适合练习语调：
+          </p>
+          <ul>
+            <li>《唐伯虎点秋香》</li>
+            <li>《食神》</li>
+            <li>《少林足球》</li>
+          </ul>
+
+          <h4>剧集推荐：TVB 剧集</h4>
+          <p>
+            剧集内容多围绕日常生活、办公室八卦和家庭琐事，适合学习最地道的口语和俚语：
+          </p>
+          <ul>
+            <li>《男亲女爱》- 关注演员：黄子华、郑裕玲</li>
+            <li>《皆大欢喜》- 关注演员：薛家燕</li>
+          </ul>
+        </div>
+
+        <div class="section-block" id="listening-4-2">
+          <h3>4.2 听粤语歌和电台节目</h3>
+          <p>粤语歌和电台节目可以帮助你抓住语感，反复听更容易记得发音和用词。</p>
+          <h4>推荐粤语歌手／歌曲：</h4>
+          <ul>
+            <li>陈奕迅《单车》《歲月如歌》《富士山下》</li>
+            <li>张学友《每天爱你多一些》《李香兰》</li>
+            <li>容祖儿《心淡》《我的骄傲》</li>
+            <li>王菲《约定》《容易受伤的女人》</li>
+            <li>Beyond《海阔天空》《真的爱你》</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5. 对话实践 -->
+      <section id="dialogue">
+        <h2>5. 对话实践</h2>
+
+        <div class="section-block" id="dialogue-5-1">
+          <h3>5.1 常用场景对话</h3>
+          <p>
+            从日常生活中最常用的情景开始，例如：买东西、点餐、坐车、打招呼等等。<br>
+            可通过网络课堂学习更多的
+            <span class="tag">
+              <a href="https://www.ilc.cuhk.edu.hk/workshop/chinese/cantonese/onlinetutorial/courseListA.aspx" target="_blank" rel="noopener">常用场景对话 [#2]
+              </a>
+            </span>
+            。
+          </p>
+        </div>
+
+        <div class="section-block" id="dialogue-5-2">
+          <h3>5.2 找粤语对话伙伴练习</h3>
+          <p>
+            找朋友、语伴练习粤语对话。<br>
+            真实对话可以让你更快习惯即时反应、听懂不同速度与口音。
+          </p>
+        </div>
+      </section>
+
+      <!-- 6 & 7. 粤音资料 / 参考 -->
+      <section id="resources">
+        <h2 id="resources-6">6. 粤音字典</h2>
+
+        <div class="section-block">
+          <p>查字、确认读音时，可以善用线上粤音字典，推荐以下网站：</p>
+          <ul class="ref-list">
+            <li>
+              <span class="ref-title">粤音资料集丛：</span>
+              <a class="ref-url" href="https://jyut.net" target="_blank" rel="noopener">
+                https://jyut.net
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <h2 id="resources-7">7. 参考资料</h2>
+
+        <div class="section-block">
+          <p>以上的粤语拼音(声母、韵母)及常用场景对话参考资料引用以下推荐网站：</p>
+          <ul class="ref-list">
+            <li>
+              <span class="ref-title">#1 香港中文大学自学中心 — 粤语拼音速递</span>
+              <a class="ref-url" href="https://www.ilc.cuhk.edu.hk/workshop/Chinese/Cantonese/Romanization/" target="_blank" rel="noopener">
+                https://www.ilc.cuhk.edu.hk/workshop/Chinese/Cantonese/Romanization/
+              </a>
+            </li>
+            <li>
+              <span class="ref-title">#2 香港中文大学自学中心 — 粤语网络课堂</span>
+              <a class="ref-url" href="https://www.ilc.cuhk.edu.hk/workshop/chinese/cantonese/onlinetutorial/courseListA.aspx" target="_blank" rel="noopener">
+                https://www.ilc.cuhk.edu.hk/workshop/chinese/cantonese/onlinetutorial/courseListA.aspx
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- 目录交互脚本 -->
+  <script>
+    // 折叠 / 展开每个章节
+    document.querySelectorAll(".toc-section-header").forEach(function (header) {
+      header.addEventListener("click", function () {
+        var section = header.parentElement;
+        section.classList.toggle("open");
+      });
+    });
+
+    // 点击目录中的链接时，平滑滚动到对应位置
+    document.querySelectorAll(".toc-sublist a").forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        event.preventDefault();
+        var targetId = this.getAttribute("href").substring(1);
+        var target = document.getElementById(targetId);
+        if (target) {
+          var headerOffset = 70; // 顶部 header 高度
+          var rect = target.getBoundingClientRect();
+          var offsetTop = rect.top + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetTop,
+            behavior: "smooth"
+          });
+        }
+
+        // 移动端点击后自动收起目录
+        var tocContainer = document.getElementById("tocContainer");
+        if (window.innerWidth <= 840) {
+          tocContainer.classList.remove("show");
+          var icon = document.getElementById("tocToggleIcon");
+          if (icon) icon.textContent = "▼";
+        }
+      });
+    });
+
+    // 移动端：目录开关按钮
+    var tocToggleBtn = document.getElementById("tocToggleBtn");
+    var tocContainer = document.getElementById("tocContainer");
+    if (tocToggleBtn && tocContainer) {
+      tocToggleBtn.addEventListener("click", function () {
+        tocContainer.classList.toggle("show");
+        var icon = document.getElementById("tocToggleIcon");
+        if (icon) {
+          icon.textContent = tocContainer.classList.contains("show") ? "▲" : "▼";
+        }
+      });
+    }
+  </script>
+
+
+</body></html>
