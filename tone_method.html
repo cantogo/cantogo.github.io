@@ -245,7 +245,7 @@
         }
         .category-card:hover { border-color: var(--border-hover); }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .card-title { font-size: 1.875rem; font-weight: bold; }
+        .card-title { font-size: 1.25rem; font-weight: bold;  margin-bottom: 0.5rem; }
         .card-subtitle { font-size: 0.875rem; font-weight: bold; margin-bottom: 0.5rem; }
         .card-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; min-height: 3rem; }
         
@@ -253,10 +253,12 @@
         .card-rose .card-title { color: var(--rose-text); }
         .card-rose:hover { background-color: var(--rose-hover); }
         .card-teal { border-width: 2px; border-color: var(--teal-border); background-color: var(--teal-bg); }
-        .card-teal .card-title { color: var(--teal-text); font-size: 1.25rem; }
+        .card-teal .card-title { color: var(--teal-text); }
         .card-amber { border-width: 2px; border-color: var(--amber-border); background-color: var(--amber-bg); }
         .card-amber .card-title { color: var(--amber-text); }
-        
+        .card-indigo { border-width: 2px; border-color: var(--indigo-border); background-color: var(--indigo-bg); }
+        .card-indigo .card-title { color: var(--indigo-text); }
+
         /* Word Play Buttons */
         .word-btn {
             display: flex;
@@ -542,9 +544,9 @@
                         <button onclick="playAudio('1-10', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">律</span>
+                                <span class="word-text">日</span>
                             </div>
-                            <span class="tag tag-indigo">leot6</span>
+                            <span class="tag tag-indigo">jat6</span>
                         </button>
                     </div>
 
@@ -566,9 +568,9 @@
                         <button onclick="playAudio('1-12', this)" class="word-btn">
                             <div class="word-btn-left">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                <span class="word-text">白</span>
+                                <span class="word-text">式</span>
                             </div>
-                            <span class="tag tag-indigo">baak6</span>
+                            <span class="tag tag-indigo">sik1</span>
                         </button>
                         <button onclick="playAudio('1-13', this)" class="word-btn">
                             <div class="word-btn-left">
@@ -607,7 +609,9 @@
 
                     <!-- -m -->
                     <div class="category-card card-amber">
-                            
+                        <h4 class="card-title">闭口音 (-m)</h4>
+                        <p class="card-desc">嘴唇紧闭，鼻腔哼鸣。</p>
+
                         <div class="grid-cols-2">
                             <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
                                 <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
@@ -658,7 +662,7 @@
                     <div class="category-card card-teal">
                         <h4 class="card-title">-p 开头加上 -p/-t/-k/-m</h4>
                         <p class="card-desc">第一个字双唇快速夹紧，然后放开，再做第二个字的尾音动作。</p>
-                        
+
                         <button onclick="playAudio('3-1', this)" class="word-btn combo-btn">
                             <div class="combo-details">
                                 <strong>-p + -p</strong><br>双唇紧闭顿挫 ➔ 双唇紧闭顿挫
@@ -737,9 +741,9 @@
                             <div class="combo-header">
                                 <div class="word-btn-left">
                                     <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
-                                    <span class="word-text">法律</span>
+                                    <span class="word-text">密切</span>
                                 </div>
-                                <span class="tag tag-teal">faat3 leot6</span>
+                                <span class="tag tag-teal">mat6 cit3</span>
                             </div>
                         </button>
 
