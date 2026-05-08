@@ -1,0 +1,973 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粤语独特韵尾</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* =========================================
+           1. CSS Variables (Theming & Consistency)
+           ========================================= */
+        :root {
+            /* Base Colors (Light Mode) */
+            --bg-body: #fafaf9;
+            --bg-surface: #ffffff;
+            --bg-surface-alt: #f5f5f4;
+            --text-primary: #292524;
+            --text-secondary: #57534e;
+            --text-muted: #a8a29e;
+            --border-color: #e7e5e4;
+            --border-hover: #d6d3d1;
+
+            --bg-color: #F2F0E9;
+            --text-main: rgb(40, 40, 40);
+
+            /* Theme Colors: Rose (Entering) */
+            --rose-bg: #fff1f2;
+            --rose-border: #fecdd3;
+            --rose-text: #be123c;
+            --rose-hover: #ffe4e6;
+
+            /* Theme Colors: Teal (Closed) */
+            --teal-bg: #f0fdfa;
+            --teal-border: #ccfbf1;
+            --teal-text: #0f766e;
+            --teal-hover: #ccfbf1;
+
+            /* Theme Colors: Indigo (Vowels) */
+            --indigo-bg: #eef2ff;
+            --indigo-border: #e0e7ff;
+            --indigo-text: #4338ca;
+            --indigo-hover: #e0e7ff;
+
+            --amber-bg: #fffbeb;
+            --amber-border: #fde68a;
+            --amber-text: #d97706;
+            --amber-hover: #fef3c7;
+
+            /* Shared */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --radius-md: 0.5rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --transition: all 0.3s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Base Colors (Dark Mode) */
+                --bg-body: #1c1917;
+                --bg-surface: #292524;
+                --bg-surface-alt: #44403c;
+                --text-primary: #f5f5f4;
+                --text-secondary: #d6d3d1;
+                --text-muted: #78716c;
+                --border-color: #44403c;
+                --border-hover: #57534e;
+
+                --bg-color: #2B2B2B;
+                --text-main: #E0E0E0;
+
+                /* Theme Colors: Rose */
+                --rose-bg: rgba(159, 18, 57, 0.2);
+                --rose-border: rgba(159, 18, 57, 0.5);
+                --rose-text: #fda4af;
+                --rose-hover: rgba(159, 18, 57, 0.4);
+
+                /* Theme Colors: Teal */
+                --teal-bg: rgba(15, 118, 110, 0.2);
+                --teal-border: rgba(15, 118, 110, 0.5);
+                --teal-text: #5eead4;
+                --teal-hover: rgba(15, 118, 110, 0.4);
+
+                /* Theme Colors: Indigo */
+                --indigo-bg: rgba(67, 56, 202, 0.2);
+                --indigo-border: rgba(67, 56, 202, 0.5);
+                --indigo-text: #a5b4fc;
+                --indigo-hover: rgba(67, 56, 202, 0.4);
+
+                --amber-bg: rgba(217, 119, 6, 0.2);
+                --amber-border: rgba(217, 119, 6, 0.5);
+                --amber-text: #fcd34d;
+                --amber-hover: rgba(217, 119, 6, 0.4);
+            }
+        }
+
+        /* =========================================
+           2. Base & Reset
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 1rem;
+            transition: var(--transition);
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 2rem; }
+        }
+
+        button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            color: inherit;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-body); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+        /* =========================================
+           3. Layout & Containers
+           ========================================= */
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        .grid-3 { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
+        .grid-2 { display: grid; gap: 2rem; grid-template-columns: 1fr; }
+        .grid-cols-2 { display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); }
+        
+        @media (min-width: 768px) {
+            .grid-3 { grid-template-columns: repeat(3, 1fr); }
+            .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* =========================================
+           4. Components
+           ========================================= */
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 1.0rem;
+            padding-bottom: 0.5rem;
+            max-width: 1024px;
+            margin: 5px auto 10px auto;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 0.5rem;
+            border-radius: var(--radius-lg);
+            font-size: 0.8rem;
+            font-weight: 500;
+            background-color: var(--bg-surface);
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+        .tab-btn:hover { background-color: var(--bg-surface-alt); }
+        
+        /* Active Tab States */
+        .tab-btn.active-rose {
+            background-color: var(--rose-bg); color: var(--rose-text);
+            box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--rose-border);
+        }
+        .tab-btn.active-teal {
+            background-color: var(--teal-bg); color: var(--teal-text);
+            box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--teal-border);
+        }
+        .tab-btn.active-indigo {
+            background-color: var(--indigo-bg); color: var(--indigo-text);
+            box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--indigo-border);
+        }
+
+        .tab-btn.active-amber {
+            background-color: var(--amber-bg); color: var(--amber-text);
+            box-shadow: 0 0 0 2px var(--bg-body), 0 0 0 4px var(--amber-border);
+        }
+
+        /* Main Content Area */
+        .main-content {
+            background-color: var(--bg-surface);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            min-height: 400px;
+            box-shadow: var(--shadow-sm);
+        }
+        @media (min-width: 768px) { .main-content { padding: 2.5rem; } }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease-out forwards; }
+
+        /* Info Banners */
+        .info-banner {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.25rem;
+            border-radius: var(--radius-lg);
+            margin-bottom: 2rem;
+            border: 1px solid;
+        }
+        .info-banner h2 { font-size: 1.25rem; }
+        .info-banner h3 { font-size: 1.125rem; margin-bottom: 0.5rem; }
+        .info-banner p { font-size: 0.875rem; opacity: 0.9; }
+        
+        .info-rose { background-color: var(--rose-bg); border-color: var(--rose-border); color: var(--rose-text); }
+        .info-teal { background-color: var(--teal-bg); border-color: var(--teal-border); color: var(--teal-text); }
+        .info-indigo { background-color: var(--indigo-bg); border-color: var(--indigo-border); color: var(--indigo-text); }
+        .info-amber { background-color: var(--amber-bg); border-color: var(--amber-border); color: var(--amber-text); }
+
+        /* Category Cards */
+        .category-card {
+            background-color: var(--bg-surface-alt);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: var(--transition);
+            position: relative;
+        }
+        .category-card:hover { border-color: var(--border-hover); }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .card-title { font-size: 1.25rem; font-weight: bold;  margin-bottom: 0.5rem; }
+        .card-subtitle { font-size: 0.875rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .card-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; min-height: 3rem; }
+        
+        /* Specific Card Colors */
+        .card-rose .card-title { color: var(--rose-text); }
+        .card-rose:hover { background-color: var(--rose-hover); }
+        .card-teal { border-width: 2px; border-color: var(--teal-border); background-color: var(--teal-bg); }
+        .card-teal .card-title { color: var(--teal-text); }
+        .card-amber { border-width: 2px; border-color: var(--amber-border); background-color: var(--amber-bg); }
+        .card-amber .card-title { color: var(--amber-text); }
+        .card-indigo { border-width: 2px; border-color: var(--indigo-border); background-color: var(--indigo-bg); }
+        .card-indigo .card-title { color: var(--indigo-text); }
+
+        /* Word Play Buttons */
+        .word-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background-color: var(--bg-surface);
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: 0.75rem;
+            transition: var(--transition);
+        }
+        .word-btn:hover { border-color: var(--border-hover); transform: translateY(-1px); }
+        .word-btn-left { display: flex; align-items: center; gap: 0.75rem; }
+        .word-icon-wrapper {
+            width: 2rem; height: 2rem;
+            border-radius: 50%;
+            background-color: var(--bg-surface-alt);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+        .word-btn:hover .word-icon-wrapper { background-color: var(--rose-bg); color: var(--rose-text); }
+        .word-text { font-size: 1.125rem; font-weight: 500; }
+        
+        .tag {
+            font-family: monospace;
+            font-size: 0.875rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+        }
+        .tag-rose { background-color: var(--rose-bg); color: var(--rose-text); }
+        .tag-teal { background-color: var(--teal-bg); color: var(--teal-text); }
+        .tag-indigo { background-color: var(--indigo-bg); color: var(--indigo-text); }
+        .tag-amber { background-color: var(--amber-bg); color: var(--amber-text); }
+        .tag-stone { background-color: var(--bg-surface-alt); color: var(--text-secondary); }
+
+        /* Grid specific buttons (Closed Tab) */
+        .word-btn-grid {
+            flex-direction: column;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .word-btn-grid .word-text { font-size: 1.5rem; margin: 0.5rem 0; }
+        /*.word-btn-grid:hover .fa-volume-high { color: var(--teal-text); }*/
+
+        /* Comparison Rows (Vowels Tab) */
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 2fr;
+            gap: 0.5rem;
+            align-items: center;
+            background-color: var(--bg-surface-alt);
+            padding: 0.75rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+        @media (min-width: 768px) { .comparison-row { gap: 1rem; } }
+        .compare-icon { display: flex; justify-content: center; color: var(--text-muted); }
+
+
+        /* =========================================
+           5. Animations
+           ========================================= */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .playing-pulse {
+            animation: pulse-ring 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            color: currentColor !important;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        /* 雙字組合專用樣式 */
+        .combo-btn { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1rem; }
+        .combo-header { display: flex; justify-content: space-between; width: 100%; align-items: center; }
+        .combo-details { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; text-align: left; }
+        .combo-details strong { color: var(--text-primary); font-size: 1.2rem; }
+        .combo-meaning { font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem; display: block; }
+
+        /* Header CSS */
+        #navbar {
+            width: 100%;
+            /* Explicitly set solid white background to prevent transparency */
+            background-color: var(--bg-color); 
+            /* Ensure header stays on top of scrolling content */
+            z-index: 1000; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+        }
+
+        #navbar .title {
+            color: var(--text-main);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-left: 0;
+        }
+
+        #navbar a {
+            color: var(--text-main);
+        }
+
+        .header-content {
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+    
+        .home-icon {
+            width: 43px;
+            height: 43px;
+            background: gba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid;
+        }
+
+        .home-icon:hover {
+            background: lightgreen;
+            border-color: lightgreen;
+            transform: translateY(-2px);
+        }
+
+        /* SVG Icons */
+        svg {
+            width: 43px;
+            height: 43px;
+            fill: #0ea5e9;
+        }     
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+<!-- Header -->
+<header id="navbar">
+    <div class="header-content">
+        <!-- Top Bar containing Title and Home Icon -->
+        <div class="top-bar">
+            <div class="title">&#9314 A - 粤语独特韵尾</div>
+                <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                    </svg>
+                </a>
+        </div>
+        <!-- Navigation Tabs -->
+        <div>
+        <nav class="nav-tabs">
+            <button onclick="switchTab('entering', 'active-indigo')" id="btn-entering" class="tab-btn active-indigo">
+                <span>入声字 (p/t/k)</span>
+            </button>
+            <button onclick="switchTab('closed', 'active-amber')" id="btn-closed" class="tab-btn">
+                <span>闭口音 (m)</span>
+            </button>
+            <button onclick="switchTab('mixed', 'active-teal')" id="btn-mixed" class="tab-btn">
+                <span>交叉組合 (p/t/k/m)</span>
+            </button>
+        </nav>
+        </div>
+    </div>
+
+</header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- 1. 入声字模块 -->
+            <div id="tab-entering" class="tab-content active">
+                <div class="info-banner info-indigo">
+                    <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
+                    <div>
+                        <h2>入声字 (p/t/k)</h2><br><h3>发音要诀：气流截断（唯闭不爆）</h3>
+                        <p>普通话的发音通常让气流自然流出。而粤语的入声字要求在发音的最后一刻，使用嘴唇或舌头像阀门一样「瞬间关闭」，将气流憋在体内，不发出爆破音。</p>
+                    </div>
+                </div>
+
+                <div class="grid-3">
+                    <!-- -p -->
+                    <div class="category-card card-indigo">
+                        <div class="card-header">
+                            <div class="card-title">-p</div>
+                        </div>
+                        <div class="card-subtitle">发音要诀：双唇紧闭顿挫</div>
+                        <p class="card-desc">发音结束时，上下嘴唇迅速合拢，将气流封锁在口腔前部。</p>
+                        
+                        <button onclick="playAudio('1-1', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">十</span>
+                            </div>
+                            <span class="tag tag-indigo">sap6</span>
+                        </button>                        
+                        <button onclick="playAudio('1-2', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">急</span>
+                            </div>
+                            <span class="tag tag-indigo">gap1</span>
+                        </button>
+                        <button onclick="playAudio('1-3', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">合</span>
+                            </div>
+                            <span class="tag tag-indigo">hap6</span>
+                        </button>
+                        <button onclick="playAudio('1-4', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">入</span>
+                            </div>
+                            <span class="tag tag-indigo">jap6</span>
+                        </button>
+                        <button onclick="playAudio('1-5', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">接</span>
+                            </div>
+                            <span class="tag tag-indigo">zip3</span>
+                        </button>
+                    </div>
+
+                    <!-- -t -->
+                    <div class="category-card card-indigo">
+                        <div class="card-header">
+                            <div class="card-title">-t</div>
+                        </div>
+                        <div class="card-subtitle">发音要诀：舌尖顶上牙龈</div>
+                        <p class="card-desc">发音结束时，舌尖迅速抬起，顶住上排门牙后方的牙龈，封锁气流。</p>
+                        
+                        <button onclick="playAudio('1-6', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">七</span>
+                            </div>
+                            <span class="tag tag-indigo">cat1</span>
+                        </button>
+                        <button onclick="playAudio('1-7', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">笔</span>
+                            </div>
+                            <span class="tag tag-indigo">bat1</span>
+                        <button onclick="playAudio('1-8', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">结</span>
+                            </div>
+                            <span class="tag tag-indigo">git3</span>
+                        </button>
+                        <button onclick="playAudio('1-9', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">质</span>
+                            </div>
+                            <span class="tag tag-indigo">zat1</span>
+                        </button>
+                        <button onclick="playAudio('1-10', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">日</span>
+                            </div>
+                            <span class="tag tag-indigo">jat6</span>
+                        </button>
+                    </div>
+
+                    <!-- -k -->
+                    <div class="category-card card-indigo">
+                        <div class="card-header">
+                            <div class="card-title">-k</div>
+                        </div>
+                        <div class="card-subtitle">发音要诀：舌根封喉</div>
+                        <p class="card-desc">发音结束时，舌根（舌头后部）向上抬起 (頂上腭)，卡住喉咙深处，封锁气流。</p>
+                        
+                        <button onclick="playAudio('1-11', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">六</span>
+                            </div>
+                            <span class="tag tag-indigo">luk6</span>
+                        </button>
+                        <button onclick="playAudio('1-12', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">式</span>
+                            </div>
+                            <span class="tag tag-indigo">sik1</span>
+                        </button>
+                        <button onclick="playAudio('1-13', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">作</span>
+                            </div>
+                            <span class="tag tag-indigo">zok3</span>
+                        </button>
+                        <button onclick="playAudio('1-14', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">的</span>
+                            </div>
+                            <span class="tag tag-indigo">dik1</span>
+                        </button>     
+                        <button onclick="playAudio('1-15', this)" class="word-btn">
+                            <div class="word-btn-left">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">木</span>
+                            </div>
+                            <span class="tag tag-indigo">muk6</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 闭口音模块 -->
+            <div id="tab-closed" class="tab-content">
+                <div class="info-banner info-amber">
+                    <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
+                    <div>
+                        <h2>闭口音 (-m)</h2><br><h3>发音要诀：双唇紧闭发鼻音</h3>
+                        <p>普通话中不存在以 -m 结尾的字。在粤语中，拼音以 -m 结尾的字，发音时「上下嘴唇完全贴合」，让剩余的声音通过鼻腔产生共鸣。</p>
+                    </div>
+                </div>
+
+                    <!-- -m -->
+                    <div class="category-card card-amber">
+                        <h4 class="card-title">闭口音 (-m)</h4>
+                        <p class="card-desc">嘴唇紧闭，鼻腔哼鸣。</p>
+
+                        <div class="grid-cols-2">
+                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">三</span>
+                                <span class="tag tag-amber">saam1</span>
+                            </button>
+                            <button onclick="playAudio('2-2', this)" class="word-btn word-btn-grid">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">心</span>
+                                <span class="tag tag-amber">sam1</span>
+                            </button>
+                            <button onclick="playAudio('2-3', this)" class="word-btn word-btn-grid">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">感</span>
+                                <span class="tag tag-amber">gam2</span>
+                            </button>
+                            <button onclick="playAudio('2-4', this)" class="word-btn word-btn-grid">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">南</span>
+                                <span class="tag tag-amber">naam4</span>
+                            </button>
+                            <button onclick="playAudio('2-5', this)" class="word-btn word-btn-grid">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">验</span>
+                                <span class="tag tag-amber">jim6</span>
+                            </button>
+                            <button onclick="playAudio('2-6', this)" class="word-btn word-btn-grid">
+                                <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                <span class="word-text">今</span>
+                                <span class="tag tag-amber">gam1</span>
+                            </button>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- 3. 交叉组合模块 -->
+            <div id="tab-mixed" class="tab-content">
+                <div class="info-banner info-teal">
+                    <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
+                    <div>
+                        <h2>交叉組合 (p/t/k/m)</h2>
+                        <p>入声字 (-p/-t/-k) 和闭口音 (-m) 交叉组合发音时，先要做到第一个字的尾音动作，然后瞬间切换到第二个字的发音位置。</p>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <!-- 第一组：以 -p 开头 -->
+                    <div class="category-card card-teal">
+                        <h4 class="card-title">-p 加 -p/-t/-k/-m</h4>
+                        <p class="card-desc">第一个字双唇快速夹紧，然后放开，再做第二个字的尾音动作。</p>
+
+                        <button onclick="playAudio('3-1', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-p + -p</strong><br>双唇紧闭顿挫 ➔ 双唇紧闭顿挫
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">集合</span>
+                                </div>
+                                <span class="tag tag-teal">zaap6 hap6</span>
+                            </div>
+                        </button>      
+
+                        <button onclick="playAudio('3-2', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-p + -t</strong><br>双唇紧闭顿挫 ➔ 舌尖顶上牙龈
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">级别</span>
+                                </div>
+                                <span class="tag tag-teal">gap1 bit6</span>
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-3', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-p + -k</strong><br>双唇紧闭顿挫 ➔ 舌根封喉
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">合作</span>
+                                </div>
+                                <span class="tag tag-teal">hap6 zok3</span>
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-4', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-p + -m</strong><br>双唇紧闭顿挫 ➔ 双唇紧闭发鼻音
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">入侵</span>
+                                </div>
+                                <span class="tag tag-teal">jap6 cam1</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- 第二组：以 -t 开头 -->
+                    <div class="category-card card-teal">
+                        <h4 class="card-title">-t 加 -p/-t/-k/-m</h4>
+                        <p class="card-desc">第一个字舌尖弹起顶住上牙龈，然后放开，再做第二个字的尾音动作。</p>
+                        
+                        <button onclick="playAudio('3-5', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-t + -p</strong><br>舌尖顶上牙龈 ➔ 双唇紧闭顿挫
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">设立</span>
+                                </div>
+                                <span class="tag tag-teal">cit3 lap6</span>
+                            </div>
+                        </button>
+                        
+                        <button onclick="playAudio('3-6', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-t + -t</strong><br>舌尖顶上牙龈 ➔ 舌尖顶上牙龈
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">密切</span>
+                                </div>
+                                <span class="tag tag-teal">mat6 cit3</span>
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-7', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-t + -k</strong><br>舌尖顶上牙龈 ➔ 舌根封喉
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">结局</span>
+                                </div>
+                                <span class="tag tag-teal">git3 guk6</span>
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-8', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-t + -m</strong><br>舌尖顶上牙龈 ➔ 双唇紧闭发鼻音
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">发音</span>
+                                </div>
+                                <span class="tag tag-teal">faat3 jam1</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- 第三组：以 -k 开头 -->
+                    <div class="category-card card-teal">
+                        <h4 class="card-title">-k 加 -p/-t/-k/-m</h4>
+                        <p class="card-desc">第一个字喉咙深处有被卡住的感觉，然后放开，再做第二个字的尾音动作。</p>
+                        
+                        <button onclick="playAudio('3-9', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-k + -p</strong><br>舌根封喉 ➔ 双唇紧闭顿挫
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">独立</span>
+                                </div>
+                                <span class="tag tag-teal">duk6 lap6</span>
+                            </div>
+                        </button>
+                        
+                        <button onclick="playAudio('3-10', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-k + -t</strong><br>舌根封喉 ➔ 舌尖顶上牙龈
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">落实</span>
+                                </div>
+                                <span class="tag tag-teal">lok6 sat6</span>
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-11', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-k + -k</strong><br>舌根封喉 ➔ 舌根封喉
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">积极</span>
+                                </div>
+                                <span class="tag tag-teal">zik1 gik6</span>
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-12', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-k + -m</strong><br>舌根封喉 ➔ 双唇紧闭发鼻音
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">责任</span>
+                                </div>
+                                <span class="tag tag-teal">zaak3 jam6</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- 第四组：以 -m 开头 -->
+                    <div class="category-card card-teal">
+                        <h4 class="card-title">-m 加 -p/-t/-k/-m</h4>
+                        <p class="card-desc">第一个字双唇合拢并带有鼻腔共鸣，然后放开，再做第二个字的尾音动作。</p>
+                      
+                        <button onclick="playAudio('3-13', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-m + -p</strong><br>双唇紧闭发鼻音 ➔ 双唇紧闭顿挫
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">深入</span>
+                                </div>
+                                <span class="tag tag-teal">sam1 jap6</span>
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-14', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-m + -t</strong><br>双唇紧闭发鼻音 ➔ 舌尖顶上牙龈
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">监察</span>
+                                </div>
+                                <span class="tag tag-teal">gaam1 caat3</span>
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-15', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-m + -k</strong><br>双唇紧闭发鼻音 ➔ 舌根封喉
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">感觉</span>
+                                </div>
+                                <span class="tag tag-teal">gam2 gok3</span>
+                            </div>
+                        </button>
+
+                        <button onclick="playAudio('3-16', this)" class="word-btn combo-btn">
+                            <div class="combo-details">
+                                <strong>-m + -m</strong><br>双唇紧闭发鼻音 ➔ 双唇紧闭发鼻音
+                            </div>
+                            <div class="combo-header">
+                                <div class="word-btn-left">
+                                    <div class="word-icon-wrapper"><i class="fa-solid fa-volume-high text-xs"></i></div>
+                                    <span class="word-text">检验</span>
+                                </div>
+                                <span class="tag tag-teal">gim2 jim6</span>
+                            </div>
+                        </button>                        
+
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+        
+    </div>
+
+    <script>
+        // --- 标签页切换逻辑 ---
+        function switchTab(tabId, activeClass) {
+            // 隐藏所有内容
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+
+            // 移除所有按钮的高亮状态
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = 'tab-btn'; // 恢复基础类
+            });
+
+            // 显示目标内容
+            const targetContent = document.getElementById(`tab-${tabId}`);
+            targetContent.classList.add('active');
+
+            // 高亮目标按钮
+            const targetBtn = document.getElementById(`btn-${tabId}`);
+            targetBtn.classList.add(activeClass);
+
+            //Scroll to top
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });            
+        }
+
+        // --- 預先錄製 MP3 播放邏輯 ---
+        // 儲存當前正在播放的音頻物件，以便在點擊新按鈕時停止舊音頻
+        let currentAudio = null;
+        let currentIcon = null;
+
+        function playAudio(jyutping, btnElement) {
+            // 1. 停止目前正在播放的音頻（如果有）
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                if (currentIcon) currentIcon.classList.remove('playing-pulse');
+            }
+
+            // 2. 構建 MP3 檔案路徑 (請確保同目錄下有 audio 資料夾及對應的 mp3)
+            const audioUrl = "https://cantogo.github.io/voice/tone_method_" + jyutping + ".mp3";
+
+            const audio = new Audio(audioUrl);
+            
+            const icon = btnElement.querySelector('.fa-volume-high');
+            
+            // 3. 播放開始時加入動畫
+            if (icon) icon.classList.add('playing-pulse');
+            
+            // 4. 嘗試播放
+            audio.play().then(() => {
+                currentAudio = audio;
+                currentIcon = icon;
+            }).catch(error => {
+                console.error("無法播放音頻:", error);
+                alert(`無法播放音頻檔案`);
+                if (icon) icon.classList.remove('playing-pulse');
+            });
+
+            // 5. 播放結束時移除動畫
+            audio.onended = () => {
+                if (icon) icon.classList.remove('playing-pulse');
+                currentAudio = null;
+                currentIcon = null;
+            };
+        }
+                
+    </script>
+
+<script src="js/navBar.js" defer></script>
+
+</body></html>
