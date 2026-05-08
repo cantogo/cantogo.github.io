@@ -141,7 +141,7 @@
         .grid-3 { display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
         .grid-2 { display: grid; gap: 2rem; grid-template-columns: 1fr; }
         .grid-cols-2 { display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); }
-        .grid-cols-3 { display: grid; gap: 1rem; grid-template-columns: repeat(2, 1fr); }
+        .grid-cols-3 { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); }
         
         @media (min-width: 768px) {
             .grid-3 { grid-template-columns: repeat(3, 1fr); }
@@ -455,9 +455,9 @@
                     <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
                         <h2>长短元音 (aa/a)</h2><br><h3>空间与时间的量化规律</h3>
-                        <p>长元音 (aa) 和短元音 (a) 的区分是严谨的。它们在两个维度上存在差异：<br>
-                        1. **空间维度**：口腔张开的幅度（aa 张得大，a 张得小）。<br>
-                        2. **时间维度**：发音持续的时长（aa 声音拖长，a 声音短促）。</p>
+                        <p>长元音 (aa) 和短元音 (a) 在两个维度上存在差异：<br>
+                        1. 空间维度：口腔张开的幅度（aa 张得大，a 张得小）。<br>
+                        2. 时间维度：发音持续的时长（aa 声音拖长，a 声音短促）。</p>
                     </div>
                 </div>
 
@@ -471,7 +471,7 @@
 
                     <!-- Comparison 1 -->
                     <div class="comparison-row">
-                        <button onclick="playAudio('3-1', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
+                        <button onclick="playAudio('4-1', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text">街</span>
@@ -479,7 +479,7 @@
                             <span class="tag tag-indigo">gaai1</span>
                         </button>
                         <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-2', this)" class="word-btn" style="margin: 0;">
+                        <button onclick="playAudio('4-2', this)" class="word-btn" style="margin: 0;">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text" style="color: var(--text-secondary);">鸡</span>
@@ -490,7 +490,7 @@
 
                     <!-- Comparison 2 -->
                     <div class="comparison-row">
-                        <button onclick="playAudio('3-3', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
+                        <button onclick="playAudio('4-3', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text">买</span>
@@ -498,7 +498,7 @@
                             <span class="tag tag-indigo">maai5</span>
                         </button>
                         <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-4', this)" class="word-btn" style="margin: 0;">
+                        <button onclick="playAudio('4-4', this)" class="word-btn" style="margin: 0;">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text" style="color: var(--text-secondary);">米</span>
@@ -509,7 +509,7 @@
 
                     <!-- Comparison 3 -->
                     <div class="comparison-row">
-                        <button onclick="playAudio('3-5', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
+                        <button onclick="playAudio('4-5', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text">柴</span>
@@ -517,7 +517,7 @@
                             <span class="tag tag-indigo">caai4</span>
                         </button>
                         <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-6', this)" class="word-btn" style="margin: 0;">
+                        <button onclick="playAudio('4-6', this)" class="word-btn" style="margin: 0;">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text" style="color: var(--text-secondary);">齐</span>
@@ -526,9 +526,9 @@
                         </button>
                     </div>
 
-                    <!-- Comparison 4 (新增) -->
+                    <!-- Comparison 4 -->
                     <div class="comparison-row">
-                        <button onclick="playAudio('3-7', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
+                        <button onclick="playAudio('4-7', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text">派</span>
@@ -536,7 +536,7 @@
                             <span class="tag tag-indigo">paai3</span>
                         </button>
                         <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-8', this)" class="word-btn" style="margin: 0;">
+                        <button onclick="playAudio('4-8', this)" class="word-btn" style="margin: 0;">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text" style="color: var(--text-secondary);">批</span>
@@ -545,9 +545,9 @@
                         </button>
                     </div>
 
-                    <!-- Comparison 5 (新增) -->
+                    <!-- Comparison 5 -->
                     <div class="comparison-row">
-                        <button onclick="playAudio('3-9', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
+                        <button onclick="playAudio('4-9', this)" class="word-btn" style="margin: 0; border-color: var(--indigo-border);">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text">乖</span>
@@ -555,7 +555,7 @@
                             <span class="tag tag-indigo">gwaai1</span>
                         </button>
                         <div class="compare-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
-                        <button onclick="playAudio('3-10', this)" class="word-btn" style="margin: 0;">
+                        <button onclick="playAudio('4-10', this)" class="word-btn" style="margin: 0;">
                             <div class="word-btn-left">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted);"></i>
                                 <span class="word-text" style="color: var(--text-secondary);">龟</span>
@@ -569,46 +569,46 @@
             <!-- 2. 前圆唇元音模块 -->
             <div id="tab-mixed" class="tab-content">
                 <div class="info-banner info-teal">
-                    <i class="fa-solid fa-lips" style="margin-top: 4px;"></i>
+                    <i class="fa-solid fa-comment-dots" style="margin-top: 4px;"></i>
                     <div>
-                        <h3>唇形控制：圆唇与舌位靠前</h3>
-                        <p>粤语中存在普通话没有或不完全相同的“前圆唇元音”。发这类音时，物理动作的重点在于：**双唇必须收圆并向前突出**，同时**舌头的位置要尽量靠前**（靠近下排牙齿）。</p>
+                        <h2>前圆唇元音 (yu/oe/eo)</h2><br><h3>唇形控制：圆唇与舌位靠前</h3>                    
+                        <p>粤语中存在普通话没有或不完全相同的 “前圆唇元音”。发这类音时，双唇必须收圆并向前突出，同时舌头的位置要尽量靠前。</p>
                     </div>
                 </div>
 
                 <div class="grid-2">
-                    <!-- yu 及其衍生 -->
+                    <!-- yu -->
                     <div class="category-card card-teal">
-                        <h4 class="card-title" style="margin-bottom: 0.5rem;">极度圆唇 (yu 及衍生)</h4>
-                        <p class="card-desc">动作指令：嘴唇用力收成一个小圆孔，向前突出，舌尖抵住下齿背。即使后面接辅音，也要保持圆唇起手。</p>
+                        <h4 class="card-title" style="margin-bottom: 0.5rem;">极度圆唇 (yu)</h4>
+                        <p class="card-desc">发音要诀：嘴唇用力收成一个小圆孔，向前突出，舌尖抵住下齿背。</p>
                         
                         <div class="grid-cols-3">
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-1', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">书</span>
                                 <span class="tag tag-teal">syu1</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-2', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">鱼</span>
                                 <span class="tag tag-teal">jyu4</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-3', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">猪</span>
                                 <span class="tag tag-teal">zyu1</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-4', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">雨</span>
                                 <span class="tag tag-teal">jyu5</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-5', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">船</span>
                                 <span class="tag tag-teal">syun4</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-6', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">雪</span>
                                 <span class="tag tag-teal">syut3</span>
@@ -616,38 +616,48 @@
                         </div>
                     </div>
 
-                    <!-- oe / eo 及其衍生 -->
+                    <!-- oe / eo -->
                     <div class="category-card card-teal">
-                        <h4 class="card-title" style="margin-bottom: 0.5rem;">适度圆唇 (oe / eo 及衍生)</h4>
-                        <p class="card-desc">动作指令：嘴唇呈微圆状，口腔打开幅度比 yu 稍大，舌位居中偏前。发音饱满且略带慵懒感。</p>
+                        <h4 class="card-title" style="margin-bottom: 0.5rem;">适度圆唇 (oe / eo)</h4>
+                        <p class="card-desc">发音要诀：嘴唇呈微圆状，口腔打开幅度比 yu 稍大，舌位居中偏前。</p>
                         
                         <div class="grid-cols-3">
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-7', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">靴</span>
                                 <span class="tag tag-teal">hoe1</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-8', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">香</span>
                                 <span class="tag tag-teal">hoeng1</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-9', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">唱</span>
                                 <span class="tag tag-teal">coeng3</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-10', this)" class="word-btn word-btn-grid">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
+                                <span class="word-text">长</span>
+                                <span class="tag tag-teal">coeng4</span>
+                            </button>       
+                            <button onclick="playAudio('5-11', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">春</span>
                                 <span class="tag tag-teal">ceon1</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-12', this)" class="word-btn word-btn-grid">
+                                <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
+                                <span class="word-text">信</span>
+                                <span class="tag tag-teal">seon3</span>
+                            </button>
+                            <button onclick="playAudio('5-13', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">去</span>
                                 <span class="tag tag-teal">heoi3</span>
                             </button>
-                            <button onclick="playAudio('2-1', this)" class="word-btn word-btn-grid">
+                            <button onclick="playAudio('5-14', this)" class="word-btn word-btn-grid">
                                 <i class="fa-solid fa-volume-high" style="color: var(--text-muted); transition: var(--transition);"></i>
                                 <span class="word-text">出</span>
                                 <span class="tag tag-teal">ceot1</span>
