@@ -1,0 +1,705 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏练习</title>
+    <style>
+        /* 柔和、低刺激的色彩系统（莫兰迪/低饱和色系） */
+        :root {
+            --bg-color: #F5F4F1; /* 燕麦米色背景，降低屏幕眩光 */
+            --card-bg: #FFFFFF;
+            --text-main: #5C5C5C; /* 柔和的深灰，代替刺眼的纯黑 */
+            --text-muted: #9E9E9E;
+            --accent-color: #D6E0D9; /* 柔和的鼠尾草绿 */
+            --accent-hover: #C5D1C9;
+            --accent-purple: #E2DEE8; /* 柔和的薰衣草紫，用于标签 */
+            --correct-bg: #E6EFE8; /* 极浅的薄荷绿 */
+            --correct-text: #6B8E76;
+            --wrong-bg: #F5E6E6; /* 极浅的灰粉色，代替警告红 */
+            --wrong-text: #9E7373;
+            --border-radius: 16px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            width: 100%;
+            max-width: 480px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .headerline {
+            background-color: var(--accent-color);
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .headerline h1 {
+            font-size: 20px;
+            font-weight: normal;
+            color: var(--text-main);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .headerline p {
+            font-size: 13px;
+            color: var(--text-main);
+            opacity: 0.85;
+        }
+
+        /* 声音控制按钮 */
+        .sound-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .sound-toggle:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .content {
+            padding: 30px;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        button {
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 12px;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--text-main);
+            width: 100%;
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .progress-container {
+            margin-bottom: 25px;
+        }
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background-color: var(--bg-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .question-area {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .category-tag {
+            display: inline-block;
+            font-size: 12px;
+            color: var(--text-main);
+            background-color: var(--accent-purple);
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        .question-word {
+            font-size: 32px;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 5px;
+        }
+
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background-color: #FAFAFA;
+            border: 2px solid #F0F0F0;
+            padding: 16px 20px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: var(--accent-color);
+            background-color: #FDFDFD;
+        }
+
+        .option-canto {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-jyutping {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .option-btn.correct {
+            background-color: var(--correct-bg);
+            border-color: var(--correct-bg);
+            color: var(--correct-text);
+        }
+        .option-btn.correct .option-canto, .option-btn.correct .option-jyutping {
+            color: var(--correct-text);
+        }
+
+        .option-btn.wrong {
+            background-color: var(--wrong-bg);
+            border-color: var(--wrong-bg);
+            color: var(--wrong-text);
+        }
+        .option-btn.wrong .option-canto, .option-btn.wrong .option-jyutping {
+            color: var(--wrong-text);
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+        }
+
+        .option-btn.disabled-neutral {
+            opacity: 0.4;
+        }
+
+        .end-screen {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .end-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        .score-text {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .feedback-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            background-color: var(--bg-color);
+            padding: 18px;
+            border-radius: 12px;
+            line-height: 1.8;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    /* Header CSS */
+    #navbar {
+      background: var(--bg-color);
+      padding: 0.5rem 0.2rem;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    #navbar nav {
+      position: absolute;
+      right: 2rem;
+      display: flex;
+      gap: 20px;
+    }
+
+    #navbar .title {
+      color: var(--text-color);
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-left: 0;
+    }
+
+    #navbar a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 1.0rem;
+      font-weight: 500;
+      margin-left: 0;
+    }
+
+    .home-icon {
+      width: 43px;
+      height: 43px;
+      background: gba(255,255,255,0.2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: 2px solid;
+    }
+        
+    .home-icon:hover {
+      background: lightgreen;
+      border-color: lightgreen;
+      transform: translateY(-2px);
+    }
+        
+    .home-icon svg {
+      width: 43px;
+      height: 43px;
+      fill: #0ea5e9;
+    }
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header id="navbar">
+        <div class="title">&#9323 游戏练习</div>
+            <nav>
+                <div>
+                    <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </nav>
+    </header>
+
+    <div class="headerline">
+        <h1>🌿 这是个有趣、专注的粤语常用词汇练习。</h1>
+        <p>以游戏方式，练习将普通话翻译成粤语。</p>
+        <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()">
+            <span id="sound-icon">🔊</span> 声音开
+        </button>
+    </div>
+
+    <div class="content" id="app-content">
+        <!-- 初始界面 -->
+        <div id="start-screen" class="fade-in">
+            <div style="text-align: center; margin-bottom: 30px; color: var(--text-muted); font-size: 14px; line-height: 1.8;">
+                <p style="margin-bottom: 15px;">欢迎来到这个安静的学习角落。</p>
+                <p style="margin-bottom: 15px;">词库有 <strong>100</strong> 个粤语常用词汇。每次练习只会随机抽取 <strong>10</strong> 个词。</p>
+                <p style="margin-bottom: 15px;"></p>没有时间限制，请按照自己的节奏慢慢来。</p>
+                <p style="margin-bottom: 15px;"></p>如果连续 <strong>3</strong> 次答对十题，请找网主领取您的奖励 :)</p>
+            </div>
+            <button class="btn-primary" onclick="startGame()">开始练习</button>
+        </div>
+
+        <!-- 游戏界面 -->
+        <div id="game-screen" class="hidden">
+            <div class="progress-container">
+                <div class="progress-text">
+                    <span id="progress-indicator">进度: 1 / 10</span>
+                    <span id="score-indicator">分数: 0</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <div class="question-area fade-in" id="question-area">
+                <span class="category-tag" id="category-tag">词汇分类</span>
+                <div class="question-word" id="question-word">普通话</div>
+                <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">对应的粤语是？</div>
+            </div>
+
+            <div class="options-grid" id="options-grid">
+                <!-- 选项由JS动态生成 -->
+            </div>
+        </div>
+
+        <!-- 结束界面 -->
+        <div id="end-screen" class="hidden">
+            <div class="end-screen fade-in">
+                <div class="end-icon">🍃</div>
+                <div class="score-text">练习完成</div>
+                <div style="margin-bottom: 20px; color: var(--text-main);">
+                    本次得分: <strong style="font-size: 20px;" id="final-score">0</strong> / 10
+                </div>
+                <div class="feedback-text" id="feedback-message">
+                    做得很好。每一次练习都是一次积累，休息一下，随时可以再来。
+                </div>
+                <button class="btn-primary" onclick="startGame()">再次练习</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    // 100 词的数据库 (简体中文)
+    const wordDatabase = [
+        // 人称与指示 (11)
+        { m: "他/她/它", c: "佢", j: "keoi5", cat: "人称与指示", audio: "1" },
+        { m: "我们", c: "我哋", j: "ngo5 dei6", cat: "人称与指示", audio: "2" },
+        { m: "你们", c: "你哋", j: "nei5 dei6", cat: "人称与指示", audio: "3" },
+        { m: "他们", c: "佢哋", j: "keoi5 dei6", cat: "人称与指示", audio: "4" },
+        { m: "这个", c: "呢个", j: "ni1 go3", cat: "人称与指示", audio: "5" },
+        { m: "那个", c: "嗰个", j: "go2 go3", cat: "人称与指示", audio: "6" },
+        { m: "这里", c: "呢度", j: "ni1 dou6", cat: "人称与指示", audio: "7" },
+        { m: "那里", c: "嗰度", j: "go2 dou6", cat: "人称与指示", audio: "8" },
+        { m: "这些", c: "呢啲", j: "ni1 di1", cat: "人称与指示", audio: "9" },
+        { m: "那些", c: "嗰啲", j: "go2 di1", cat: "人称与指示", audio: "10" },
+        { m: "别人", c: "人哋", j: "jan4 dei6", cat: "人称与指示", audio: "11" },
+
+        // 疑问词 (12)
+        { m: "什么", c: "咩", j: "me1", cat: "疑问词", audio: "12" },
+        { m: "怎么", c: "点", j: "dim2", cat: "疑问词", audio: "13" },
+        { m: "怎样", c: "点样", j: "dim2 joeng2", cat: "疑问词", audio: "14" },
+        { m: "为什么", c: "点解", j: "dim2 gaai2", cat: "疑问词", audio: "15" },
+        { m: "哪里", c: "边度", j: "bin1 dou6", cat: "疑问词", audio: "16" },
+        { m: "谁", c: "边个", j: "bin1 go3", cat: "疑问词", audio: "17" },
+        { m: "什么时候", c: "几时", j: "gei2 si4", cat: "疑问词", audio: "18" },
+        { m: "多少", c: "几多", j: "gei2 do1", cat: "疑问词", audio: "19" },
+        { m: "是不是", c: "系咪", j: "hai6 mai6", cat: "疑问词", audio: "20" },
+        { m: "有没有", c: "有冇", j: "jau5 mou5", cat: "疑问词", audio: "21" },
+        { m: "好不好", c: "好唔好", j: "hou2 m4 hou2", cat: "疑问词", audio: "22" },
+        { m: "可以吗", c: "得唔得", j: "dak1 m4 dak1", cat: "疑问词", audio: "23" },
+
+        // 核心动词 (23)
+        { m: "是", c: "系", j: "hai6", cat: "核心动词", audio: "24" },
+        { m: "在", c: "喺", j: "hai2", cat: "核心动词", audio: "25" },
+        { m: "没有", c: "冇", j: "mou5", cat: "核心动词", audio: "26" },
+        { m: "看", c: "睇", j: "tai2", cat: "核心动词", audio: "27" },
+        { m: "吃", c: "食", j: "sik6", cat: "核心动词", audio: "28" },
+        { m: "喝", c: "饮", j: "jam2", cat: "核心动词", audio: "29" },
+        { m: "给", c: "畀", j: "bei2", cat: "核心动词", audio: "30" },
+        { m: "说", c: "讲", j: "gong2", cat: "核心动词", audio: "31" },
+        { m: "找", c: "揾", j: "wan2", cat: "核心动词", audio: "32" },
+        { m: "拿", c: "攞", j: "lo2", cat: "核心动词", audio: "33" },
+        { m: "喜欢", c: "钟意", j: "zung1 ji3", cat: "核心动词", audio: "34" },
+        { m: "站立", c: "企", j: "kei5", cat: "核心动词", audio: "35" },
+        { m: "穿(衣服)", c: "着", j: "zoek3", cat: "核心动词", audio: "36" },
+        { m: "脱", c: "除", j: "ceoi4", cat: "核心动词", audio: "37" },
+        { m: "回家", c: "返屋企", j: "faan1 uk1 kei2", cat: "核心动词", audio: "38" },
+        { m: "上班", c: "返工", j: "faan1 gung1", cat: "核心动词", audio: "39" },
+        { m: "下班", c: "放工", j: "fong3 gung1", cat: "核心动词", audio: "40" },
+        { m: "害怕", c: "惊", j: "geng1", cat: "核心动词", audio: "41" },
+        { m: "生气", c: "嬲", j: "nau1", cat: "核心动词", audio: "42" },
+        { m: "哭", c: "喊", j: "haam3", cat: "核心动词", audio: "43" },
+        { m: "聊天", c: "倾偈", j: "king1 gai2", cat: "动作与日常", audio: "44"},
+        { m: "骗", c: "呃", j: "aak1", cat: "核心动词", audio: "45" },
+        { m: "忘记", c: "唔记得", j: "m4 gei3 dak1", cat: "核心动词", audio: "46" },
+
+        // 形容词与副词 (13)
+        { m: "不", c: "唔", j: "m4", cat: "形容词与副词", audio: "47" },
+        { m: "漂亮", c: "靓", j: "leng3", cat: "形容词与副词", audio: "48" },
+        { m: "厉害", c: "劲", j: "ging6", cat: "形容词与副词", audio: "49" },
+        { m: "笨", c: "蠢", j: "ceon2", cat: "形容词与副词", audio: "50" },
+        { m: "一点儿", c: "啲", j: "di1", cat: "形容词与副词", audio: "51" },
+        { m: "累", c: "攰", j: "gui6", cat: "形容词与副词", audio: "52" },
+        { m: "小", c: "细", j: "sai3", cat: "形容词与副词", audio: "53" },
+        { m: "便宜", c: "平", j: "peng4", cat: "形容词与副词", audio: "54" },
+        { m: "聪明", c: "叻", j: "lek1", cat: "形容词与副词", audio: "55" },
+        { m: "胖", c: "肥", j: "fei4", cat: "形容词与副词", audio: "56" },
+        { m: "脏", c: "污糟", j: "wu1 zou1", cat: "形容词与副词", audio: "57" },
+        { m: "随便", c: "是但", j: "si6 daan6", cat: "形容词与副词", audio: "58" },
+        { m: "刚才", c: "头先", j: "tau4 sin1", cat: "形容词与副词", audio: "59" },    
+
+        // 时间与天气 (14)
+        { m: "今天", c: "今日", j: "gam1 jat6", cat: "时间与天气", audio: "60" },
+        { m: "明天", c: "听日", j: "ting1 jat6", cat: "时间与天气", audio: "61" },
+        { m: "昨天", c: "寻日", j: "cam4 jat6", cat: "时间与天气", audio: "62" },
+        { m: "早上", c: "朝早", j: "ziu1 zou2", cat: "时间与天气", audio: "63" },
+        { m: "下午", c: "晏昼", j: "aan3 zau3", cat: "时间与天气", audio: "64" },
+        { m: "晚上", c: "夜晚", j: "je6 maan5", cat: "时间与天气", audio: "65" },
+        { m: "现在", c: "依家", j: "ji1 gaa1", cat: "时间与天气", audio: "66" },
+        { m: "刚才", c: "头先", j: "tau4 sin1", cat: "时间与天气", audio: "67" },
+        { m: "等一下", c: "一阵间", j: "jat1 zan6 gaan1", cat: "时间与天气", audio: "68" },
+        { m: "下雨", c: "落雨", j: "lok6 jyu5", cat: "时间与天气", audio: "69" },
+        { m: "冷", c: "冻", j: "dung3", cat: "时间与天气", audio: "70" },
+        { m: "明年", c: "出年", j: "ceot1 nin4", cat: "时间与天气", audio: "71" },
+        { m: "去年", c: "旧年", j: "gau6 nin4", cat: "时间与天气", audio: "72" },
+        { m: "星期", c: "礼拜", j: "lai5 baai3", cat: "时间与天气", audio: "73" },
+
+        // 生活物品篇 (8)
+        { m: "自行车", c: "单车", j: "daan1 ce1", cat: "生活与物品", audio: "74" },
+        { m: "摩托车", c: "电单车", j: "din6 daan1 ce1", cat: "生活与物品", audio: "75" },
+        { m: "出租车", c: "的士", j: "dik1 si2", cat: "生活与物品", audio: "76" },
+        { m: "公交车", c: "巴士", j: "baa1 si2", cat: "生活与物品", audio: "77" },
+        { m: "圆珠笔", c: "原子笔", j: "jyun4 zi2 bat1", cat: "生活与物品", audio: "78" },
+        { m: "雨伞", c: "遮", j: "ze1", cat: "生活与物品", audio: "79" },
+        { m: "空调", c: "冷气", j: "laang5 hei3", cat: "生活与物品", audio: "80" },
+        { m: "插座", c: "插苏", j: "caap3 sou1", cat: "生活与物品", audio: "81" },
+
+        // 物品与场所 (6)
+        { m: "东西", c: "嘢", j: "je5", cat: "物品与场所", audio: "82" },
+        { m: "衣服", c: "衫", j: "saam1", cat: "物品与场所", audio: "83" },
+        { m: "手机", c: "电话", j: "din6 waa2", cat: "物品与场所", audio: "84" },
+        { m: "洗手间", c: "厕所", j: "ci3 so2", cat: "物品与场所", audio: "85" },
+        { m: "桌子", c: "台", j: "toi2", cat: "物品与场所", audio: "86" },
+
+        // 人物与动物 (4)
+        { m: "爸爸", c: "老豆", j: "lou5 dau6", cat: "人物与动物", audio: "87" },
+        { m: "妈妈", c: "妈咪", j: "maa1 mi4", cat: "人物与动物", audio: "88" },
+        { m: "弟弟", c: "细佬", j: "sai3 lou2", cat: "人物与动物", audio: "89" },
+        { m: "老板", c: "老细", j: "lou5 sai3", cat: "人物与动物", audio: "90" },
+
+        // 语气与交际 (10)
+        { m: "的(所属)", c: "嘅", j: "ge3", cat: "语气与交际", audio: "91" },
+        { m: "了(完成)", c: "咗", j: "zo2", cat: "语气与交际", audio: "92" },
+        { m: "正在", c: "紧", j: "gan2", cat: "语气与交际", audio: "93" },
+        { m: "谢谢(服务)", c: "唔该", j: "m4 goi1", cat: "语气与交际", audio: "94" },
+        { m: "谢谢(礼物)", c: "多谢", j: "do1 ze6", cat: "语气与交际", audio: "95" },
+        { m: "对不起", c: "对唔住", j: "deoi3 m4 zyu6", cat: "语气与交际", audio: "96" },
+        { m: "没关系", c: "唔紧要", j: "m4 gan2 jiu3", cat: "语气与交际", audio: "97" },
+        { m: "早上好", c: "早晨", j: "zou2 san4", cat: "语气与交际", audio: "98" },
+        { m: "晚安", c: "早唞", j: "zou2 tau2", cat: "语气与交际", audio: "99" },
+        { m: "再见", c: "拜拜", j: "baai1 baai3", cat: "语气与交际", audio: "100" }
+    ];
+
+    const QUESTIONS_PER_ROUND = 10;
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let isAnswered = false;
+    let soundEnabled = true; // 声音开关状态
+
+    // 切换声音开关
+    function toggleSound() {
+        soundEnabled = !soundEnabled;
+        const icon = document.getElementById('sound-icon');
+        const btn = document.getElementById('sound-toggle');
+        if (soundEnabled) {
+            icon.textContent = '🔊';
+            btn.innerHTML = '<span id="sound-icon">🔊</span> 声音开';
+        } else {
+            icon.textContent = '🔇';
+            btn.innerHTML = '<span id="sound-icon">🔇</span> 声音关';
+        }
+    }
+
+    // 播放音频
+    function playAudio(audioUrl) {
+        const url = "https://cantogo.github.io/voice/game_" + audioUrl + ".mp3";
+        if (!soundEnabled || !audioUrl) return;
+        try {
+            const audio = new Audio(audioUrl);
+            audio.play().catch(e => {
+                console.log("音频播放被浏览器拦截或文件不存在，静音继续。");
+            });
+        } catch (e) {
+            console.log("音频加载失败");
+        }
+    }
+
+    // 随机打乱数组
+    function shuffleArray(array) {
+        const newArr = [...array];
+        for (let i = newArr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+        }
+        return newArr;
+    }
+
+    function showScreen(screenId) {
+        document.getElementById('start-screen').classList.add('hidden');
+        document.getElementById('game-screen').classList.add('hidden');
+        document.getElementById('end-screen').classList.add('hidden');
+        
+        const screen = document.getElementById(screenId);
+        screen.classList.remove('hidden');
+        
+        screen.classList.remove('fade-in');
+        void screen.offsetWidth; 
+        screen.classList.add('fade-in');
+    }
+
+    function startGame() {
+        const shuffledWords = shuffleArray(wordDatabase);
+        currentQuestions = shuffledWords.slice(0, QUESTIONS_PER_ROUND);
+        currentIndex = 0;
+        score = 0;
+        
+        updateProgress();
+        renderQuestion();
+        showScreen('game-screen');
+    }
+
+    function updateProgress() {
+        document.getElementById('progress-indicator').textContent = `进度: ${currentIndex + 1} / ${QUESTIONS_PER_ROUND}`;
+        document.getElementById('score-indicator').textContent = `分数: ${score}`;
+        const percentage = ((currentIndex) / QUESTIONS_PER_ROUND) * 100;
+        document.getElementById('progress-bar').style.width = `${percentage}%`;
+    }
+
+    function renderQuestion() {
+        isAnswered = false;
+        const currentWord = currentQuestions[currentIndex];
+        
+        document.getElementById('category-tag').textContent = currentWord.cat;
+        document.getElementById('question-word').textContent = currentWord.m;
+        
+        const wrongOptions = wordDatabase.filter(w => w.c !== currentWord.c);
+        const shuffledWrong = shuffleArray(wrongOptions).slice(0, 3);
+        const options = shuffleArray([currentWord, ...shuffledWrong]);
+        
+        const optionsContainer = document.getElementById('options-grid');
+        optionsContainer.innerHTML = '';
+        
+        options.forEach((opt) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerHTML = `
+                <div>
+                    <div class="option-canto">
+                        ${opt.c} 
+                    </div>
+                    <div class="option-jyutping">${opt.j}</div>
+                </div>
+            `;
+            btn.onclick = () => handleAnswer(opt, btn, currentWord);
+            optionsContainer.appendChild(btn);
+        });
+
+        const qArea = document.getElementById('question-area');
+        qArea.classList.remove('fade-in');
+        void qArea.offsetWidth;
+        qArea.classList.add('fade-in');
+    }
+
+    function handleAnswer(selectedOpt, btnElement, correctWord) {
+        if (isAnswered) return;
+        isAnswered = true;
+        
+        // 播放所选选项的预制MP3音频
+        playAudio(selectedOpt.audio);
+        
+        const isCorrect = selectedOpt.c === correctWord.c;
+        const allButtons = document.querySelectorAll('.option-btn');
+        
+        if (isCorrect) {
+            score++;
+            btnElement.classList.add('correct');
+        } else {
+            btnElement.classList.add('wrong');
+            allButtons.forEach(b => {
+                if (b.querySelector('.option-canto').textContent.includes(correctWord.c)) {
+                    b.classList.add('correct');
+                }
+            });
+        }
+        
+        allButtons.forEach(b => {
+            b.disabled = true;
+            if (!b.classList.contains('correct') && !b.classList.contains('wrong')) {
+                b.classList.add('disabled-neutral');
+            }
+        });
+
+        document.getElementById('score-indicator').textContent = `分数: ${score}`;
+        const percentage = ((currentIndex + 1) / QUESTIONS_PER_ROUND) * 100;
+        document.getElementById('progress-bar').style.width = `${percentage}%`;
+
+        // 延迟进入下一题 (2.2秒，给音频播放留出足够的时间)
+        setTimeout(() => {
+            currentIndex++;
+            if (currentIndex < QUESTIONS_PER_ROUND) {
+                updateProgress();
+                renderQuestion();
+            } else {
+                endGame();
+            }
+        }, 2500);
+    }
+
+    function endGame() {
+        document.getElementById('final-score').textContent = score;
+        
+        const feedbackEl = document.getElementById('feedback-message');
+        if (score >= 9) {
+            feedbackEl.textContent = "非常出色。你已经很好地掌握了这些词汇的差异，继续保持这份宁静的专注。";
+        } else if (score >= 6) {
+            feedbackEl.textContent = "做得很棒。慢慢建立起对两种语言差异的语感，不用着急，你已经做得很好了。";
+        } else {
+            feedbackEl.textContent = "每一次尝试都是一次积累。休息一下，按照自己的节奏慢慢来就好，这里永远欢迎你。";
+        }
+        
+        showScreen('end-screen');
+    }
+</script>
+
+
+
+</body></html>
