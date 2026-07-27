@@ -535,9 +535,9 @@
     // 播放音频
     function playAudio(audioUrl) {
         const url = "https://cantogo.github.io/voice/game_" + audioUrl + ".mp3";
-        if (!soundEnabled || !audioUrl) return;
+        if (!soundEnabled || !url) return;
         try {
-            const audio = new Audio(audioUrl);
+            const audio = new Audio(url);
             audio.play().catch(e => {
                 console.log("音频播放被浏览器拦截或文件不存在，静音继续。");
             });
