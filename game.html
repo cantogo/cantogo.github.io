@@ -56,7 +56,7 @@
         }
 
         .headerline h1 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: normal;
             color: var(--text-main);
             letter-spacing: 1px;
@@ -64,7 +64,7 @@
         }
 
         .headerline p {
-            font-size: 13px;
+            font-size: 186x;
             color: var(--text-main);
             opacity: 0.85;
         }
@@ -346,11 +346,8 @@
     </header>
 
     <div class="headerline">
-        <h1>🌿 这是个有趣、专注的粤语常用词汇练习。</h1>
-        <p>以游戏方式，练习将普通话翻译成粤语。</p>
-        <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()">
-            <span id="sound-icon">🔊</span> 声音开
-        </button>
+        <h1>🌿 这是个有趣的游戏</h1>
+        <p>练习将普通话翻译成粤语</p>
     </div>
 
     <div class="content" id="app-content">
@@ -535,20 +532,6 @@
     let isAnswered = false;
     let soundEnabled = true; // 声音开关状态
 
-    // 切换声音开关
-    function toggleSound() {
-        soundEnabled = !soundEnabled;
-        const icon = document.getElementById('sound-icon');
-        const btn = document.getElementById('sound-toggle');
-        if (soundEnabled) {
-            icon.textContent = '🔊';
-            btn.innerHTML = '<span id="sound-icon">🔊</span> 声音开';
-        } else {
-            icon.textContent = '🔇';
-            btn.innerHTML = '<span id="sound-icon">🔇</span> 声音关';
-        }
-    }
-
     // 播放音频
     function playAudio(audioUrl) {
         const url = "https://cantogo.github.io/voice/game_" + audioUrl + ".mp3";
@@ -700,6 +683,6 @@
     }
 </script>
 
-
+<script src="js/navBar.js" defer></script>
 
 </body></html>
