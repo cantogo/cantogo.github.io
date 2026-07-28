@@ -1,23 +1,23 @@
 <!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>游戏练习</title>
+    <title>普粤差异学习 - 温和语音版</title>
     <style>
-        /* 柔和、低刺激的色彩系统（莫兰迪/低饱和色系） */
+        /* 针对阿斯伯格症友好的低感官刺激色彩系统（莫兰迪色系） */
         :root {
-            --bg-color: #F5F4F1; /* 燕麦米色背景，降低屏幕眩光 */
+            --bg-color: #F4F3EF; /* 燕麦柔和背景，降低屏幕眩光 */
             --card-bg: #FFFFFF;
-            --text-main: #5C5C5C; /* 柔和的深灰，代替刺眼的纯黑 */
-            --text-muted: #9E9E9E;
-            --accent-color: #D6E0D9; /* 柔和的鼠尾草绿 */
-            --accent-hover: #C5D1C9;
-            --accent-purple: #E2DEE8; /* 柔和的薰衣草紫，用于标签 */
-            --correct-bg: #E6EFE8; /* 极浅的薄荷绿 */
-            --correct-text: #6B8E76;
-            --wrong-bg: #F5E6E6; /* 极浅的灰粉色，代替警告红 */
-            --wrong-text: #9E7373;
+            --text-main: #5A5A5A; /* 柔和深灰，避免纯黑的强烈对比 */
+            --text-muted: #9BA3A5;
+            --accent-color: #D4E0D9; /* 治愈系鼠尾草绿 */
+            --accent-hover: #C2D1C8;
+            --accent-purple: #E2DFE6; /* 柔和薰衣草紫 */
+            --correct-bg: #E5EFE8; /* 极浅薄荷绿 */
+            --correct-text: #5B7A63;
+            --wrong-bg: #F4E5E5; /* 极浅灰粉色，代替刺眼的警告红 */
+            --wrong-text: #9D7272;
             --border-radius: 16px;
-            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.3s ease;
         }
 
         * {
@@ -32,7 +32,7 @@
             color: var(--text-main);
             display: flex;
             justify-content: center;
-            align-items: baseline;
+            align-items: center;
             min-height: 100vh;
             padding: 20px;
             line-height: 1.6;
@@ -41,9 +41,9 @@
         .container {
             background-color: var(--card-bg);
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
             overflow: hidden;
             position: relative;
         }
@@ -56,43 +56,21 @@
         }
 
         .headerline h1 {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: normal;
-            color: var(--text-main);
+            color: #4A5D52;
             letter-spacing: 1px;
             margin-bottom: 5px;
         }
 
         .headerline p {
-            font-size: 186x;
-            color: var(--text-main);
-            opacity: 0.85;
-        }
-
-        /* 声音控制按钮 */
-        .sound-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.5);
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--text-main);
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .sound-toggle:hover {
-            background: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            color: #6B7C72;
         }
 
         .content {
             padding: 30px;
-            min-height: 420px;
+            min-height: 400px;
             display: flex;
             flex-direction: column;
         }
@@ -109,7 +87,7 @@
 
         .btn-primary {
             background-color: var(--accent-color);
-            color: var(--text-main);
+            color: #4A5D52;
             width: 100%;
             padding: 16px;
             margin-top: 20px;
@@ -152,12 +130,11 @@
         .category-tag {
             display: inline-block;
             font-size: 12px;
-            color: var(--text-main);
+            color: #6A5B77;
             background-color: var(--accent-purple);
             padding: 4px 14px;
             border-radius: 20px;
             margin-bottom: 15px;
-            opacity: 0.9;
         }
         .question-word {
             font-size: 32px;
@@ -180,6 +157,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .option-btn:hover:not(:disabled) {
@@ -193,7 +171,7 @@
             color: var(--text-main);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .option-jyutping {
@@ -223,9 +201,35 @@
         .option-btn:disabled {
             cursor: default;
         }
-
         .option-btn.disabled-neutral {
             opacity: 0.4;
+        }
+
+        /* 动态语音播放波纹动画（温和不刺眼） */
+        .audio-wave {
+            display: none;
+            align-items: flex-end;
+            gap: 3px;
+            height: 18px;
+            margin-left: 8px;
+        }
+        .audio-wave.active {
+            display: flex;
+        }
+        .audio-wave span {
+            display: inline-block;
+            width: 4px;
+            background-color: var(--correct-text);
+            border-radius: 2px;
+            animation: wave 1s infinite ease-in-out;
+        }
+        .audio-wave span:nth-child(1) { height: 8px; animation-delay: 0s; }
+        .audio-wave span:nth-child(2) { height: 16px; animation-delay: 0.2s; }
+        .audio-wave span:nth-child(3) { height: 12px; animation-delay: 0.4s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.6); opacity: 0.7; }
+            50% { transform: scaleY(1); opacity: 1; }
         }
 
         .end-screen {
@@ -253,12 +257,11 @@
         .hidden {
             display: none !important;
         }
-
         .fade-in {
-            animation: fadeIn 0.6s ease forwards;
+            animation: fadeIn 0.5s ease forwards;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -325,7 +328,7 @@
       height: 43px;
       fill: #0ea5e9;
     }
-        
+
     </style>
 </head>
 <body>
@@ -529,7 +532,7 @@
     let currentIndex = 0;
     let score = 0;
     let isAnswered = false;
-    let soundEnabled = true; // 声音开关状态
+    let soundEnabled = true;
 
     // 播放音频
     function playAudio(audioUrl) {
@@ -612,10 +615,14 @@
         options.forEach((opt) => {
             const btn = document.createElement('button');
             btn.className = 'option-btn';
+            // 在选项中预置波纹动画的HTML，默认隐藏
             btn.innerHTML = `
                 <div>
                     <div class="option-canto">
                         ${opt.c} 
+                        <div class="audio-wave" data-word="${opt.c}">
+                            <span></span><span></span><span></span>
+                        </div>
                     </div>
                     <div class="option-jyutping">${opt.j}</div>
                 </div>
@@ -647,10 +654,16 @@
             btnElement.classList.add('wrong');
             // 标出正确答案
             allButtons.forEach(b => {
-                if (b.querySelector('.option-canto').textContent.trim() === correctWord.c) {
+                if (b.querySelector('.option-canto').textContent.includes(correctWord.c)) {
                     b.classList.add('correct');
                 }
             });
+        }
+        
+        // 【核心逻辑：在正确答案旁边显示播放波纹动画】
+        const correctWave = document.querySelector(`.audio-wave[data-word="${correctWord.c}"]`);
+        if (correctWave) {
+            correctWave.classList.add('active');
         }
         
         allButtons.forEach(b => {
@@ -692,6 +705,6 @@
     }
 </script>
 
-<script src="js/navBar.js" defer></script>
+
 
 </body></html>
