@@ -6,6 +6,7 @@
         /* 针对阿斯伯格症友好的低感官刺激色彩系统（莫兰迪色系） */
         :root {
             --bg-color: #F4F3EF; /* 燕麦柔和背景，降低屏幕眩光 */
+            --border-color: #E6E6E6;
             --card-bg: #FFFFFF;
             --text-main: #5A5A5A; /* 柔和深灰，避免纯黑的强烈对比 */
             --text-muted: #9BA3A5;
@@ -18,6 +19,7 @@
             --wrong-text: #9D7272;
             --border-radius: 16px;
             --transition: all 0.3s ease;
+            --wave-color: #2442d6;
         }
 
         * {
@@ -131,15 +133,7 @@
             text-align: center;
             margin-bottom: 30px;
         }
-        .category-tag {
-            display: inline-block;
-            font-size: 12px;
-            color: #6A5B77;
-            background-color: var(--accent-purple);
-            padding: 4px 14px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-        }
+
         .question-word {
             font-size: 32px;
             font-weight: 500;
@@ -223,7 +217,7 @@
         .audio-wave span {
             display: inline-block;
             width: 4px;
-            background-color: var(--correct-text);
+            background-color: var(--wave-color);
             border-radius: 2px;
             animation: wave 1s infinite ease-in-out;
         }
@@ -381,7 +375,6 @@
             </div>
 
             <div class="question-area fade-in" id="question-area">
-                <span class="category-tag" id="category-tag">词汇分类</span>
                 <div class="question-word" id="question-word">普通话</div>
                 <div style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">对应的粤语是？</div>
             </div>
@@ -597,7 +590,6 @@
         const currentWord = currentQuestions[currentIndex];
         const correctLength = currentWord.c.length; // 获取正确答案的字数
         
-        document.getElementById('category-tag').textContent = currentWord.cat;
         document.getElementById('question-word').textContent = currentWord.m;
         
         // 【核心逻辑：筛选字数相同的错误选项】
