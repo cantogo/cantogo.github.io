@@ -407,7 +407,9 @@
     // 100 词的数据库 (简体中文)
     const wordDatabase = [
         // 人称与指示 (11)
-        { m: "他/她/它", c: "佢", j: "keoi5", cat: "人称与指示", audio: "1" },
+        { m: "他", c: "佢", j: "keoi5", cat: "人称与指示", audio: "1" },
+        { m: "她", c: "佢", j: "keoi5", cat: "人称与指示", audio: "1" },
+        { m: "她", c: "佢", j: "keoi5", cat: "人称与指示", audio: "1" },
         { m: "我们", c: "我哋", j: "ngo5 dei6", cat: "人称与指示", audio: "2" },
         { m: "你们", c: "你哋", j: "nei5 dei6", cat: "人称与指示", audio: "3" },
         { m: "他们", c: "佢哋", j: "keoi5 dei6", cat: "人称与指示", audio: "4" },
@@ -418,6 +420,10 @@
         { m: "这些", c: "呢啲", j: "ni1 di1", cat: "人称与指示", audio: "9" },
         { m: "那些", c: "嗰啲", j: "go2 di1", cat: "人称与指示", audio: "10" },
         { m: "别人", c: "人哋", j: "jan4 dei6", cat: "人称与指示", audio: "11" },
+        { m: "爸爸", c: "老豆", j: "lou5 dau6", cat: "人称与指示", audio: "87" },
+        { m: "妈妈", c: "妈咪", j: "maa1 mi4", cat: "人称与指示", audio: "88" },
+        { m: "弟弟", c: "细佬", j: "sai3 lou2", cat: "人称与指示", audio: "89" },
+        { m: "老板", c: "老细", j: "lou5 sai3", cat: "人称与指示", audio: "90" },
 
         // 疑问词 (12)
         { m: "什么", c: "咩", j: "me1", cat: "疑问词", audio: "12" },
@@ -498,19 +504,12 @@
         { m: "雨伞", c: "遮", j: "ze1", cat: "生活与物品", audio: "79" },
         { m: "空调", c: "冷气", j: "laang5 hei3", cat: "生活与物品", audio: "80" },
         { m: "插座", c: "插苏", j: "caap3 sou1", cat: "生活与物品", audio: "81" },
+        { m: "东西", c: "嘢", j: "je5", cat: "生活与物品", audio: "82" },
+        { m: "衣服", c: "衫", j: "saam1", cat: "生活与物品", audio: "83" },
+        { m: "手机", c: "电话", j: "din6 waa2", cat: "生活与物品", audio: "84" },
+        { m: "洗手间", c: "厕所", j: "ci3 so2", cat: "生活与物品", audio: "85" },
+        { m: "桌子", c: "台", j: "toi2", cat: "生活与物品", audio: "86" },
 
-        // 物品与场所 (6)
-        { m: "东西", c: "嘢", j: "je5", cat: "物品与场所", audio: "82" },
-        { m: "衣服", c: "衫", j: "saam1", cat: "物品与场所", audio: "83" },
-        { m: "手机", c: "电话", j: "din6 waa2", cat: "物品与场所", audio: "84" },
-        { m: "洗手间", c: "厕所", j: "ci3 so2", cat: "物品与场所", audio: "85" },
-        { m: "桌子", c: "台", j: "toi2", cat: "物品与场所", audio: "86" },
-
-        // 人物与动物 (4)
-        { m: "爸爸", c: "老豆", j: "lou5 dau6", cat: "人物与动物", audio: "87" },
-        { m: "妈妈", c: "妈咪", j: "maa1 mi4", cat: "人物与动物", audio: "88" },
-        { m: "弟弟", c: "细佬", j: "sai3 lou2", cat: "人物与动物", audio: "89" },
-        { m: "老板", c: "老细", j: "lou5 sai3", cat: "人物与动物", audio: "90" },
 
         // 语气与交际 (10)
         { m: "的(所属)", c: "嘅", j: "ge3", cat: "语气与交际", audio: "91" },
@@ -590,12 +589,21 @@
     function renderQuestion() {
         isAnswered = false;
         const currentWord = currentQuestions[currentIndex];
+        const correctLength = currentWord.c.length; // 获取正确答案的字数
         
         document.getElementById('category-tag').textContent = currentWord.cat;
         document.getElementById('question-word').textContent = currentWord.m;
         
-        const wrongOptions = wordDatabase.filter(w => w.c !== currentWord.c);
-        const shuffledWrong = shuffleArray(wrongOptions).slice(0, 3);
+        // 【核心逻辑：筛选字数相同的错误选项】
+        let sameLengthWrongOptions = wordDatabase.filter(w => w.c.length === correctLength && w.c !== currentWord.c);
+        
+        // 如果相同字数的词不够3个，则用其他词补齐（在200词库中通常不会发生）
+        if (sameLengthWrongOptions.length < 10) {
+            const otherWrongOptions = wordDatabase.filter(w => w.c.length !== correctLength && w.c !== currentWord.c);
+            sameLengthWrongOptions = sameLengthWrongOptions.concat(otherWrongOptions);
+        }
+
+        const shuffledWrong = shuffleArray(sameLengthWrongOptions).slice(0, 3);
         const options = shuffleArray([currentWord, ...shuffledWrong]);
         
         const optionsContainer = document.getElementById('options-grid');
@@ -626,8 +634,8 @@
         if (isAnswered) return;
         isAnswered = true;
         
-        // 播放所选选项的预制MP3音频
-        playAudio(selectedOpt.audio);
+        // 【核心逻辑：无论选对选错，只播放正确答案的发音】
+        playAudio(correctWord.audio);
         
         const isCorrect = selectedOpt.c === correctWord.c;
         const allButtons = document.querySelectorAll('.option-btn');
@@ -637,8 +645,9 @@
             btnElement.classList.add('correct');
         } else {
             btnElement.classList.add('wrong');
+            // 标出正确答案
             allButtons.forEach(b => {
-                if (b.querySelector('.option-canto').textContent.includes(correctWord.c)) {
+                if (b.querySelector('.option-canto').textContent.trim() === correctWord.c) {
                     b.classList.add('correct');
                 }
             });
@@ -655,7 +664,7 @@
         const percentage = ((currentIndex + 1) / QUESTIONS_PER_ROUND) * 100;
         document.getElementById('progress-bar').style.width = `${percentage}%`;
 
-        // 延迟进入下一题 (2.2秒，给音频播放留出足够的时间)
+        // 延迟2.5秒进入下一题，确保有足够时间听完正确发音并观察正确选项
         setTimeout(() => {
             currentIndex++;
             if (currentIndex < QUESTIONS_PER_ROUND) {
