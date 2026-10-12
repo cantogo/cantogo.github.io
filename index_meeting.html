@@ -376,286 +376,78 @@
     --bg:          #1e1b24;
     --surface:     #26222d;   /* text boxes / cards */
     --surface-2:   #2e2937;   /* nested boxes, hover */
-    --border:      #3e3749;
 
     /* Text (warm off-white, never pure white) */
     --text:        #e4ddd2;
     --text-muted:  #b3abbd;
-    --heading:     #ead7c3;   /* soft peach */
 
     /* Accents (muted pastels) */
     --lavender:    #b9a6da;
-    --sage:        #9fc4a9;
-    --rose:        #d6a8b3;
     --sky:         #a8c2dc;
-
-    --focus:       #c9b8e8;
-    --shadow:      0 2px 8px rgba(0, 0, 0, 0.35);
-    --radius:      12px;
   }
 
-  /* ---------- Base ---------- */
-  html, body {
-    background-color: var(--bg) !important;
-    color: var(--text) !important;
-  }
+    body {
+      color: var(--text);
+      background: var(--bg);
+    }
 
-  body {
-    line-height: 1.85;            /* roomy spacing for Chinese text */
-    letter-spacing: 0.02em;
-    -webkit-font-smoothing: antialiased;
-  }
+    a {
+      color: var(--sky);
+    }
 
-  /* ---------- Headings ---------- */
-  h1, h2, h3, h4, h5, h6 {
-    color: var(--heading) !important;
-    font-weight: 600;
-  }
-  h1 {
-    border-bottom: 2px solid var(--lavender);
-    padding-bottom: 0.3em;
-  }
-  h2 {
-    border-left: 4px solid var(--sage);
-    padding-left: 0.6em;
-  }
-  h3 {
-    color: var(--lavender) !important;
-  }
+    .intro-card {
+      background: var(--surface);
+    }
 
-  p, li, span, td, th, label, dd, dt {
-    color: inherit;
-  }
-  small, .subtitle, .muted, figcaption {
-    color: var(--text-muted) !important;
-  }
+    .intro-text {
+      color: #62bea4;
+    }
 
-  /* ---------- All text boxes: dark background ---------- */
-  header, nav, main, section, article, aside, footer,
-  .toc, #toc, .catalog, .menu, .card, .box, .panel, .content,
-  [class*="box"], [class*="card"], [class*="panel"], [class*="section"],
-  details, blockquote, fieldset, dialog {
-    background-color: var(--surface) !important;
-    color: var(--text) !important;
-    border-color: var(--border) !important;
-  }
+    /* 左侧：可折叠目录 */
+    .toc-container {
+      background: var(--surface);
+    }
 
-  section, article, .card, .box, .panel,
-  [class*="box"], [class*="card"], details {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-  }
+    .toc-title span {
+      color: var(--text);
+    }
 
-  /* Boxes inside boxes get a slightly lighter shade */
-  section section, section details, details details,
-  .card .card, .box .box, [class*="box"] [class*="box"] {
-    background-color: var(--surface-2) !important;
-  }
+    .toc-section {
+      background: var(--surface);
+    }
 
-  /* Override any light inline backgrounds, e.g. style="background:#fff" */
-  [style*="background"]:not(img):not(video) {
-    background-color: var(--surface) !important;
-    color: var(--text) !important;
-  }
+    .toc-section-header:hover {
+      background: var(--surface-2);
+    }
 
-  /* ---------- Collapsible table of contents (点击展开 / 收起) ---------- */
-  summary,
-  .toc-toggle, [class*="toggle"], [class*="collapse"] > :first-child {
-    background-color: var(--surface-2) !important;
-    color: var(--heading) !important;
-    border-radius: 8px;
-    padding: 0.4em 0.8em;
-    cursor: pointer;
-  }
-  summary:hover, [class*="toggle"]:hover {
-    background-color: #362f41 !important;
-  }
-  summary::marker, .arrow {
-    color: var(--lavender);
-  }
+    .toc-sublist a {
+      color: var(--text-muted);
+    }
 
-  /* ---------- Links (①–⑫ topic links, references) ---------- */
-  a {
-    color: var(--lavender) !important;
-    text-decoration: underline;
-    text-decoration-color: rgba(185, 166, 218, 0.4);
-    text-underline-offset: 3px;
-  }
-  a:visited {
-    color: var(--rose) !important;
-  }
-  a:hover {
-    color: var(--sage) !important;
-    text-decoration-color: currentColor;
-  }
+    h2 {
+      color: var(--lavender);
+    }
+    h3 {
+      color: var(--sky);
+    }
+    h4 {
+      color: var(--sky);
+    }
 
-  /* Clear, gentle focus ring for keyboard users */
-  :focus-visible {
-    outline: 2px solid var(--focus) !important;
-    outline-offset: 3px;
-    border-radius: 6px;
-  }
+    /* 信息小标签 */
+    .tag {
+      background: #053c5a;
+    }
+    .tag-green {
+      background: #053c5a;
 
-  /* ---------- Form fields: dark background ---------- */
-  input, textarea, select, button,
-  [contenteditable="true"] {
-    background-color: var(--surface-2) !important;
-    color: var(--text) !important;
-    border: 1px solid var(--border) !important;
-    border-radius: 8px;
-  }
-  input::placeholder, textarea::placeholder {
-    color: var(--text-muted) !important;
-    opacity: 0.8;
-  }
-  input:focus, textarea:focus, select:focus {
-    border-color: var(--lavender) !important;
-    box-shadow: 0 0 0 3px rgba(185, 166, 218, 0.2);
-  }
-  button, .btn, [type="submit"], [type="button"] {
-    background-color: #3a3346 !important;
-    color: var(--heading) !important;
-    cursor: pointer;
-  }
-  button:hover, .btn:hover {
-    background-color: #463e54 !important;
-  }
+    }
 
-  /* ---------- "[New😊]" badges ---------- */
-  .new, .badge, [class*="new"], mark {
-    background-color: rgba(159, 196, 169, 0.18) !important;
-    color: var(--sage) !important;
-    border: 1px solid rgba(159, 196, 169, 0.4);
-    border-radius: 999px;
-    padding: 0 0.5em;
-    font-weight: 600;
-  }
+    /* 区块容器 */
+    .section-block {
+      background: var(--surface);
+    }
 
-  /* ---------- Lists (films, songs, workplace scenes) ---------- */
-  ul li::marker, ol li::marker {
-    color: var(--sage);
-  }
-
-  /* ---------- Tables ---------- */
-  table {
-    background-color: var(--surface) !important;
-    border-collapse: collapse;
-  }
-  th {
-    background-color: var(--surface-2) !important;
-    color: var(--heading) !important;
-  }
-  th, td {
-    border: 1px solid var(--border) !important;
-  }
-  tr:nth-child(even) td {
-    background-color: rgba(255, 255, 255, 0.02);
-  }
-
-  /* ---------- Quotes, code, Jyutping ---------- */
-  blockquote {
-    border-left: 4px solid var(--rose) !important;
-    padding: 0.6em 1em;
-    color: var(--text-muted) !important;
-  }
-  code, kbd, pre, .jyutping, ruby rt {
-    background-color: #2a2532 !important;
-    color: var(--sky) !important;
-    border-radius: 6px;
-    padding: 0.1em 0.35em;
-  }
-  pre {
-    padding: 1em;
-    overflow-x: auto;
-    border: 1px solid var(--border);
-  }
-
-  hr {
-    border: none;
-    border-top: 1px dashed var(--border);
-  }
-
-  /* ---------- Images and video: slightly dimmed ---------- */
-  img, video, iframe {
-    filter: brightness(0.85) contrast(1.05);
-    border-radius: 8px;
-  }
-
-  /* ---------- Text selection ---------- */
-  ::selection {
-    background-color: rgba(185, 166, 218, 0.35);
-    color: #fff8ef;
-  }
-
-  /* ---------- Scrollbar ---------- */
-  * {
-    scrollbar-color: #4a4257 var(--bg);
-    scrollbar-width: thin;
-  }
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb {
-    background: #4a4257;
-    border-radius: 10px;
-    border: 2px solid var(--bg);
-  }
-  /* ---------- Tags ---------- */
-  .tag {
-    display: inline-block;
-    background-color: rgba(185, 166, 218, 0.15) !important;  /* soft lavender tint */
-    color: var(--lavender) !important;
-    border: 1px solid rgba(185, 166, 218, 0.40) !important;
-    border-radius: 999px;
-    padding: 0.1em 0.65em;
-    font-size: 0.85em;
-    font-weight: 600;
-    line-height: 1.6;
-    letter-spacing: 0.03em;
-    vertical-align: middle;
-    box-shadow: none;
-  }
-
-  /* Green tag (e.g. the "New😊" labels) */
-  .tag-green,
-  .tag.tag-green {
-    background-color: rgba(159, 196, 169, 0.16) !important;  /* soft sage tint */
-    color: var(--sage) !important;
-    border: 1px solid rgba(159, 196, 169, 0.42) !important;
-  }
-
-  /* Tags that are links or buttons: gentle hover, no jumpy effects */
-  a.tag, button.tag {
-    text-decoration: none !important;
-    cursor: pointer;
-  }
-  a.tag:hover, button.tag:hover {
-    background-color: rgba(185, 166, 218, 0.24) !important;
-    color: #cfc0ea !important;
-  }
-  a.tag-green:hover, button.tag-green:hover,
-  a.tag.tag-green:hover, button.tag.tag-green:hover {
-    background-color: rgba(159, 196, 169, 0.26) !important;
-    color: #b6d6bd !important;
-  }
-
-  /* Clear focus ring for keyboard users */
-  .tag:focus-visible {
-    outline: 2px solid var(--focus) !important;
-    outline-offset: 2px;
-  }
-  .tag-green:focus-visible {
-    outline-color: var(--sage) !important;
-  }  
-}
-
-/* ---------- Calm motion (for anyone who has asked for less) ---------- */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
 }
 
 </style>
@@ -810,7 +602,7 @@
         </div>
 
         <div class="section-block" id="tones-1-3">
-          <h3>1.3 独特发音 &nbsp<span class="new-drop-badge">[New😊]</span></h3>
+          <h3>1.3 独特发音</h3>
           <p>
             粤语有许多普通话没有的发音方法，其中
            <span class="tag-green">
@@ -935,7 +727,7 @@
         <div class="section-block" id="dialogue-5-1">
           <h3>4.1 常用场景对话</h3>
 
-           <h4>职场粤语会话 &nbsp<span class="new-drop-badge">[New😊]</span></h4>
+           <h4>职场粤语会话</h4>
           <p>
             在职场的粤语对话或会议中，可以通过实践和模仿，学习到更多地道的职场粤语：
           </p>
@@ -946,7 +738,7 @@
             <li><span class="tag-green"><a href="https://cantogo.github.io/meeting4.html" target="_self">&#9321 场景4: 商讨设备更换计划</a></span></li>
           </ul>   
 
-          <h4>职场粤语会话 &nbsp<span class="new-drop-badge">[New😊]</span></h4>
+          <h4>职场粤语会话</h4>
           <p>
             在职场的粤语对话或会议中，可以通过实践和模仿，学习到更多地道的职场粤语：
           </p>
