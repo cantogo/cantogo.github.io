@@ -326,14 +326,279 @@
       fill: #0ea5e9;
     }
 
-    </style>
+/* =========================================================
+   🌙 Dark mode: calm, soft and low-stimulation
+   ========================================================= */
+@media (prefers-color-scheme: dark) {
+
+  :root {
+    color-scheme: dark;
+
+    /* Background layers: deep blue-grey, not pure black */
+    --bg:            #1d1f27;
+    --surface:       #262935;
+    --surface-2:     #2f3341;
+    --border:        #3c4050;
+
+    /* Text: warm off-white, not pure white */
+    --text:          #e8e3ec;
+    --text-soft:     #b4adbd;
+    --text-faint:    #8a8496;
+
+    /* Accents: lavender, sage, dusty rose */
+    --lavender:      #b9aee0;
+    --lavender-deep: #8f84bf;
+    --sage:          #a3c9a8;
+    --rose:          #d9aab6;
+    --mist-blue:     #a7bfd9;
+
+    /* Answer feedback: gentle, never alarming */
+    --correct-bg:    #2c3d33;
+    --correct-text:  #bfe0c4;
+    --wrong-bg:      #40362c;   /* soft amber instead of harsh red */
+    --wrong-text:    #e8cfa6;
+
+    --radius:        16px;
+    --shadow:        0 4px 18px rgba(0, 0, 0, 0.25);
+  }
+
+  /* ---------- Page ---------- */
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- Main card / container ---------- */
+  .container,
+  .card,
+  .game-container,
+  .start-screen,
+  .quiz-screen,
+  .result-screen {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    color: var(--text);
+  }
+
+  /* ---------- Headings ("⑫ 游戏练习", "🌿 普通话翻译成粤语的游戏练习") ---------- */
+  h1, h2, h3 {
+    color: var(--lavender);
+    font-weight: 600;
+  }
+
+  .headerline {
+      background-color: #4c6054;
+
+  }
+
+  .headerline h1 {
+       color: #c0c7c3;
+  }
+
+  /* Intro text ("欢迎来到这个安静的学习角落…") */
+  p,
+  .intro,
+  .description {
+    color: var(--text-soft);
+  }
+
+  /* Highlighted numbers ("100" and "10") */
+  strong,
+  .highlight,
+  .count {
+    color: var(--rose);
+    font-weight: 600;
+  }
+
+  /* ---------- Progress & score bar ---------- */
+  .progress,
+  .score,
+  #progress,
+  #score {
+    color: var(--text-soft);
+    background-color: var(--surface-2);
+    border-radius: 999px;
+    padding: 0.3em 0.9em;
+  }
+
+  /* Optional progress bar */
+  .progress-bar {
+    background-color: var(--surface-2);
+    border-radius: 999px;
+  }
+  .progress-bar-fill {
+    background-color: var(--sage);
+    border-radius: 999px;
+  }
+
+  /* ---------- Question area ---------- */
+  .label,
+  .question-label {          /* "普通话" and "对应的粤语是？" */
+    color: var(--text-faint);
+  }
+
+  .word,
+  .question-word,
+  #word {                     /* The Mandarin word being asked */
+    color: var(--text);
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .option-canto {
+    color: var(--text-soft);
+  }
+
+  .option-jyutping {
+    color: var(--text-faint);
+  }
+
+  /* ---------- Answer buttons ---------- */
+  .option,
+  .option-btn,
+  .choice,
+  .answer-btn {
+    background-color: var(--surface-2);
+    color: var(--text);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+  }
+
+  .option:hover,
+  .option-btn:hover,
+  .choice:hover,
+  .answer-btn:hover {
+    background-color: #363a4a;
+    border-color: var(--lavender-deep);
+  }
+
+  /* Correct answer: soft sage */
+  .correct {
+    background-color: var(--correct-bg) !important;
+    color: var(--correct-text) !important;
+    border-color: var(--sage) !important;
+  }
+
+  /* Wrong answer: soft amber, calm instead of alarming */
+  .wrong,
+  .incorrect {
+    background-color: var(--wrong-bg) !important;
+    color: var(--wrong-text) !important;
+    border-color: #c9a774 !important;
+  }
+
+  /* ---------- Main buttons ("开始练习", "再次练习") ---------- */
+  button,
+  .btn,
+  .start-btn,
+  .restart-btn
+   {
+    background-color: var(--lavender-deep);
+    color: #1d1f27;
+    border: none;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: background-color 0.25s ease;
+  }
+
+  button:hover,
+  .btn:hover,
+  .start-btn:hover,
+  .restart-btn:hover {
+    background-color: var(--lavender);
+  }
+
+  .btn-primary {
+    background-color: #4c6054;
+    color: #c0c7c3;
+  }
+
+ .btn-primary:hover {
+    background-color: #2c3a31;
+  }
+
+  /* Answer buttons keep their own style (overrides the general button rule) */
+  .option-btn,
+  .answer-btn {
+    font-weight: 500;
+  }
+
+  /* Clear, gentle keyboard focus */
+  button:focus-visible,
+  .option:focus-visible,
+  .option-btn:focus-visible {
+    outline: 3px solid var(--mist-blue);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Result screen ---------- */
+  .leaf,
+  .emoji {                    /* 🍃 */
+    filter: saturate(0.8) brightness(0.9);
+  }
+
+  .final-score,
+  #final-score {
+    color: var(--sage);
+    font-weight: 700;
+  }
+
+  .result-message {           /* "做得很好…休息一下，随时可以再来。" */
+    color: var(--text-soft);
+  }
+
+  /* ---------- Soft text selection & scrollbar ---------- */
+  ::selection {
+    background-color: var(--lavender-deep);
+    color: var(--bg);
+  }
+
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+  }
+
+ /* =========================================================
+     🧭 Navbar: calm, steady, low-stimulation
+     ========================================================= */
+  #navbar {
+    background-color: var(--surface);
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* =========================================================
+   🧘 Turn off motion for users who prefer less movement
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+</style>
 </head>
 <body>
 
 <div class="container">
 
     <header id="navbar">
-        <div class="title">&#9323 游戏练习</div>
+        <div class="title">&#9325 游戏练习</div>
             <nav>
                 <div>
                     <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
