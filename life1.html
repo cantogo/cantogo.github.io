@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日常生活粤语会话-1</title>
+    <link rel="stylesheet" href="css\meeting.css">
+</head>
+<body>
+
+<div class="container">
+    <header class="title-bar">
+    <div><h1>&#9321 日常生活粤语会话-1</h1></div>
+      <nav>
+        <div>
+          <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+            </svg>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <p class="subtitle">场景1: 茶餐廳點餐</p>
+
+    <div class="global-controls">
+        <!-- Row 1: Text (Left Aligned) -->
+        <div class="global-controls-row1"><span>这是一段在茶餐厅点餐的粤语对话。对话中包含了一些地道的茶餐厅用语和特色美食（如猪扒包、葡挞）。</span></div>
+
+        <!-- Row 2: Controls -->
+        <div class="global-controls-row2">
+            <!-- Play/Stop (Left Aligned) -->
+            <button class="main-btn" onclick="playAll()">▶ 全部播放</button>
+            <button class="main-btn" onclick="stopAudio()">⏹ 停止</button>
+
+            <!-- 新增菜单区域 -->
+            <div class="menu-wrapper">
+                <button class="main-btn menu-btn" id="menuBtn" onclick="toggleMenu(event)">
+                    <span>场景菜单&nbsp;</span>
+                    <span class="arrow-icon">▼</span>
+                </button>
+                <div class="menu-dropdown" id="menuDropdown">
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/life1.html" title="茶餐廳點餐">场景1: 茶餐廳點餐</a>
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting2.html" title="跟进工程项目进度">场景2: 跟进工程项目进度</a>                    
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting3.html" title="检讨设备保养服务">场景3: 检讨设备保养服务</a>                    
+                    </div>
+                    <div class="menu-item">
+                        <a href="https://cantogo.github.io/meeting4.html" title="商讨设备更换计划">场景4: 商讨设备更换计划</a>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-list" id="chatContainer"></div>
+
+    <div class="status-bar" id="statusBar">准备就绪</div>
+</div>
+
+<script>
+    // 脚本数据
+    const scriptData = [
+        { id: 1, role: "1", name: "大哥", jobtitle: "夥記", text: "几多位呀，靓女？" },
+        { id: 2, role: "2", name: "靚女", jobtitle: "客人", text: "一位呀，唔该。" },
+        { id: 3, role: "1", name: "大哥", jobtitle: "夥記", text: "呢边卡位随便坐！睇啱想食啲咩就叫我啦。" },
+        { id: 4, role: "2", name: "靚女", jobtitle: "客人", text: "伙记，唔该写啲嘢！" },
+        { id: 5, role: "1", name: "大哥", jobtitle: "夥記", text: "好呀想食啲咩？" },
+        { id: 6, role: "2", name: "靚女", jobtitle: "客人", text: "我想叫一个猪扒包，同埋一个葡挞。" },
+        { id: 7, role: "1", name: "大哥", jobtitle: "夥記", text: "冇问题，猪扒包同葡挞。要唔要跟餐饮呀？" },
+        { id: 8, role: "2", name: "靚女", jobtitle: "客人", text: "都好! 转餐饮啦。畀杯冻奶茶我，要少甜少冰。" },
+        { id: 9, role: "1", name: "大哥", jobtitle: "夥記", text: "冻奶茶少甜少冰。仲有冇其他嘢？" },
+        { id: 10, role: "2", name: "靚女", jobtitle: "客人", text: "暂时系咁多先，唔该。" },
+        { id: 11, role: "1", name: "大哥", jobtitle: "夥記", text: "得！猪扒包、葡挞，跟杯冻奶茶少甜少冰。稍等一阵，好快有得食！" },
+        { id: 12, role: "1", name: "大哥", jobtitle: "夥記", text: "(大约十分钟后) 靓女，你嘅猪扒包同葡挞，仲有杯冻奶茶。慢慢！" },
+        { id: 13, role: "2", name: "靚女", jobtitle: "客人", text: "唔该晒。" },
+        { id: 14, role: "2", name: "靚女", jobtitle: "客人", text: "(吃完准备结账) 伙记，唔该埋单！" },
+        { id: 15, role: "1", name: "大哥", jobtitle: "夥記", text: "好！猪扒包餐加个葡挞，总共六十五蚊！前面收银处畀钱就得喇，多谢晒！" }
+    ];
+
+</script>
+
+<script src="js/meeting_js_1.js" defer></script>
+
+<script>
+
+    // 核心播放函数
+    function playAudioFile(index, onComplete) {
+        // 停止当前正在播放的
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+
+        // 构造文件路径
+        const fileIndex = index + 1; 
+        const audioPath = `https://cantogo.github.io/voice/life_1-${fileIndex}.mp3`; 
+
+        currentAudio.src = audioPath;
+        
+        // 监听加载错误
+        currentAudio.onerror = () => {
+            updateStatus(`❌ 错误：找不到文件 ${audioPath}`, true);
+            highlightMessage(null);
+            isPlayingAll = false;
+        };
+
+        // 监听播放结束
+        currentAudio.onended = () => {
+            if (onComplete) onComplete();
+        };
+
+        // 开始播放
+        currentAudio.play().then(() => {
+            updateStatus(`正在播放 ...`);
+        }).catch(e => {
+            console.error(e);
+            updateStatus(`❌ 播放失败: 请检查文件或浏览器设置`, true);
+        });
+    }
+
+</script>
+
+<script src="js/meeting_js_2.js" defer></script>
+
+</body></html>
