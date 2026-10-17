@@ -1,7 +1,9 @@
 <!DOCTYPE html><html lang="zh-Hans"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
   <meta charset="UTF-8">
-  <title>轻轻松松、怏怏乐乐学粤语</title>
+  <title>轻轻松松、快快乐乐学粤语</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#1e1b24" media="(prefers-color-scheme: dark)">
   <style>
     /* 全站基本样式 */
     * {
@@ -27,7 +29,7 @@
     }
 
     /* 顶部导航 */
-    header {
+      header {
       background: linear-gradient(135deg, #14b8a6, #0ea5e9);
       color: #fff;
       padding: 0.75rem 1rem;
@@ -35,6 +37,7 @@
       top: 0;
       z-index: 30;
     }
+
     .header-inner {
       max-width: 1080px;
       margin: 0 auto;
@@ -361,14 +364,110 @@
                 box-shadow: 0 4px 6px rgba(20, 184, 166, 0.4);
             }
         }    
-  </style>
+
+/* =========================================================
+   Dark mode: soft, calm, easy on the eyes
+   ========================================================= */
+@media (prefers-color-scheme: dark) {
+
+  :root {
+    color-scheme: dark;
+
+    /* Backgrounds (deep plum-charcoal, never pure black) */
+    --bg:          #1e1b24;
+    --surface:     #26222d;   /* text boxes / cards */
+    --surface-2:   #433d4d;   /* nested boxes, hover */
+
+    /* Text (warm off-white, never pure white) */
+    --text:        #e4ddd2;
+    --text-muted:  #b3abbd;
+
+    /* Accents (muted pastels) */
+    --lavender:    #b9a6da;
+    --sky:         #a8c2dc;
+  }
+
+    body {
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    header {
+      background: linear-gradient(135deg, #0b6459, #075b81);
+      color: #d8c8d4;
+    }
+
+    a {
+      color: #c1d5c0;
+    }
+
+    .intro-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-2);
+    }
+
+    .intro-text {
+      color: #62bea4;
+    }
+
+    /* 左侧：可折叠目录 */
+    .toc-container {
+      background: var(--surface);
+      border: 1px solid var(--surface-2);
+    }
+
+    .toc-title span {
+      color: var(--text);
+    }
+
+    .toc-section {
+      background: var(--surface);
+    }
+
+    .toc-section-header:hover {
+      background: var(--surface-2);
+    }
+
+    .toc-sublist a {
+      color: var(--text-muted);
+    }
+
+    h2 {
+      color: var(--lavender);
+    }
+    h3 {
+      color: var(--lavender);
+    }
+    h4 {
+      color: var(--sky);
+    }
+
+    /* 信息小标签 */
+    .tag {
+      background-color: rgba(193,213, 192, 0.15);
+    }
+    .tag-green {
+     /* background: #053c5a;*/
+      background-color: rgba(193,213, 192, 0.15);
+
+    }
+
+    /* 区块容器 */
+    .section-block {
+      background: var(--surface);
+      border: 1px solid var(--surface-2);
+    }
+
+}
+
+</style>
 </head>
 <body>
   <!-- 顶部导航 -->
   <header>
     <div class="header-inner">
       <div>
-        <div class="site-title">轻轻松松、怏怏乐乐学粤语</div>
+        <div class="site-title">轻轻松松、快快乐乐学粤语</div>
               <!-- 桌面版：大章节导航；移动端：用按钮打开目录 -->
         <div class="site-subtitle">按您的节奏，在粤语世界安心做自己 :)</div>
       </div>
@@ -430,14 +529,13 @@
         <li class="toc-section open">
           <div class="toc-section-header">
             <span>
-              <strong>3. 趣味学习</strong>
+              <strong>3. 听力与模仿</strong>
             </span>
             <span class="toc-chevron">▶</span>
           </div>
           <ul class="toc-sublist">
-            <li><a href="#fun-3-1">3.1 绕口令</a></li>
-            <li><a href="#fun-3-2">3.2 笑话</a></li>
-            <li><a href="#fun-3-3">3.3 游戏练习</a></li>
+            <li><a href="#listening-4-1">3.1 观看粤语剧集和电影</a></li>
+            <li><a href="#listening-4-2">3.2 听粤语歌和电台节目</a></li>
           </ul>
         </li>
 
@@ -445,13 +543,13 @@
         <li class="toc-section open">
           <div class="toc-section-header">
             <span>
-              <strong>4. 听力与模仿</strong>
+              <strong>4. 对话实践</strong>
             </span>
             <span class="toc-chevron">▶</span>
           </div>
           <ul class="toc-sublist">
-            <li><a href="#listening-4-1">4.1 观看粤语剧集和电影</a></li>
-            <li><a href="#listening-4-2">4.2 听粤语歌和电台节目</a></li>
+            <li><a href="#dialogue-5-1">4.1 常用场景对话</a></li>
+            <li><a href="#dialogue-5-2">4.2 找粤语对话伙伴练习</a></li>
           </ul>
         </li>
 
@@ -459,29 +557,17 @@
         <li class="toc-section open">
           <div class="toc-section-header">
             <span>
-              <strong>5. 对话实践</strong>
+              <strong>5. 趣味学习</strong>
             </span>
             <span class="toc-chevron">▶</span>
           </div>
           <ul class="toc-sublist">
-            <li><a href="#dialogue-5-1">5.1 常用场景对话</a></li>
-            <li><a href="#dialogue-5-2">5.2 找粤语对话伙伴练习</a></li>
+            <li><a href="#fun-3-1">5.1 绕口令</a></li>
+            <li><a href="#fun-3-2">5.2 笑话</a></li>
+            <li><a href="#fun-3-3">5.3 游戏练习</a></li>            
           </ul>
         </li>
 
-        <!-- 6 & 7 -->
-        <li class="toc-section open">
-          <div class="toc-section-header">
-            <span>
-              <strong>6–7. 粤音字典与参考资料</strong>
-            </span>
-            <span class="toc-chevron">▶</span>
-          </div>
-          <ul class="toc-sublist">
-            <li><a href="#resources-6">6. 粤音字典</a></li>
-            <li><a href="#resources-7">7. 参考资料</a></li>
-          </ul>
-        </li>
       </ul>
     </aside>
 
@@ -492,16 +578,11 @@
         <h2>1. 声调与发音</h2>
 
         <div class="section-block" id="tones-1-1">
-          <h3>1.1 粤语拼音</h3>
+          <h3>1.1 粤语拼音 &nbsp<span class="new-drop-badge">[New😊]</span></h3>
           <p>
-            认识粤语的
-            <span class="tag">
-              <a href="https://www.ilc.cuhk.edu.hk/workshop/Chinese/Cantonese/Romanization/ch2_initials/2_learn.aspx" target="_blank" rel="noopener">声母 [#1]
-              </a>
-            </span>
-            与
-            <span class="tag">
-              <a href="https://www.ilc.cuhk.edu.hk/workshop/Chinese/Cantonese/Romanization/ch3_finals/2_learn.aspx" target="_blank" rel="noopener">韵母 [#1]
+            认识
+            <span class="tag-green">
+            <a href="https://cantogo.github.io/pinyin.html" target="_self">&#9312 粤语声母与韵母
               </a>
             </span>
            ，是打好发音基础的第一步。
@@ -513,12 +594,12 @@
           <p>
             先简单认识
            <span class="tag-green">
-            <a href="https://cantogo.github.io/tone_intro.html" target="_self">&#9312 粤语九声六调
+            <a href="https://cantogo.github.io/tone_intro.html" target="_self">&#9313 A - 粤语九声六调
               </a>
             </span>
             ，再慢慢熟悉
             <span class="tag-green">
-              <a href="https://cantogo.github.io/tone_voice.html" target="_self">&#9313 九声六调发音
+              <a href="https://cantogo.github.io/tone_voice.html" target="_self">&#9313 B - 九声六调发音
               </a>
             </span>
             的高低升降变化。
@@ -538,7 +619,7 @@
             <a href="https://cantogo.github.io/tone_method2.html" target="_self">&#9314 B - 粤语独特元音
               </a>
             </span>
-            有长短元音 (a/aa) 和前圆唇元音 (yu/eo/oe)。
+            有长短元音 (a/aa) 和前圆唇元音 (yu/oe/eo)。
           </p>
         </div>
 
@@ -600,54 +681,12 @@
 
       </section>
 
-      <!-- 3. 趣味学习 -->
-      <section id="fun">
-        <h2>3. 趣味学习</h2>
-
-        <div class="section-block" id="fun-3-1">
-          <h3>3.1 绕口令</h3>
-          <p>
-            通过有趣的
-            <span class="tag-green">
-              <a href="https://cantogo.github.io/twister.html" target="_self">&#9321 粤语绕口令
-              </a>
-            </span>
-            ，可以学习语速节奏，熟悉声调的细微差别。
-          </p>
-        </div>
-
-        <div class="section-block" id="fun-3-2">
-          <h3>3.2 笑话</h3>
-          <p>
-            尝试用
-            <span class="tag-green">
-              <a href="https://cantogo.github.io/joke.html" target="_self">&#9322 粤语讲笑话
-              </a>
-            </span>            
-            ，是检验听力与表达能力的好方法，也能增加学习乐趣。
-          </p>
-        </div>
-
-        <div class="section-block" id="fun-3-3">
-          <h3>3.3 游戏练习 &nbsp<span class="new-drop-badge">[New😊]</span></h3>
-          <p>
-            玩玩普通话翻译成粤语的
-            <span class="tag-green">
-              <a href="https://cantogo.github.io/game.html" target="_self">&#9323 游戏练习
-              </a>
-            </span>            
-            ，慢慢掌握对两种语言差异的语感。
-          </p>
-        </div>        
-
-      </section>
-
-      <!-- 4. 听力与模仿 -->
+      <!-- 3. 听力与模仿 -->
       <section id="listening">
-        <h2>4. 听力与模仿</h2>
+        <h2>3. 听力与模仿</h2>
 
         <div class="section-block" id="listening-4-1">
-          <h3>4.1 观看粤语剧集和电影</h3>
+          <h3>3.1 观看粤语剧集和电影</h3>
           <p>
             通过电影与剧集，加强耳朵对粤语节奏和语调的敏感度，顺便吸收日常用语。
           </p>
@@ -673,7 +712,7 @@
         </div>
 
         <div class="section-block" id="listening-4-2">
-          <h3>4.2 听粤语歌和电台节目</h3>
+          <h3>3.2 听粤语歌和电台节目</h3>
           <p>粤语歌和电台节目可以帮助你抓住语感，反复听更容易记得发音和用词。</p>
           <h4>推荐粤语歌手／歌曲：</h4>
           <ul>
@@ -686,25 +725,38 @@
         </div>
       </section>
 
-      <!-- 5. 对话实践 -->
+      <!-- 4. 对话实践 -->
       <section id="dialogue">
-        <h2>5. 对话实践</h2>
+        <h2>4. 对话实践</h2>
 
         <div class="section-block" id="dialogue-5-1">
-          <h3>5.1 常用场景对话</h3>
+          <h3>4.1 常用场景对话 &nbsp<span class="new-drop-badge">[New😊]</span></h3>
+
+           <h4>日常粤语会话</h4>
           <p>
-            从日常生活中最常用的情景开始，例如：买东西、点餐、坐车、打招呼等等。<br>
-            可通过网络课堂学习更多的
-            <span class="tag">
-              <a href="https://www.ilc.cuhk.edu.hk/workshop/chinese/cantonese/onlinetutorial/courseListA.aspx" target="_blank" rel="noopener">常用场景对话 [#2]
-              </a>
-            </span>
-            。
+            从日常生活中最常用的情景开始，尝试粤语对话，例如：点餐、打招呼、问路、闲聊等等：
           </p>
+          <ul>
+            <li><span class="tag-green"><a href="https://cantogo.github.io/life1.html" target="_self">&#9321 场景1: 茶餐厅点餐</a></span></li>
+            <li><span class="tag-green"><a href="https://cantogo.github.io/life2.html" target="_self">&#9321 场景2: 上班打招呼</a></span></li>
+            <li><span class="tag-green"><a href="https://cantogo.github.io/life3.html" target="_self">&#9321 场景3: 街头上问路</a></span></li>
+            <li><span class="tag-green"><a href="https://cantogo.github.io/life4.html" target="_self">&#9321 场景4: 茶水间闲聊</a></span></li>
+          </ul>   
+
+          <h4>职场粤语会话</h4>
+          <p>
+            在职场的粤语对话或会议中，可以通过实践和模仿，学习到更多地道的职场粤语：
+          </p>
+          <ul>
+            <li><span class="tag-green"><a href="https://cantogo.github.io/meeting1.html" target="_self">&#9322 场景1: 筹备公司联欢晚会</a></span></li>
+            <li><span class="tag-green"><a href="https://cantogo.github.io/meeting2.html" target="_self">&#9322 场景2: 跟进工程项目进度</a></span></li>
+            <li><span class="tag-green"><a href="https://cantogo.github.io/meeting3.html" target="_self">&#9322 场景3: 检讨设备保养服务</a></span></li>
+            <li><span class="tag-green"><a href="https://cantogo.github.io/meeting4.html" target="_self">&#9322 场景4: 商讨设备更换计划</a></span></li>
+          </ul>                
         </div>
 
         <div class="section-block" id="dialogue-5-2">
-          <h3>5.2 找粤语对话伙伴练习</h3>
+          <h3>4.2 找粤语对话伙伴练习</h3>
           <p>
             找朋友、语伴练习粤语对话。<br>
             真实对话可以让你更快习惯即时反应、听懂不同速度与口音。
@@ -712,42 +764,47 @@
         </div>
       </section>
 
-      <!-- 6 & 7. 粤音资料 / 参考 -->
-      <section id="resources">
-        <h2 id="resources-6">6. 粤音字典</h2>
+      <!-- 5. 趣味学习 -->
+      <section id="fun">
+        <h2>5. 趣味学习</h2>
 
-        <div class="section-block">
-          <p>查字、确认读音时，可以善用线上粤音字典，推荐以下网站：</p>
-          <ul class="ref-list">
-            <li>
-              <span class="ref-title">粤音资料集丛：</span>
-              <a class="ref-url" href="https://jyut.net" target="_blank" rel="noopener">
-                https://jyut.net
+        <div class="section-block" id="fun-3-1">
+          <h3>5.1 绕口令</h3>
+          <p>
+            通过有趣的
+            <span class="tag-green">
+              <a href="https://cantogo.github.io/twister.html" target="_self">&#9323 粤语绕口令
               </a>
-            </li>
-          </ul>
+            </span>
+            ，可以学习语速节奏，熟悉声调的细微差别。
+          </p>
         </div>
 
-        <h2 id="resources-7">7. 参考资料</h2>
-
-        <div class="section-block">
-          <p>以上的粤语拼音(声母、韵母)及常用场景对话参考资料引用以下推荐网站：</p>
-          <ul class="ref-list">
-            <li>
-              <span class="ref-title">#1 香港中文大学自学中心 — 粤语拼音速递</span>
-              <a class="ref-url" href="https://www.ilc.cuhk.edu.hk/workshop/Chinese/Cantonese/Romanization/" target="_blank" rel="noopener">
-                https://www.ilc.cuhk.edu.hk/workshop/Chinese/Cantonese/Romanization/
+        <div class="section-block" id="fun-3-2">
+          <h3>5.2 笑话</h3>
+          <p>
+            尝试用
+            <span class="tag-green">
+              <a href="https://cantogo.github.io/joke.html" target="_self">&#9324 粤语讲笑话
               </a>
-            </li>
-            <li>
-              <span class="ref-title">#2 香港中文大学自学中心 — 粤语网络课堂</span>
-              <a class="ref-url" href="https://www.ilc.cuhk.edu.hk/workshop/chinese/cantonese/onlinetutorial/courseListA.aspx" target="_blank" rel="noopener">
-                https://www.ilc.cuhk.edu.hk/workshop/chinese/cantonese/onlinetutorial/courseListA.aspx
-              </a>
-            </li>
-          </ul>
+            </span>            
+            ，是检验听力与表达能力的好方法，也能增加学习乐趣。
+          </p>
         </div>
-      </section>
+
+        <div class="section-block" id="fun-3-3">
+          <h3>5.3 游戏练习</h3>
+          <p>
+            玩玩普通话翻译成粤语的
+            <span class="tag-green">
+              <a href="https://cantogo.github.io/game.html" target="_self">&#9325 游戏练习
+              </a>
+            </span>            
+            ，慢慢掌握对两种语言差异的语感。
+          </p>
+        </div>    
+      </section>      
+
     </main>
   </div>
 
