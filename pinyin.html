@@ -5,8 +5,6 @@
     <style>
         /* 基礎變量：柔和、低刺激的淺色模式（莫蘭迪色系） */
         :root {
-            --bg: #ffffff;
-            --fg: #111111;
             --bg-color: #f9f8f6;
             --text-color: #4a4a4a;
             --card-bg: #ffffff;
@@ -23,8 +21,6 @@
         /* 深色模式：靜謐、低對比度的深色調 */
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #060608;
-                --fg: #f5f5f5;
                 --bg-color: #1e1e24;
                 --text-color: #dcdcdc;
                 --card-bg: #2b2b36;
@@ -249,7 +245,7 @@
 
     /* Header CSS */
     #navbar {
-      background: var(--bg);
+      background: var(--bg-color);
       padding: 0.75rem 1rem;
       position: sticky;
       top: 0;
@@ -271,7 +267,7 @@
     }
 
     #navbar .title {
-      color: var(--fg);
+      color: var(--text-color);
       font-size: 1.8rem;
       font-weight: 700;
       margin-left: 0;
@@ -279,7 +275,7 @@
 
     #navbar a {
       text-decoration: none;
-      color: var(--fg);
+      color: var(--text-color);
       font-size: 1.0rem;
       font-weight: 500;
       margin-left: 0;
