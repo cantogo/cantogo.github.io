@@ -549,6 +549,12 @@
 
         event.target.classList.add('active');
         document.getElementById(tabId).classList.add('active');
+    
+        //Scroll to top
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });   
     }
 
     // 柔和的提示框功能
