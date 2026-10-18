@@ -5,14 +5,16 @@
     <style>
         /* 基礎變量：柔和、低刺激的淺色模式（莫蘭迪色系） */
         :root {
-            --bg-color: #f9f8f6;
+            --bg-body: #f9f8f6;
+            --bg-color: #ffffff;
+            --bg-cat-color: #f3f0f0;
             --text-color: #4a4a4a;
             --card-bg: #ffffff;
             --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
             --primary-color: #b5c0d0; /* 柔和的灰藍色 */
-            --secondary-color: #aca0bc; /* 柔和的淡紫色 */
+            --secondary-color: #bfb5cd; /* 柔和的淡紫色 */
             --accent-color: #fce1e4; /* 柔和的淡粉色 */
-            --border-color: #eaeaea;
+            --border-color: #e6d6d6;
             --hover-bg: #f0f4f8;
             --active-bg: #e2e8f0;
             --font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
@@ -21,7 +23,9 @@
         /* 深色模式：靜謐、低對比度的深色調 */
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-color: #1e1e24;
+                --bg-body: #1e1e24;
+                --bg-color: #25252c;
+                --bg-cat-color: #25252c;
                 --text-color: #dcdcdc;
                 --card-bg: #2b2b36;
                 --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -41,7 +45,7 @@
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-body);
             color: var(--text-color);
             font-family: var(--font-family);
             line-height: 1.6;
@@ -54,12 +58,24 @@
             margin: 0 auto;
         }
 
+        /* Header */
         header {
-            margin-bottom: 30px;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: var(--card-shadow);
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 1.0rem;
+            padding-bottom: 0.5rem;
+            max-width: 900px;
+            margin: 5px auto 10px auto;
             border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 25px;
         }
 
         h1 {
@@ -170,6 +186,17 @@
             gap: 15px;
         }
 
+        .category-card {
+            background-color: var(--bg-cat-color);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            margin-top: 30px ;
+            margin-bottom: 30px ;
+        }
+
         .item-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -224,7 +251,7 @@
 
         /* 分類標題 */
         .category-title {
-            margin: 30px 0 15px 0;
+            margin: 15px 0 15px 0;
             font-size: 18px;
             font-weight: 600;
             padding-bottom: 8px;
@@ -243,94 +270,105 @@
             }
         }
 
-    /* Header CSS */
-    #navbar {
-      background: var(--bg-color);
-      padding: 0.75rem 1rem;
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      max-width: 1080px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
+        /* Header CSS */
+        #navbar {
+            width: 100%;
+            /* Explicitly set solid white background to prevent transparency */
+            background-color: var(--bg-color); 
+            /* Ensure header stays on top of scrolling content */
+            z-index: 1000; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+        }
 
-    #navbar nav {
-      position: absolute;
-      right: 2rem;
-      display: flex;
-      gap: 20px;
-    }
+        #navbar .title {
+            color: var(--text-color);
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-left: 0;
+        }
 
-    #navbar .title {
-      color: var(--text-color);
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-left: 0;
-    }
+        #navbar a {
+            color: var(--text-color);
+        }
 
-    #navbar a {
-      text-decoration: none;
-      color: var(--text-color);
-      font-size: 1.0rem;
-      font-weight: 500;
-      margin-left: 0;
-    }
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
 
-    .home-icon {
-      width: 43px;
-      height: 43px;
-      background: gba(255,255,255,0.2);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      border: 2px solid;
-    }
-        
-    .home-icon:hover {
-      background: lightgreen;
-      border-color: lightgreen;
-      transform: translateY(-2px);
-    }
-        
-    .home-icon svg {
-      width: 43px;
-      height: 43px;
-      fill: #0ea5e9;
-    }        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+    
+        .home-icon {
+            width: 43px;
+            height: 43px;
+            background: gba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid;
+        }
+
+        .home-icon:hover {
+            background: lightgreen;
+            border-color: lightgreen;
+            transform: translateY(-2px);
+        }
+
+        /* SVG Icons */
+        svg {
+            width: 43px;
+            height: 43px;
+            fill: #0ea5e9;
+        }         
     </style>
 </head>
 <body>
 
 <div class="container">
 
-    <header id="navbar">
-    <div class="title">&#9312 粤语声母与韵母</div>
-      <nav>
-        <div>
-          <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
-            </svg>
-          </a>
+<!-- Header -->
+<header id="navbar">
+    <div class="header-content">
+        <!-- Top Bar containing Title and Home Icon -->
+        <div class="top-bar">
+            <div class="title">&#9312 粤语声母与韵母</div>
+                <a href="https://cantogo.github.io" class="home-icon" title="轻轻松松、怏怏乐乐学粤语">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"></path>
+                    </svg>
+                </a>
         </div>
-      </nav>
-    </header>
-
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('initials')">声母表 (Initials)</button>
-        <button class="tab-btn" onclick="switchTab('finals')">韵母表 (Finals)</button>
+        <!-- Navigation Tabs -->
+        <div>
+            <nav class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab('initials')">声母表</button>
+                <button class="tab-btn" onclick="switchTab('finals')">韵母表</button>
+            </nav>
+        </div>
     </div>
+</header>
 
-    <!-- 声母部分 -->
-    <div id="initials" class="content-section active">
+<!-- 声母部分 -->
+<div id="initials" class="content-section active">
+
+    <div class="category-card">
         <div class="category-title">与普通话发音基本一致。</div>
         <div class="grid-container">
             <div class="item-card" data-audio="1"><div class="speaker-icon">♪</div><div class="jyutping">b</div><div class="example">波 (bo1)</div></div>
@@ -345,35 +383,45 @@
             <div class="item-card" data-audio="10"><div class="speaker-icon">♪</div><div class="jyutping">k</div><div class="example">卡 (kaa1)</div></div>
             <div class="item-card" data-audio="15"><div class="speaker-icon">♪</div><div class="jyutping">w</div><div class="example">和 (wo4)</div></div>
         </div>
+    </div>
 
+    <div class="category-card">
         <div class="category-title">轻柔喉音，像英文的 h (如 hello)。</div>
         <div class="grid-container">
             <div class="item-card" data-audio="12"><div class="speaker-icon">♪</div><div class="jyutping">h</div><div class="example">何 (ho4)</div></div>
         </div>
+    </div>    
         
+    <div class="category-card">
         <div class="category-title">半元音，像英文的 y (如 yes)。</div>
         <div class="grid-container">
             <div class="item-card" data-audio="19"><div class="speaker-icon">♪</div><div class="jyutping">j</div><div class="example">也 (jaa5)</div></div>
         </div>   
+    </div>    
         
+    <div class="category-card">
         <div class="category-title">介于普通话平舌 (zcs) 与舌面 (jqx) 之间，无卷舌。</div>
         <div class="grid-container">
             <div class="item-card" data-audio="16"><div class="speaker-icon">♪</div><div class="jyutping">z</div><div class="example">左 (zo2)</div></div>
             <div class="item-card" data-audio="17"><div class="speaker-icon">♪</div><div class="jyutping">c</div><div class="example">初 (co1)</div></div>
             <div class="item-card" data-audio="18"><div class="speaker-icon">♪</div><div class="jyutping">s</div><div class="example">梳 (so1)</div></div>
         </div>
+    </div>    
         
+    <div class="category-card">
         <div class="category-title">粤语有，普通话没有。</div>
         <div class="grid-container">
             <div class="item-card" data-audio="11"><div class="speaker-icon">♪</div><div class="jyutping">ng</div><div class="example">我 (ngo5)</div></div>
             <div class="item-card" data-audio="13"><div class="speaker-icon">♪</div><div class="jyutping">gw</div><div class="example">过 (gwo3)</div></div>
             <div class="item-card" data-audio="14"><div class="speaker-icon">♪</div><div class="jyutping">kw</div><div class="example">跨 (kwaa1)</div></div>
         </div>
-    </div>
+    </div>    
+</div>
 
-    <!-- 韵母部分 -->
-    <div id="finals" class="content-section">
+<!-- 韵母部分 -->
+<div id="finals" class="content-section">
         
+    <div class="category-card">
         <div class="category-title">aa 行（长 a 音）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="20"><div class="speaker-icon">♪</div><div class="jyutping">aa</div><div class="example">沙 (saa1)</div></div>
@@ -386,7 +434,9 @@
             <div class="item-card" data-audio="27"><div class="speaker-icon">♪</div><div class="jyutping">aat</div><div class="example">八 (baat3)</div></div>
             <div class="item-card" data-audio="28"><div class="speaker-icon">♪</div><div class="jyutping">aak</div><div class="example">百 (baak3)</div></div>
         </div>
+    </div>    
 
+    <div class="category-card">
         <div class="category-title">a 行（短 a 音）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="29"><div class="speaker-icon">♪</div><div class="jyutping">ai</div><div class="example">矮 (ai2)</div></div>
@@ -398,7 +448,9 @@
             <div class="item-card" data-audio="35"><div class="speaker-icon">♪</div><div class="jyutping">at</div><div class="example">不 (bat1)</div></div>
             <div class="item-card" data-audio="36"><div class="speaker-icon">♪</div><div class="jyutping">ak</div><div class="example">得 (dak1)</div></div>
         </div>
+    </div>    
 
+    <div class="category-card">
         <div class="category-title">e 行（"诶" 音）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="37"><div class="speaker-icon">♪</div><div class="jyutping">e</div><div class="example">些 (se1)</div></div>
@@ -406,7 +458,9 @@
             <div class="item-card" data-audio="39"><div class="speaker-icon">♪</div><div class="jyutping">eng</div><div class="example">郑 (zeng6)</div></div>
             <div class="item-card" data-audio="40"><div class="speaker-icon">♪</div><div class="jyutping">ek</div><div class="example">石 (sek6)</div></div>
         </div>
+    </div>    
 
+    <div class="category-card">
         <div class="category-title">i 行（"衣" 音）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="41"><div class="speaker-icon">♪</div><div class="jyutping">i</div><div class="example">诗 (si1)</div></div>
@@ -418,7 +472,9 @@
             <div class="item-card" data-audio="47"><div class="speaker-icon">♪</div><div class="jyutping">it</div><div class="example">泄 (sit3)</div></div>
             <div class="item-card" data-audio="48"><div class="speaker-icon">♪</div><div class="jyutping">ik</div><div class="example">色 (sik1)</div></div>
         </div>
+    </div>    
 
+    <div class="category-card">
         <div class="category-title">o 行（"柯" 音）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="49"><div class="speaker-icon">♪</div><div class="jyutping">o</div><div class="example">疏 (so1)</div></div>
@@ -429,7 +485,9 @@
             <div class="item-card" data-audio="54"><div class="speaker-icon">♪</div><div class="jyutping">ot</div><div class="example">渴 (hot3)</div></div>
             <div class="item-card" data-audio="55"><div class="speaker-icon">♪</div><div class="jyutping">ok</div><div class="example">索 (sok3)</div></div>
         </div>
+    </div>    
 
+    <div class="category-card">
         <div class="category-title">u 行（"乌" 音）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="56"><div class="speaker-icon">♪</div><div class="jyutping">u</div><div class="example">夫 (fu1)</div></div>
@@ -439,28 +497,36 @@
             <div class="item-card" data-audio="60"><div class="speaker-icon">♪</div><div class="jyutping">ut</div><div class="example">阔 (fut3)</div></div>
             <div class="item-card" data-audio="61"><div class="speaker-icon">♪</div><div class="jyutping">uk</div><div class="example">福 (fuk1)</div></div>
         </div>
+    </div>    
 
+    <div class="category-card">
         <div class="category-title">oe 行（前圆唇元音，长音）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="62"><div class="speaker-icon">♪</div><div class="jyutping">oe</div><div class="example">靴 (hoe1)</div></div>
             <div class="item-card" data-audio="63"><div class="speaker-icon">♪</div><div class="jyutping">oeng</div><div class="example">香 (hoeng1)</div></div>
             <div class="item-card" data-audio="64"><div class="speaker-icon">♪</div><div class="jyutping">oek</div><div class="example">脚 (goek3)</div></div>
         </div>
+    </div>    
 
+    <div class="category-card">
         <div class="category-title">eo 行（前圆唇元音，短音）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="65"><div class="speaker-icon">♪</div><div class="jyutping">eoi</div><div class="example">需 (seoi1)</div></div>
             <div class="item-card" data-audio="66"><div class="speaker-icon">♪</div><div class="jyutping">eon</div><div class="example">询 (seon1)</div></div>
             <div class="item-card" data-audio="67"><div class="speaker-icon">♪</div><div class="jyutping">eot</div><div class="example">出 (ceot1)</div></div>
         </div>
+    </div>    
 
+    <div class="category-card">
         <div class="category-title">yu 行（前圆唇元音，"於" 音）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="68"><div class="speaker-icon">♪</div><div class="jyutping">yu</div><div class="example">书 (syu1)</div></div>
             <div class="item-card" data-audio="69"><div class="speaker-icon">♪</div><div class="jyutping">yun</div><div class="example">孙 (syun1)</div></div>
             <div class="item-card" data-audio="70"><div class="speaker-icon">♪</div><div class="jyutping">yut</div><div class="example">雪 (syut3)</div></div>
         </div>
+    </div>    
         
+    <div class="category-card">
         <div class="category-title">m、ng 行 （独立鼻音，自成音节）</div>
         <div class="grid-container">
             <div class="item-card" data-audio="71"><div class="speaker-icon">♪</div><div class="jyutping">m</div><div class="example">唔 (m4)</div></div>
