@@ -221,12 +221,17 @@
             background-color: var(--active-bg);
         }
 
-        /* 小喇叭圖標 */
+        /* 動態音頻圖標 (音軌柱狀圖) */
         .speaker-icon {
             position: absolute;
-            top: 8px;
-            right: 8px;
-            font-size: 12px;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2px;
+            width: 14px;
+            height: 12px;
             opacity: 0.3;
             transition: opacity 0.2s ease;
         }
@@ -235,6 +240,39 @@
             opacity: 0.7;
         }
 
+        .item-card.playing .speaker-icon {
+            opacity: 1;
+        }
+
+        .speaker-icon .bar {
+            width: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+            height: 30%; /* 默認靜止高度 */
+            transition: height 0.2s ease, background-color 0.2s ease;
+        }
+
+        /* 播放時的動畫效果 */
+        .item-card.playing .speaker-icon .bar {
+            background-color: #8b9bb4; /* 播放時顏色加深 */
+            animation: soundWave 0.5s infinite alternate ease-in-out;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .item-card.playing .speaker-icon .bar {
+                background-color: #a3b8cc;
+            }
+        }
+
+        .item-card.playing .speaker-icon .bar:nth-child(1) { animation-delay: 0s; }
+        .item-card.playing .speaker-icon .bar:nth-child(2) { animation-delay: 0.2s; }
+        .item-card.playing .speaker-icon .bar:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes soundWave {
+            0% { height: 30%; }
+            100% { height: 100%; }
+        }
+        
         .jyutping {
             font-size: 22px;
             font-weight: bold;
@@ -371,49 +409,49 @@
     <div class="category-card">
         <div class="category-title">与普通话声母发音基本一致。</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="1"><div class="speaker-icon">♪</div><div class="jyutping">b</div><div class="example">波 (bo1)</div></div>
-            <div class="item-card" data-audio="2"><div class="speaker-icon">♪</div><div class="jyutping">p</div><div class="example">婆 (po4)</div></div>
-            <div class="item-card" data-audio="3"><div class="speaker-icon">♪</div><div class="jyutping">m</div><div class="example">摸 (mo1)</div></div>
-            <div class="item-card" data-audio="4"><div class="speaker-icon">♪</div><div class="jyutping">f</div><div class="example">科 (fo1)</div></div>
-            <div class="item-card" data-audio="5"><div class="speaker-icon">♪</div><div class="jyutping">d</div><div class="example">多 (do1)</div></div>
-            <div class="item-card" data-audio="6"><div class="speaker-icon">♪</div><div class="jyutping">t</div><div class="example">拖 (to1)</div></div>
-            <div class="item-card" data-audio="7"><div class="speaker-icon">♪</div><div class="jyutping">n</div><div class="example">挪 (no4)</div></div>
-            <div class="item-card" data-audio="8"><div class="speaker-icon">♪</div><div class="jyutping">l</div><div class="example">罗 (lo4)</div></div>
-            <div class="item-card" data-audio="9"><div class="speaker-icon">♪</div><div class="jyutping">g</div><div class="example">哥 (go1)</div></div>
-            <div class="item-card" data-audio="10"><div class="speaker-icon">♪</div><div class="jyutping">k</div><div class="example">卡 (kaa1)</div></div>
-            <div class="item-card" data-audio="15"><div class="speaker-icon">♪</div><div class="jyutping">w</div><div class="example">和 (wo4)</div></div>
+            <div class="item-card" data-audio="1"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">b</div><div class="example">波 (bo1)</div></div>
+            <div class="item-card" data-audio="2"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">p</div><div class="example">婆 (po4)</div></div>
+            <div class="item-card" data-audio="3"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">m</div><div class="example">摸 (mo1)</div></div>
+            <div class="item-card" data-audio="4"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">f</div><div class="example">科 (fo1)</div></div>
+            <div class="item-card" data-audio="5"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">d</div><div class="example">多 (do1)</div></div>
+            <div class="item-card" data-audio="6"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">t</div><div class="example">拖 (to1)</div></div>
+            <div class="item-card" data-audio="7"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">n</div><div class="example">挪 (no4)</div></div>
+            <div class="item-card" data-audio="8"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">l</div><div class="example">罗 (lo4)</div></div>
+            <div class="item-card" data-audio="9"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">g</div><div class="example">哥 (go1)</div></div>
+            <div class="item-card" data-audio="10"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">k</div><div class="example">卡 (kaa1)</div></div>
+            <div class="item-card" data-audio="15"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">w</div><div class="example">和 (wo4)</div></div>
         </div>
     </div>
 
     <div class="category-card">
         <div class="category-title">轻柔喉音，像英文的 h (如 hello)。</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="12"><div class="speaker-icon">♪</div><div class="jyutping">h</div><div class="example">何 (ho4)</div></div>
+            <div class="item-card" data-audio="12"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">h</div><div class="example">何 (ho4)</div></div>
         </div>
     </div>    
         
     <div class="category-card">
         <div class="category-title">半元音，像英文的 y (如 yes)。</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="19"><div class="speaker-icon">♪</div><div class="jyutping">j</div><div class="example">也 (jaa5)</div></div>
+            <div class="item-card" data-audio="19"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">j</div><div class="example">也 (jaa5)</div></div>
         </div>   
     </div>    
         
     <div class="category-card">
         <div class="category-title">介于普通话平舌音 (z/c/s) 与舌面音 (j/q/x) 之间，无卷舌。</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="16"><div class="speaker-icon">♪</div><div class="jyutping">z</div><div class="example">左 (zo2)</div></div>
-            <div class="item-card" data-audio="17"><div class="speaker-icon">♪</div><div class="jyutping">c</div><div class="example">初 (co1)</div></div>
-            <div class="item-card" data-audio="18"><div class="speaker-icon">♪</div><div class="jyutping">s</div><div class="example">梳 (so1)</div></div>
+            <div class="item-card" data-audio="16"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">z</div><div class="example">左 (zo2)</div></div>
+            <div class="item-card" data-audio="17"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">c</div><div class="example">初 (co1)</div></div>
+            <div class="item-card" data-audio="18"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">s</div><div class="example">梳 (so1)</div></div>
         </div>
     </div>    
         
     <div class="category-card">
         <div class="category-title">粤语有，普通话没有。</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="11"><div class="speaker-icon">♪</div><div class="jyutping">ng</div><div class="example">我 (ngo5)</div></div>
-            <div class="item-card" data-audio="13"><div class="speaker-icon">♪</div><div class="jyutping">gw</div><div class="example">过 (gwo3)</div></div>
-            <div class="item-card" data-audio="14"><div class="speaker-icon">♪</div><div class="jyutping">kw</div><div class="example">跨 (kwaa1)</div></div>
+            <div class="item-card" data-audio="11"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ng</div><div class="example">我 (ngo5)</div></div>
+            <div class="item-card" data-audio="13"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">gw</div><div class="example">过 (gwo3)</div></div>
+            <div class="item-card" data-audio="14"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">kw</div><div class="example">跨 (kwaa1)</div></div>
         </div>
     </div>    
 </div>
@@ -424,113 +462,113 @@
     <div class="category-card">
         <div class="category-title">aa 行（长 a 音）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="20"><div class="speaker-icon">♪</div><div class="jyutping">aa</div><div class="example">沙 (saa1)</div></div>
-            <div class="item-card" data-audio="21"><div class="speaker-icon">♪</div><div class="jyutping">aai</div><div class="example">摆 (baai2)</div></div>
-            <div class="item-card" data-audio="22"><div class="speaker-icon">♪</div><div class="jyutping">aau</div><div class="example">包 (baau1)</div></div>
-            <div class="item-card" data-audio="23"><div class="speaker-icon">♪</div><div class="jyutping">aam</div><div class="example">贪 (taam1)</div></div>
-            <div class="item-card" data-audio="24"><div class="speaker-icon">♪</div><div class="jyutping">aan</div><div class="example">山 (saan1)</div></div>
-            <div class="item-card" data-audio="25"><div class="speaker-icon">♪</div><div class="jyutping">aang</div><div class="example">冷 (laang5)</div></div>
-            <div class="item-card" data-audio="26"><div class="speaker-icon">♪</div><div class="jyutping">aap</div><div class="example">插 (caap3)</div></div>
-            <div class="item-card" data-audio="27"><div class="speaker-icon">♪</div><div class="jyutping">aat</div><div class="example">八 (baat3)</div></div>
-            <div class="item-card" data-audio="28"><div class="speaker-icon">♪</div><div class="jyutping">aak</div><div class="example">百 (baak3)</div></div>
+            <div class="item-card" data-audio="20"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">aa</div><div class="example">沙 (saa1)</div></div>
+            <div class="item-card" data-audio="21"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">aai</div><div class="example">摆 (baai2)</div></div>
+            <div class="item-card" data-audio="22"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">aau</div><div class="example">包 (baau1)</div></div>
+            <div class="item-card" data-audio="23"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">aam</div><div class="example">贪 (taam1)</div></div>
+            <div class="item-card" data-audio="24"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">aan</div><div class="example">山 (saan1)</div></div>
+            <div class="item-card" data-audio="25"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">aang</div><div class="example">冷 (laang5)</div></div>
+            <div class="item-card" data-audio="26"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">aap</div><div class="example">插 (caap3)</div></div>
+            <div class="item-card" data-audio="27"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">aat</div><div class="example">八 (baat3)</div></div>
+            <div class="item-card" data-audio="28"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">aak</div><div class="example">百 (baak3)</div></div>
         </div>
     </div>    
 
     <div class="category-card">
         <div class="category-title">a 行（短 a 音）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="29"><div class="speaker-icon">♪</div><div class="jyutping">ai</div><div class="example">矮 (ai2)</div></div>
-            <div class="item-card" data-audio="30"><div class="speaker-icon">♪</div><div class="jyutping">au</div><div class="example">欧 (au1)</div></div>
-            <div class="item-card" data-audio="31"><div class="speaker-icon">♪</div><div class="jyutping">am</div><div class="example">暗 (am3)</div></div>
-            <div class="item-card" data-audio="32"><div class="speaker-icon">♪</div><div class="jyutping">an</div><div class="example">新 (san1)</div></div>
-            <div class="item-card" data-audio="33"><div class="speaker-icon">♪</div><div class="jyutping">ang</div><div class="example">莺 (ang1)</div></div>
-            <div class="item-card" data-audio="34"><div class="speaker-icon">♪</div><div class="jyutping">ap</div><div class="example">急 (gap1)</div></div>
-            <div class="item-card" data-audio="35"><div class="speaker-icon">♪</div><div class="jyutping">at</div><div class="example">不 (bat1)</div></div>
-            <div class="item-card" data-audio="36"><div class="speaker-icon">♪</div><div class="jyutping">ak</div><div class="example">得 (dak1)</div></div>
+            <div class="item-card" data-audio="29"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ai</div><div class="example">矮 (ai2)</div></div>
+            <div class="item-card" data-audio="30"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">au</div><div class="example">欧 (au1)</div></div>
+            <div class="item-card" data-audio="31"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">am</div><div class="example">暗 (am3)</div></div>
+            <div class="item-card" data-audio="32"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">an</div><div class="example">新 (san1)</div></div>
+            <div class="item-card" data-audio="33"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ang</div><div class="example">莺 (ang1)</div></div>
+            <div class="item-card" data-audio="34"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ap</div><div class="example">急 (gap1)</div></div>
+            <div class="item-card" data-audio="35"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">at</div><div class="example">不 (bat1)</div></div>
+            <div class="item-card" data-audio="36"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ak</div><div class="example">得 (dak1)</div></div>
         </div>
     </div>    
 
     <div class="category-card">
         <div class="category-title">e 行（"诶" 音）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="37"><div class="speaker-icon">♪</div><div class="jyutping">e</div><div class="example">些 (se1)</div></div>
-            <div class="item-card" data-audio="38"><div class="speaker-icon">♪</div><div class="jyutping">ei</div><div class="example">四 (sei3)</div></div>
-            <div class="item-card" data-audio="39"><div class="speaker-icon">♪</div><div class="jyutping">eng</div><div class="example">靓 (leng3)</div></div>
-            <div class="item-card" data-audio="40"><div class="speaker-icon">♪</div><div class="jyutping">ek</div><div class="example">石 (sek6)</div></div>
+            <div class="item-card" data-audio="37"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">e</div><div class="example">些 (se1)</div></div>
+            <div class="item-card" data-audio="38"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ei</div><div class="example">四 (sei3)</div></div>
+            <div class="item-card" data-audio="39"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">eng</div><div class="example">靓 (leng3)</div></div>
+            <div class="item-card" data-audio="40"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ek</div><div class="example">石 (sek6)</div></div>
         </div>
     </div>    
 
     <div class="category-card">
         <div class="category-title">i 行（"衣" 音）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="41"><div class="speaker-icon">♪</div><div class="jyutping">i</div><div class="example">诗 (si1)</div></div>
-            <div class="item-card" data-audio="42"><div class="speaker-icon">♪</div><div class="jyutping">iu</div><div class="example">消 (siu1)</div></div>
-            <div class="item-card" data-audio="43"><div class="speaker-icon">♪</div><div class="jyutping">im</div><div class="example">闪 (sim2)</div></div>
-            <div class="item-card" data-audio="44"><div class="speaker-icon">♪</div><div class="jyutping">in</div><div class="example">先 (sin1)</div></div>
-            <div class="item-card" data-audio="45"><div class="speaker-icon">♪</div><div class="jyutping">ing</div><div class="example">星 (sing1)</div></div>
-            <div class="item-card" data-audio="46"><div class="speaker-icon">♪</div><div class="jyutping">ip</div><div class="example">摄 (sip3)</div></div>
-            <div class="item-card" data-audio="47"><div class="speaker-icon">♪</div><div class="jyutping">it</div><div class="example">泄 (sit3)</div></div>
-            <div class="item-card" data-audio="48"><div class="speaker-icon">♪</div><div class="jyutping">ik</div><div class="example">色 (sik1)</div></div>
+            <div class="item-card" data-audio="41"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">i</div><div class="example">诗 (si1)</div></div>
+            <div class="item-card" data-audio="42"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">iu</div><div class="example">消 (siu1)</div></div>
+            <div class="item-card" data-audio="43"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">im</div><div class="example">闪 (sim2)</div></div>
+            <div class="item-card" data-audio="44"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">in</div><div class="example">先 (sin1)</div></div>
+            <div class="item-card" data-audio="45"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ing</div><div class="example">星 (sing1)</div></div>
+            <div class="item-card" data-audio="46"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ip</div><div class="example">摄 (sip3)</div></div>
+            <div class="item-card" data-audio="47"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">it</div><div class="example">泄 (sit3)</div></div>
+            <div class="item-card" data-audio="48"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ik</div><div class="example">色 (sik1)</div></div>
         </div>
     </div>    
 
     <div class="category-card">
         <div class="category-title">o 行（"柯" 音）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="49"><div class="speaker-icon">♪</div><div class="jyutping">o</div><div class="example">疏 (so1)</div></div>
-            <div class="item-card" data-audio="50"><div class="speaker-icon">♪</div><div class="jyutping">oi</div><div class="example">腮 (soi1)</div></div>
-            <div class="item-card" data-audio="51"><div class="speaker-icon">♪</div><div class="jyutping">ou</div><div class="example">苏 (sou1)</div></div>
-            <div class="item-card" data-audio="52"><div class="speaker-icon">♪</div><div class="jyutping">on</div><div class="example">看 (hon3)</div></div>
-            <div class="item-card" data-audio="53"><div class="speaker-icon">♪</div><div class="jyutping">ong</div><div class="example">桑 (song1)</div></div>
-            <div class="item-card" data-audio="54"><div class="speaker-icon">♪</div><div class="jyutping">ot</div><div class="example">渴 (hot3)</div></div>
-            <div class="item-card" data-audio="55"><div class="speaker-icon">♪</div><div class="jyutping">ok</div><div class="example">索 (sok3)</div></div>
+            <div class="item-card" data-audio="49"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">o</div><div class="example">疏 (so1)</div></div>
+            <div class="item-card" data-audio="50"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">oi</div><div class="example">腮 (soi1)</div></div>
+            <div class="item-card" data-audio="51"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ou</div><div class="example">苏 (sou1)</div></div>
+            <div class="item-card" data-audio="52"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">on</div><div class="example">看 (hon3)</div></div>
+            <div class="item-card" data-audio="53"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ong</div><div class="example">桑 (song1)</div></div>
+            <div class="item-card" data-audio="54"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ot</div><div class="example">渴 (hot3)</div></div>
+            <div class="item-card" data-audio="55"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ok</div><div class="example">索 (sok3)</div></div>
         </div>
     </div>    
 
     <div class="category-card">
         <div class="category-title">u 行（"乌" 音）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="56"><div class="speaker-icon">♪</div><div class="jyutping">u</div><div class="example">夫 (fu1)</div></div>
-            <div class="item-card" data-audio="57"><div class="speaker-icon">♪</div><div class="jyutping">ui</div><div class="example">灰 (fui1)</div></div>
-            <div class="item-card" data-audio="58"><div class="speaker-icon">♪</div><div class="jyutping">un</div><div class="example">欢 (fun1)</div></div>
-            <div class="item-card" data-audio="59"><div class="speaker-icon">♪</div><div class="jyutping">ung</div><div class="example">风 (fung1)</div></div>
-            <div class="item-card" data-audio="60"><div class="speaker-icon">♪</div><div class="jyutping">ut</div><div class="example">阔 (fut3)</div></div>
-            <div class="item-card" data-audio="61"><div class="speaker-icon">♪</div><div class="jyutping">uk</div><div class="example">福 (fuk1)</div></div>
+            <div class="item-card" data-audio="56"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">u</div><div class="example">夫 (fu1)</div></div>
+            <div class="item-card" data-audio="57"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ui</div><div class="example">灰 (fui1)</div></div>
+            <div class="item-card" data-audio="58"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">un</div><div class="example">欢 (fun1)</div></div>
+            <div class="item-card" data-audio="59"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ung</div><div class="example">风 (fung1)</div></div>
+            <div class="item-card" data-audio="60"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ut</div><div class="example">阔 (fut3)</div></div>
+            <div class="item-card" data-audio="61"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">uk</div><div class="example">福 (fuk1)</div></div>
         </div>
     </div>    
 
     <div class="category-card">
         <div class="category-title">oe 行（前圆唇元音，长音）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="62"><div class="speaker-icon">♪</div><div class="jyutping">oe</div><div class="example">靴 (hoe1)</div></div>
-            <div class="item-card" data-audio="63"><div class="speaker-icon">♪</div><div class="jyutping">oeng</div><div class="example">香 (hoeng1)</div></div>
-            <div class="item-card" data-audio="64"><div class="speaker-icon">♪</div><div class="jyutping">oek</div><div class="example">脚 (goek3)</div></div>
+            <div class="item-card" data-audio="62"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">oe</div><div class="example">靴 (hoe1)</div></div>
+            <div class="item-card" data-audio="63"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">oeng</div><div class="example">香 (hoeng1)</div></div>
+            <div class="item-card" data-audio="64"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">oek</div><div class="example">脚 (goek3)</div></div>
         </div>
     </div>    
 
     <div class="category-card">
         <div class="category-title">eo 行（前圆唇元音，短音）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="65"><div class="speaker-icon">♪</div><div class="jyutping">eoi</div><div class="example">需 (seoi1)</div></div>
-            <div class="item-card" data-audio="66"><div class="speaker-icon">♪</div><div class="jyutping">eon</div><div class="example">询 (seon1)</div></div>
-            <div class="item-card" data-audio="67"><div class="speaker-icon">♪</div><div class="jyutping">eot</div><div class="example">出 (ceot1)</div></div>
+            <div class="item-card" data-audio="65"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">eoi</div><div class="example">需 (seoi1)</div></div>
+            <div class="item-card" data-audio="66"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">eon</div><div class="example">询 (seon1)</div></div>
+            <div class="item-card" data-audio="67"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">eot</div><div class="example">出 (ceot1)</div></div>
         </div>
     </div>    
 
     <div class="category-card">
         <div class="category-title">yu 行（前圆唇元音，"於" 音）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="68"><div class="speaker-icon">♪</div><div class="jyutping">yu</div><div class="example">书 (syu1)</div></div>
-            <div class="item-card" data-audio="69"><div class="speaker-icon">♪</div><div class="jyutping">yun</div><div class="example">孙 (syun1)</div></div>
-            <div class="item-card" data-audio="70"><div class="speaker-icon">♪</div><div class="jyutping">yut</div><div class="example">雪 (syut3)</div></div>
+            <div class="item-card" data-audio="68"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">yu</div><div class="example">书 (syu1)</div></div>
+            <div class="item-card" data-audio="69"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">yun</div><div class="example">孙 (syun1)</div></div>
+            <div class="item-card" data-audio="70"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">yut</div><div class="example">雪 (syut3)</div></div>
         </div>
     </div>    
         
     <div class="category-card">
         <div class="category-title">m、ng 行 （独立鼻音，自成音节）</div>
         <div class="grid-container">
-            <div class="item-card" data-audio="71"><div class="speaker-icon">♪</div><div class="jyutping">m</div><div class="example">唔 (m4)</div></div>
-            <div class="item-card" data-audio="72"><div class="speaker-icon">♪</div><div class="jyutping">ng</div><div class="example">吴 (ng4)</div></div>
+            <div class="item-card" data-audio="71"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">m</div><div class="example">唔 (m4)</div></div>
+            <div class="item-card" data-audio="72"><div class="speaker-icon"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div><div class="jyutping">ng</div><div class="example">吴 (ng4)</div></div>
         </div>
     </div>
 </div>
@@ -583,14 +621,24 @@
             currentAudio.currentTime = 0;
         }
 
-        // 構建音頻文件路徑（假設音頻文件在同級目錄的 audio 文件夾下）
+        // 構建音頻文件路徑
         const audioPath = `https://cantogo.github.io/voice/pinyin_1-${audioFileName}.mp3`;
         currentAudio = new Audio(audioPath);
+
+        // 當音頻自然播放結束時，移除動畫狀態
+        currentAudio.onended = () => {
+            if (cardElement) cardElement.classList.remove('playing');
+        };
 
         // 嘗試播放音頻
         currentAudio.play().catch(error => {
             console.error("音頻播放失敗:", error);
             showToast(`無法播放：${audioFileName}。請確保 audio 文件夾中存在該文件。`);
+            
+            // 由於沒有真實音頻文件會觸發 catch，我們在這裏模擬 1.5 秒的播放動畫，方便預覽效果
+            setTimeout(() => {
+                if (cardElement) cardElement.classList.remove('playing');
+            }, 1500);
         });
     }
 
@@ -599,9 +647,18 @@
         const cards = document.querySelectorAll('.item-card');
         cards.forEach(card => {
             card.addEventListener('click', () => {
+                // 移除所有卡片的播放狀態
+                cards.forEach(c => c.classList.remove('playing'));
+                
+                // 為當前點擊的卡片添加播放狀態（觸發 CSS 動畫）
+                card.classList.add('playing');
+
                 const audioFile = card.getAttribute('data-audio');
                 if (audioFile) {
-                    playAudio(audioFile);
+                    playAudio(audioFile, card);
+                } else {
+                    // 如果沒有音頻文件，1秒後移除動畫
+                    setTimeout(() => card.classList.remove('playing'), 1000);
                 }
             });
         });
