@@ -611,8 +611,8 @@
     // 全局音頻對象，避免同時播放多個聲音
     let currentAudio = null;
 
-    // 播放 MP3 音頻
-    function playAudio(audioFileName) {
+    // 播放 MP3 音頻並觸發動畫
+    function playAudio(audioFileName, cardElement) {
         if (!audioFileName) return;
 
         // 停止當前正在播放的音頻
