@@ -235,7 +235,7 @@
             }
             
             // 創建新的 Audio 物件並播放
-            const audioPath ='https://cantogo.github.io/voice/auxi_1-${audioSrc}.mp3';
+            const audioPath ="https://cantogo.github.io/voice/auxi_1-" + audioSrc + ".mp3";
             currentAudio = new Audio(audioPath);
             
             // 處理播放錯誤（例如找不到檔案）
@@ -243,7 +243,7 @@
                 console.error("播放失敗:", error);
                 
                 // 創建一個自定義的模態對話框來替代 alert
-                showErrorModal(`無法播放音頻檔案：${audioSrc}<br><br>請確保您已經在網頁目錄下創建了 <strong>audio</strong> 資料夾，並放入了對應的 MP3 檔案。`);
+                showErrorModal(`無法播放音頻檔案：${audioPath}<br><br>請確保您已經在網頁目錄下創建了 <strong>audio</strong> 資料夾，並放入了對應的 MP3 檔案。`);
             });
         }
 
