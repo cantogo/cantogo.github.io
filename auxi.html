@@ -1,0 +1,300 @@
+<!DOCTYPE html><html lang="zh-HK"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粵語語氣助詞解析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 定義淺色模式（預設）的柔和顏色變數 */
+        :root {
+            --bg-color: #F7F6F3;
+            --text-color: #4A4A4A;
+            --card-bg: #FFFFFF;
+            --card-border: #EAE8E3;
+            --heading-color: #5C7A74;
+            --tip-bg: #EDF1F0;
+            --tip-border: #D5E0DE;
+            --combo-bg: #FAFAFA;
+            --combo-border: #F0F0F0;
+            --meaning-text: #666666;
+            --example-text: #6B7280;
+            --mandarin-text: #6B8299;
+            
+            --tag-laa3-bg: #F0E6EA; --tag-laa3-text: #8A5A6E;
+            --tag-laa1-bg: #E6F0EA; --tag-laa1-text: #5A8A6E;
+            --tag-gaa3-bg: #E6EAF0; --tag-gaa3-text: #5A6E8A;
+            --tag-aa3-bg: #F0EFE6;  --tag-aa3-text: #8A825A;
+            
+            --play-btn: #8BA39E;
+            --play-btn-hover: #5C7A74;
+            --border-line: #E5E7EB;
+        }
+
+        /* 定義深色模式的柔和顏色變數，避免純黑和高對比度 */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1A1C1E;
+                --text-color: #C9D1D9;
+                --card-bg: #222528;
+                --card-border: #30363D;
+                --heading-color: #7CA39B;
+                --tip-bg: #262B2A;
+                --tip-border: #3A4744;
+                --combo-bg: #2A2D31;
+                --combo-border: #383D43;
+                --meaning-text: #9CA3AF;
+                --example-text: #8B949E;
+                --mandarin-text: #85A0B5;
+                
+                --tag-laa3-bg: #3D2B33; --tag-laa3-text: #D6A3B8;
+                --tag-laa1-bg: #2B3D33; --tag-laa1-text: #A3D6B8;
+                --tag-gaa3-bg: #2B333D; --tag-gaa3-text: #A3B8D6;
+                --tag-aa3-bg: #3D3A2B;  --tag-aa3-text: #D6CDA3;
+                
+                --play-btn: #6B827D;
+                --play-btn-hover: #9CB5AF;
+                --border-line: #30363D;
+            }
+        }
+
+        /* 應用變數到全局樣式 */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .heading-text { color: var(--heading-color); }
+        .meaning-text { color: var(--meaning-text); }
+        .example-text { color: var(--example-text); }
+        .border-line { border-color: var(--border-line); }
+        
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tip-box {
+            background-color: var(--tip-bg);
+            border: 1px solid var(--tip-border);
+        }
+        
+        .combo-box {
+            background-color: var(--combo-bg);
+            border: 1px solid var(--combo-border);
+        }
+
+        .particle-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .tag-laa3 { background-color: var(--tag-laa3-bg); color: var(--tag-laa3-text); }
+        .tag-laa1 { background-color: var(--tag-laa1-bg); color: var(--tag-laa1-text); }
+        .tag-gaa3 { background-color: var(--tag-gaa3-bg); color: var(--tag-gaa3-text); }
+        .tag-aa3  { background-color: var(--tag-aa3-bg); color: var(--tag-aa3-text); }
+        
+        .play-btn {
+            color: var(--play-btn);
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        .play-btn:hover {
+            color: var(--play-btn-hover);
+        }
+        
+        .mandarin-text {
+            color: var(--mandarin-text);
+            font-size: 0.875rem;
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- 頭部 -->
+        <header class="mb-10 text-center">
+            <h1 class="text-3xl font-bold mb-3 heading-text">粵語語氣助詞解析</h1>
+            <p class="example-text text-sm">點擊播放圖示即可收聽預先錄製的粵語發音</p>
+        </header>
+
+        <!-- 內容區將由JS動態生成以保持結構整潔 -->
+        <div id="content-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            <!-- 卡片容器 -->
+        </div>
+
+        <!-- 總結小貼士 -->
+        <div class="tip-box rounded-xl p-6 mb-10">
+            <h2 class="text-xl font-bold heading-text mb-4 flex items-center">
+                <i class="fas fa-lightbulb mr-2"></i> 總結小貼士 (規律記憶)
+            </h2>
+            <ul class="space-y-3 text-sm md:text-base">
+                <li class="flex items-start">
+                    <span class="particle-tag tag-laa3 mr-3 mt-1">喇 (laa3)</span>
+                    <span>通常帶有<strong>「狀態改變」</strong>、<strong>「宣布結束」</strong>或<strong>「不耐煩」</strong>的意味。</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="particle-tag tag-laa1 mr-3 mt-1">啦 (laa1)</span>
+                    <span>通常用於<strong>「溫和提議」</strong>、<strong>「請求」</strong>、<strong>「安撫」</strong>或<strong>「隨和答應」</strong>。</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="particle-tag tag-gaa3 mr-3 mt-1">㗎 (gaa3)</span>
+                    <span>通常用來<strong>「強調事實」</strong>、<strong>「反駁別人」</strong>或<strong>「解釋原因」</strong>。</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="particle-tag tag-aa3 mr-3 mt-1">呀 (aa3)</span>
+                    <span>通常用於<strong>「爽快答應」</strong>、<strong>「強烈情緒（如驚呼/興奮）」</strong>或<strong>「直接回應」</strong>。</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 數據庫：加入了 audioSrc 屬性，指向對應的 MP3 檔案路徑
+        const data = [
+            {
+                word: "好", jyutping: "hou2",
+                combinations: [
+                    { text: "好喇", jp: "hou2 laa3", tag: "laa3", meaning: "妥協 / 宣布結束", example: "好喇，唔好再嘈喇。", mandarin: "好了，別再吵了。", audioSrc: "1" },
+                    { text: "好啦", jp: "hou2 laa1", tag: "laa1", meaning: "勉強答應 / 提議", example: "既然你想去，咁好啦。", mandarin: "既然你想去，那好吧。", audioSrc: "2" },
+                    { text: "好㗎", jp: "hou2 gaa3", tag: "gaa3", meaning: "強調事實 / 反駁", example: "呢隻藥對身體好㗎！", mandarin: "這藥對身體很好的！", audioSrc: "3" },
+                    { text: "好呀", jp: "hou2 aa3", tag: "aa3", meaning: "爽快答應 / 熱情", example: "今晚打邊爐？好呀！", mandarin: "今晚吃火鍋？好啊！", audioSrc: "4" }
+                ]
+            },
+            {
+                word: "唔好", jyutping: "m4 hou2",
+                combinations: [
+                    { text: "唔好喇", jp: "m4 hou2 laa3", tag: "laa3", meaning: "婉拒 / 勸止", example: "夜喇，我都係唔好喇。", mandarin: "晚了，我還是算了吧。", audioSrc: "5" },
+                    { text: "唔好啦", jp: "m4 hou2 laa1", tag: "laa1", meaning: "懇求 / 溫和勸阻", example: "你唔好咁嬲啦。", mandarin: "你別這麼生氣啦。", audioSrc: "6" },
+                    { text: "唔好㗎", jp: "m4 hou2 gaa3", tag: "gaa3", meaning: "警告 / 強調壞處", example: "空肚食甜嘢對胃唔好㗎！", mandarin: "空腹吃甜食對胃不好的！", audioSrc: "7" },
+                    { text: "唔好呀", jp: "m4 hou2 aa3", tag: "aa3", meaning: "強烈拒絕 / 驚呼", example: "你要掉咗我件玩具？唔好呀！", mandarin: "你要扔掉我的玩具？不要啊！", audioSrc: "8" }
+                ]
+            },
+            {
+                word: "得", jyutping: "dak1",
+                combinations: [
+                    { text: "得喇", jp: "dak1 laa3", tag: "laa3", meaning: "不耐煩 / 表示已完成", example: "得喇得喇！你講咗好多次喇！", mandarin: "行了行了！你已經說了很多次了！", audioSrc: "9" },
+                    { text: "得啦", jp: "dak1 laa1", tag: "laa1", meaning: "安撫 / 隨意答應", example: "放心交畀我啦，得啦。", mandarin: "放心交給我吧，沒問題的。", audioSrc: "10" },
+                    { text: "得㗎", jp: "dak1 gaa3", tag: "gaa3", meaning: "給予信心 / 保證", example: "你照住呢個方法做，一定得㗎！", mandarin: "你照著這個方法做，一定行的！", audioSrc: "11" },
+                    { text: "得呀", jp: "dak1 aa3", tag: "aa3", meaning: "爽快答應 / 肯定能力", example: "聽日幫我頂更？得呀！", mandarin: "明天幫我代班？可以啊！", audioSrc: "12" }
+                ]
+            },
+            {
+                word: "唔得", jyutping: "m4 dak1",
+                combinations: [
+                    { text: "唔得喇", jp: "m4 dak1 laa3", tag: "laa3", meaning: "撐不住 / 狀態變差", example: "我跑咗十個圈，真係唔得喇。", mandarin: "我跑了十圈，真的不行了。", audioSrc: "13" },
+                    { text: "唔得啦", jp: "m4 dak1 laa1", tag: "laa1", meaning: "無奈放棄 / 預測失敗", example: "部電腦整極都死機，睇嚟唔得啦。", mandarin: "這電腦怎麼修都死機，看來是不行了。", audioSrc: "14" },
+                    { text: "唔得㗎", jp: "m4 dak1 gaa3", tag: "gaa3", meaning: "嚴厲禁止 / 強調規則", example: "考試出貓，絕對唔得㗎！", mandarin: "考試作弊，絕對不可以的！", audioSrc: "15" },
+                    { text: "唔得呀", jp: "m4 dak1 aa3", tag: "aa3", meaning: "強烈反對 / 焦急", example: "你一個人去咁危險，唔得呀！", mandarin: "你一個人去這麼危險，不行啊！", audioSrc: "16" }
+                ]
+            },
+            {
+                word: "食", jyutping: "sik6",
+                combinations: [
+                    { text: "食喇", jp: "sik6 laa3", tag: "laa3", meaning: "動作準備開始 / 催促", example: "啲餸凍晒喇，快啲食喇！", mandarin: "菜都涼了，快點吃吧！", audioSrc: "17" },
+                    { text: "食啦", jp: "sik6 laa1", tag: "laa1", meaning: "邀請 / 勸食", example: "買咗好多蛋糕，大家隨便食啦。", mandarin: "買了很多蛋糕，大家隨便吃吧。", audioSrc: "18" },
+                    { text: "食㗎", jp: "sik6 gaa3", tag: "gaa3", meaning: "強調習慣 / 澄清", example: "你以為我唔食辣？我食㗎！", mandarin: "你以為我不吃辣？我吃的！", audioSrc: "19" },
+                    { text: "食呀", jp: "sik6 aa3", tag: "aa3", meaning: "肯定回應 / 興奮", example: "有免費雪糕，你食唔食？食呀！", mandarin: "有免費冰淇淋，你吃不吃？吃啊！", audioSrc: "20" }
+                ]
+            },
+            {
+                word: "去", jyutping: "heoi3",
+                combinations: [
+                    { text: "去喇", jp: "heoi3 laa3", tag: "laa3", meaning: "準備出發 / 打發", example: "夠鐘喇，我去喇，拜拜。", mandarin: "時間到了，我走了，拜拜。", audioSrc: "21" },
+                    { text: "去啦", jp: "heoi3 laa1", tag: "laa1", meaning: "鼓勵 / 批准", example: "既然係難得機會，你放心去啦。", mandarin: "既然是難得的機會，你放心去吧。", audioSrc: "22" },
+                    { text: "去㗎", jp: "heoi3 gaa3", tag: "gaa3", meaning: "強調意願 / 澄清事實", example: "邊個話我唔去旅行？我去㗎！", mandarin: "誰說我不去旅遊？我去的！", audioSrc: "23" },
+                    { text: "去呀", jp: "heoi3 aa3", tag: "aa3", meaning: "爽快答應 / 期待", example: "今晚去唱K，你去唔去？去呀！", mandarin: "今晚去唱K，你去不去？去啊！", audioSrc: "24" }
+                ]
+            }
+        ];
+
+        // 播放 MP3 的邏輯
+        let currentAudio = null;
+
+        function playAudio(audioSrc) {
+            const audioPath ='https://cantogo.github.io/voice/auxi_1-${audioSrc.mp3';
+
+            // 如果當前有音頻正在播放，先暫停它
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            
+            // 創建新的 Audio 物件並播放
+            currentAudio = new Audio(audioPath);
+            
+            // 處理播放錯誤（例如找不到檔案）
+            currentAudio.play().catch(error => {
+                console.error("播放失敗:", error);
+                
+                // 創建一個自定義的模態對話框來替代 alert
+                showErrorModal(`無法播放音頻檔案：${audioSrc}<br><br>請確保您已經在網頁目錄下創建了 <strong>audio</strong> 資料夾，並放入了對應的 MP3 檔案。`);
+            });
+        }
+
+        // 顯示錯誤提示的模態框
+        function showErrorModal(message) {
+            const modalHtml = `
+                <div id="error-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-sm mx-4 shadow-xl border border-gray-200 dark:border-gray-700">
+                        <h3 class="text-lg font-bold text-red-600 dark:text-red-400 mb-3"><i class="fas fa-exclamation-triangle mr-2"></i>播放失敗</h3>
+                        <p class="text-gray-700 dark:text-gray-300 text-sm mb-5">${message}</p>
+                        <button onclick="document.getElementById('error-modal').remove()" class="w-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium py-2 px-4 rounded transition-colors">
+                            關閉
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', modalHtml);
+        }
+
+        const container = document.getElementById('content-grid');
+        
+        data.forEach(group => {
+            let html = `
+                <div class="card p-5">
+                    <h2 class="text-2xl font-bold mb-4 border-b pb-2 heading-text border-line">
+                        ${group.word} <span class="text-sm example-text font-normal ml-2">(${group.jyutping})</span>
+                    </h2>
+                    <div class="space-y-4">
+            `;
+            
+            group.combinations.forEach(combo => {
+                html += `
+                    <div class="combo-box flex flex-col sm:flex-row sm:items-start justify-between p-3 rounded-lg">
+                        <div class="flex-1">
+                            <div class="flex items-center mb-1">
+                                <span class="text-lg font-bold mr-2">${combo.text}</span>
+                                <span class="particle-tag tag-${combo.tag} mr-3">${combo.jp}</span>
+                                <button onclick="playAudio('${combo.audioSrc}')" class="play-btn" title="播放發音" aria-label="播放發音">
+                                    <i class="fas fa-volume-up"></i>
+                                </button>
+                            </div>
+                            <div class="text-sm font-medium meaning-text mb-1">${combo.meaning}</div>
+                            <div class="text-sm example-text italic">粵：${combo.example}</div>
+                            <div class="mandarin-text">普：${combo.mandarin}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `</div></div>`;
+            container.innerHTML += html;
+        });
+    </script>
+
+
+</body></html>
