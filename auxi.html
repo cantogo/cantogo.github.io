@@ -221,11 +221,12 @@
             }
         ];
 
+
         // 播放 MP3 的邏輯
         let currentAudio = null;
 
         function playAudio(audioSrc) {
-            const audioPath ='https://cantogo.github.io/voice/auxi_1-${audioSrc.mp3';
+        if (!audioSrc) return;
 
             // 如果當前有音頻正在播放，先暫停它
             if (currentAudio) {
@@ -234,6 +235,7 @@
             }
             
             // 創建新的 Audio 物件並播放
+            const audioPath ='https://cantogo.github.io/voice/auxi_1-${audioSrc}.mp3';
             currentAudio = new Audio(audioPath);
             
             // 處理播放錯誤（例如找不到檔案）
